@@ -1,0 +1,11 @@
+{
+  "name": "kani.tech",
+  "version": "1.0.0",
+  "description": "nanimono_demonai's blog",
+  "main": "index.js",
+  "repository": "https://github.com/NanimonoDemonai/kani.tech.git",
+  "homepage": "https://kani.tech",
+  "author": "nanimono demonai <nanimono.demonai.kani@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
