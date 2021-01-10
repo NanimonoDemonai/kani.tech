@@ -1,5 +1,6 @@
 import { NextPage } from "next";
-const a: number = "hoge";
+
+const hidoivalue: number = "hoge";
 
 export const IndexPage: NextPage = () => (
   <div>
