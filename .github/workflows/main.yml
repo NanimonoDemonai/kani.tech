@@ -11,10 +11,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      # ref: https://github.com/reviewdog/reviewdog#github-action-reviewdogaction-setup
-      - uses: reviewdog/action-setup@v1
-        with:
-          reviewdog_version: latest
       # ref: https://github.com/actions/cache/blob/main/examples.md#node---yarn
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -28,17 +24,15 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install Dependencies
         run: yarn --frozen-lockfile
-      # ref: https://github.com/reviewdog/reviewdog#available-pre-defined-errorformat
-      - name: Typecheck
-        run: yarn tsc | reviewdog -f=tsc -reporter=github-pr-review
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+      - name: TypeCheking
+        run: yarn tsc
       # ref: https://github.com/reviewdog/action-eslint#githubworkflowsreviewdogyml
       - uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           eslint_flags: "./**/*.{ts,tsx,mdx}"
+          fail_on_error: true
       - uses: mattallty/jest-github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
