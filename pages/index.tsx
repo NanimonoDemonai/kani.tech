@@ -1,9 +1,3 @@
-import { NextPage } from "next";
-
-const IndexPage: NextPage = () => (
-  <div>
-    <p>カニのページ🦀</p>
-  </div>
-);
+import { IndexPage } from "../src/components/IndexPage";
 
 export default IndexPage;
