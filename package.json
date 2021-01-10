@@ -13,8 +13,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "update-snapshot": "jest src/test/Storyshots.test.ts -u",
     "storybook": "start-storybook -p 6006",
+    "update-storyshots": "jest src/test/Storyshots.test.ts -u",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
