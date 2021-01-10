@@ -24,8 +24,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install Dependencies
         run: yarn
-      - name: TypeScript Error Reporter
-        uses: andoshin11/typescript-error-reporter-action@v1.0.0
       # ref: https://github.com/reviewdog/action-eslint#githubworkflowsreviewdogyml
       - uses: reviewdog/action-eslint@v1
         with:
