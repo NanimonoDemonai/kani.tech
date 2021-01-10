@@ -23,8 +23,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install Dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       # ref: https://github.com/reviewdog/action-eslint#githubworkflowsreviewdogyml
+      - name: Typecheck
+        uses: andoshin11/typescript-error-reporter-action@v1.0.2
       - uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.github_token }}
