@@ -11,10 +11,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
+      # ref: https://github.com/reviewdog/reviewdog#github-action-reviewdogaction-setup
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      # ref: https://github.com/actions/cache/blob/main/examples.md#node---yarn
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      # ref: https://github.com/actions/cache/blob/main/examples.md#node---yarn
       - uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
@@ -24,8 +28,9 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install Dependencies
         run: yarn --frozen-lockfile
+      # ref: https://github.com/reviewdog/reviewdog#available-pre-defined-errorformat
       - name: Typecheck
-        run: yarn tsc | reviewdog -f=typescript
+        run: yarn tsc | reviewdog -f=typescript -reporter=github-pr-review
       # ref: https://github.com/reviewdog/action-eslint#githubworkflowsreviewdogyml
       - uses: reviewdog/action-eslint@v1
         with:
