@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots MDX/Checkbox indexページ 1`] = `
+<div>
+  <p>
+    カニのページ🦀
+  </p>
+</div>
+`;

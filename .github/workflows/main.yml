@@ -29,6 +29,6 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          eslint_flags: "./**/*.{ts,tsx}"
+          eslint_flags: "./**/*.{ts,tsx,mdx,json}"
       - name: Build
         run: yarn build
