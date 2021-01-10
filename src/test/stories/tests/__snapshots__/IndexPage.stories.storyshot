@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots IndexPage Render Index Page With Default Props 1`] = `
+<div>
+  <p>
+    カニのページ🦀
+  </p>
+</div>
+`;
