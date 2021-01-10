@@ -29,7 +29,7 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          eslint_flags: "./**/*.{ts,tsx,mdx,json}"
+          eslint_flags: "./**/*.{ts,tsx,mdx}"
       - uses: mattallty/jest-github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
