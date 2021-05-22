@@ -17,6 +17,7 @@
     "update-storyshots": "jest src/test/Storyshots.test.ts -u",
     "build-storybook": "build-storybook"
   },
+  "packageManager": "yarn@1.22.5",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@storybook/addon-docs": "^6.1.11",
