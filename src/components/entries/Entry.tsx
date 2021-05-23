@@ -1,20 +1,10 @@
-import { VFC } from "react";
-import dynamic from "next/dynamic";
-import { NotFoundErrorPage } from "../pages/NotFoundErrorPage";
-import Component from "../../entries/kani.mdx";
+import { ComponentType, VFC } from "react";
 
 interface Props {
-  pid: string;
+  Component: ComponentType;
 }
 
-const EntryComponent = (pid: string) =>
-  dynamic(() =>
-    import(`../entries/${pid}`)
-      .then((mod) => mod)
-      .catch(() => NotFoundErrorPage)
-  );
-
-export const Entry: VFC<Props> = ({ pid }) => (
+export const Entry: VFC<Props> = ({ Component }) => (
   <div>
     <Component />
   </div>
