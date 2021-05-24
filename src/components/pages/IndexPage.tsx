@@ -1,7 +1,17 @@
 import { NextPage } from "next";
 
+import clsx from "clsx";
+
 export const IndexPage: NextPage = () => (
-  <div>
-    <p>カニのページ🦀</p>
-  </div>
+  <p
+    className={clsx([
+      "font-mono",
+      "border",
+      "hyphens-auto",
+      "text-2xl",
+      "text-current",
+    ])}
+  >
+    カニのページ🦀
+  </p>
 );
