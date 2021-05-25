@@ -6,10 +6,14 @@ import { EntryListProps } from "./types";
 export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
   <>
     <p>エントリー一覧</p>
-    {entryPageList.map((e) => (
-      <Link href={getEntryPathWithEntryName(e)} key={e}>
-        {e}
-      </Link>
-    ))}
+    <ul>
+      {entryPageList.map((e) => (
+        <li key={e}>
+          <Link href={getEntryPathWithEntryName(e)} key={e}>
+            {e}
+          </Link>
+        </li>
+      ))}
+    </ul>
   </>
 );
