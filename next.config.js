@@ -1,12 +1,8 @@
-// MDXを読み込めるようにする
-// ref: https://www.npmjs.com/package/@next/mdx
-const withMDX = require("@next/mdx")({
-  extension: /\.mdx$/,
-});
 const WindiCSSWebpackPlugin = require("windicss-webpack-plugin").default;
+const path = require("path");
 
-module.exports = withMDX({
-  pageExtensions: ["tsx", "mdx"],
+module.exports = {
+  pageExtensions: ["tsx"],
   future: {
     webpack5: false,
   },
@@ -19,6 +15,14 @@ module.exports = withMDX({
         },
       })
     );
+    config.module.rules.push({
+      test: /\.mdx$/,
+      use: [
+        "babel-loader",
+        "@mdx-js/loader",
+        path.join(__dirname, "./src/buildLib/fmLoader.js"),
+      ],
+    });
     return config;
   },
-});
+};
