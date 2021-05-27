@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { FrontMatter } from "../@types/mdx";
+import type { FrontMatter } from "../types/FrontMatter";
+
 const stringParser = z.string();
 
 export const unknownObjectToFrontMatter = (unknownObject: {
