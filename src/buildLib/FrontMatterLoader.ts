@@ -2,7 +2,10 @@ import { loader } from "webpack";
 import parser from "gray-matter";
 import stringifyObject from "stringify-object";
 import { unknownObjectToFrontMatter } from "./FrontMatterParser";
-const mdx: (content: string) => Promise<string> = require("@mdx-js/mdx");
+import mdx from "@mdx-js/mdx";
+import sanitize from "rehype-sanitize";
+import { Plugin } from "unified";
+
 // language=js
 const DEFAULT_RENDERER = `
 import React from 'react'
@@ -13,7 +16,11 @@ export const FMLoader: loader.Loader = function (src) {
   const callback = this.async();
   const { data, content } = parser(src);
   const frontMatter = unknownObjectToFrontMatter(data);
-  mdx(content).then((jsx) => {
+  const rehypePlugins: Plugin[] = [];
+  if (!frontMatter.disableSanitize) {
+    rehypePlugins.push(sanitize);
+  }
+  mdx(content, { rehypePlugins }).then((jsx) => {
     const code = [
       DEFAULT_RENDERER,
       // language=js
