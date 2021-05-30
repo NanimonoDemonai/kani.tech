@@ -1,17 +1,22 @@
-import { useRouter } from "next/router";
 import { Entry } from "../entries/Entry";
-import { NotFoundErrorPage } from "./NotFoundErrorPage";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { FrontMatter } from "../../types/FrontMatter";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-export const EntryPage: NextPage = () => {
+interface Props {
+  source: MDXRemoteSerializeResult;
+  frontMatter: FrontMatter;
+}
+
+export const EntryPage: NextPage<Props> = ({ source, frontMatter }) => {
   const router = useRouter();
   const { pid } = router.query;
-  const EntryComponent = dynamic(() =>
-    import(`../../entries/${pid}.mdx`)
-      .then((mod) => mod)
-      .catch(() => NotFoundErrorPage)
+  return (
+    <Entry>
+      <MDXRemote {...source} components={{}} />
+      <Link href={`${pid}/mdx`}>ソースコード</Link>
+    </Entry>
   );
-  if (typeof pid === "string") return <Entry Component={EntryComponent} />;
-  return <NotFoundErrorPage />;
 };

@@ -1,11 +1,7 @@
-import { ComponentType, VFC } from "react";
+import { ReactNode, VFC } from "react";
 
 interface Props {
-  Component: ComponentType;
+  children: ReactNode;
 }
 
-export const Entry: VFC<Props> = ({ Component }) => (
-  <div>
-    <Component />
-  </div>
-);
+export const Entry: VFC<Props> = ({ children }) => <div>{children}</div>;

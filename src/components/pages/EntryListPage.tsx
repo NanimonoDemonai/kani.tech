@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { getEntryPathWithEntryName } from "../../utils/getURL";
-import { EntryListProps } from "./types";
+import { EntryListProps } from "../entries/types";
 
 export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
   <>
