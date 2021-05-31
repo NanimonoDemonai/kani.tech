@@ -1,27 +1,19 @@
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
-import "windi.css";
 import type { AppProps } from "next/app";
 import { VFC } from "react";
 import { PageNavbar } from "../components/Navbar/PageNavbar";
-import clsx from "clsx";
+import { Box } from "@fower/react";
 
 const MyApp: VFC<AppProps> = ({ Component, pageProps }) => (
-  <div className={clsx(["min-h-screen", "bg-hero-diagonal-lines"])}>
+  <Box minH52>
     <PageNavbar />
-    <div
-      className={clsx([
-        "container",
-        "mx-auto",
-        "text-black-500",
-        "max-w-screen-lg",
-        "min-h-screen-md",
-        "p-4",
-      ])}
-    >
-      <Component {...pageProps} />
+    <div id="wrapper" row toCenterX>
+      <main p5 textLG maxW--lg="70%" w="100%">
+        <Component {...pageProps} />
+      </main>
     </div>
-  </div>
+  </Box>
 );
 
 export default MyApp;

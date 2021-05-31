@@ -4,7 +4,7 @@ import { getEntryPathWithEntryName } from "../../utils/getURL";
 import { EntryListProps } from "../entries/types";
 
 export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
-  <>
+  <article>
     <p>エントリー一覧</p>
     <ul>
       {entryPageList.map((e) => (
@@ -15,5 +15,5 @@ export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
         </li>
       ))}
     </ul>
-  </>
+  </article>
 );
