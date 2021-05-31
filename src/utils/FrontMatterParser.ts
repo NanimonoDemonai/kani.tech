@@ -3,6 +3,13 @@ import type { FrontMatter } from "../types/FrontMatter";
 
 const stringParser = z.string();
 const booleanParser = z.boolean();
+import parser from "gray-matter";
+
+export const frontMatterParser = (source: string) => {
+  const { data, content } = parser(source);
+  const frontMatter = unknownObjectToFrontMatter(data);
+  return { frontMatter, content };
+};
 
 export const unknownObjectToFrontMatter = (unknownObject: {
   [key: string]: unknown;
