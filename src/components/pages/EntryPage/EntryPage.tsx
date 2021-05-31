@@ -1,16 +1,19 @@
-import { EntryList } from "../entries/EntryList/EntryList";
+import { EntryList } from "../EntryList/EntryList";
 import { NextPage } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
-import { FrontMatter } from "../../types/FrontMatter";
+import { FrontMatter } from "../../../types/FrontMatter";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-interface Props {
+export interface EntryPageProps {
   source: MDXRemoteSerializeResult;
   frontMatter: FrontMatter;
 }
 
-export const EntryPage: NextPage<Props> = ({ source, frontMatter }) => {
+export const EntryPage: NextPage<EntryPageProps> = ({
+  source,
+  frontMatter,
+}) => {
   const router = useRouter();
   const { pid } = router.query;
   return (

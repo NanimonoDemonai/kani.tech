@@ -1,21 +1,24 @@
 import { NextPage } from "next";
-import { FrontMatter } from "../../types/FrontMatter";
+import { FrontMatter } from "../../../types/FrontMatter";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
 import dark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 
 import Link from "next/link";
-import { getEntryPathWithEntryName } from "../../utils/getURL";
+import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
 import Head from "next/head";
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
-interface Props {
+export interface MDXSourcePageProps {
   source: string;
   frontMatter: FrontMatter;
 }
 
-export const MDXPage: NextPage<Props> = ({ source, frontMatter }) => {
+export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
+  source,
+  frontMatter,
+}) => {
   const router = useRouter();
   const { pid } = router.query;
   return (
