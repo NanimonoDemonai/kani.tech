@@ -5,6 +5,8 @@ import parser from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { revalidate } from "../../../constants/revalidate";
 import { unknownObjectToFrontMatter } from "../../../buildLib/FrontMatterParser";
+import { Plugin } from "unified";
+import sanitize from "rehype-sanitize";
 
 export default EntryPage;
 
@@ -13,7 +15,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const source = await fs.readFile(`./src/entries/${params.pid}.mdx`);
   const { data, content } = parser(source);
   const frontMatter = unknownObjectToFrontMatter(data);
-  const mdxSource = await serialize(content);
+  const rehypePlugins: Plugin[] = [];
+  if (!frontMatter.disableSanitize) {
+    rehypePlugins.push(sanitize);
+  }
+  const mdxSource = await serialize(content, { mdxOptions: { rehypePlugins } });
   return { props: { source: mdxSource, frontMatter }, revalidate };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
