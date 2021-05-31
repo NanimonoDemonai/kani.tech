@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { getEntryPageList } from "../../../constants/EntryPageList";
-import { EntryListProps } from "../../entries/types";
+import { EntryListProps } from "./EntryListPage";
 
 export const getEntryPageListStaticProps: GetStaticProps<EntryListProps> =
   async () => {

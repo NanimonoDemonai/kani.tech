@@ -1,7 +1,10 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { getEntryPathWithEntryName } from "../../utils/getURL";
-import { EntryListProps } from "../entries/types";
+import { getEntryPathWithEntryName } from "../../../utils/getURL";
+
+export interface EntryListProps {
+  entryPageList: string[];
+}
 
 export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
   <article>
