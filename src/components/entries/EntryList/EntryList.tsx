@@ -4,4 +4,4 @@ interface Props {
   children: ReactNode;
 }
 
-export const Entry: VFC<Props> = ({ children }) => <div>{children}</div>;
+export const EntryList: VFC<Props> = ({ children }) => <div>{children}</div>;

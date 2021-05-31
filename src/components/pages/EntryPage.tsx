@@ -1,4 +1,4 @@
-import { Entry } from "../entries/Entry";
+import { EntryList } from "../entries/EntryList/EntryList";
 import { NextPage } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FrontMatter } from "../../types/FrontMatter";
@@ -14,9 +14,9 @@ export const EntryPage: NextPage<Props> = ({ source, frontMatter }) => {
   const router = useRouter();
   const { pid } = router.query;
   return (
-    <Entry>
+    <EntryList>
       <MDXRemote {...source} components={{}} />
       <Link href={`${pid}/mdx`}>ソースコード</Link>
-    </Entry>
+    </EntryList>
   );
 };

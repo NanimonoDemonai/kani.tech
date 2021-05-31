@@ -1,6 +1,6 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import { EntryListPage } from "../../components/pages/EntryListPage";
-import { getEntryPageStaticProps } from "../../components/entries/dataFetching";
+import { getEntryPageStaticProps } from "../../components/entries/EntryList/dataFetching";
 
 const EntryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
   EntryListPage;
