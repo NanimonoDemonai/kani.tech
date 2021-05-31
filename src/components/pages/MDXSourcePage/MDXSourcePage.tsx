@@ -8,6 +8,7 @@ import Link from "next/link";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { Title } from "../../Metas/Title";
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
 export interface MDXSourcePageProps {
@@ -17,15 +18,13 @@ export interface MDXSourcePageProps {
 
 export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
   source,
-  frontMatter,
+  frontMatter: { title },
 }) => {
   const router = useRouter();
   const { pid } = router.query;
   return (
     <div>
-      <Head>
-        <title>{frontMatter.title}</title>
-      </Head>
+      <Title title={title + "/source"} />
       <SyntaxHighlighter language="markdown" style={dark}>
         {`${source}`}
       </SyntaxHighlighter>
