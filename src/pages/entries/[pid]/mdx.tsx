@@ -2,12 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { promises as fs } from "fs";
 import { MDXPage } from "../../../components/pages/MDXPage";
 import { revalidate } from "../../../constants/revalidate";
-import parser from "gray-matter";
-import {
-  frontMatterParser,
-  unknownObjectToFrontMatter,
-} from "../../../utils/FrontMatterParser";
-import { sourceParser } from "../../../utils/sourceParser";
+import { frontMatterParser } from "../../../utils/FrontMatterParser";
 
 export default MDXPage;
 
