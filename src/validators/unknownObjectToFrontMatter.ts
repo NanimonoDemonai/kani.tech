@@ -1,5 +1,5 @@
-import { FrontMatter } from "../types/FrontMatter";
 import { z } from "zod";
+import { FrontMatter } from "../types/FrontMatter";
 
 const DEFAULT_VALUE: FrontMatter = {
   title: "",

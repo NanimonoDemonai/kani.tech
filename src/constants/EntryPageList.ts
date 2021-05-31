@@ -1,5 +1,5 @@
-import { getFilesByGlob } from "../utils/getFilesByGlob";
 import path from "path";
+import { getFilesByGlob } from "../utils/getFilesByGlob";
 
 export const getEntryPagePathList = (): Promise<string[]> =>
   getFilesByGlob("./src/entries/*.mdx");

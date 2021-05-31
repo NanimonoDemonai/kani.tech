@@ -1,6 +1,6 @@
-import { loader } from "webpack";
-import stringifyObject from "stringify-object";
 import mdx from "@mdx-js/mdx";
+import stringifyObject from "stringify-object";
+import { loader } from "webpack";
 import { sourceParser } from "../utils/sourceParser";
 
 // language=js

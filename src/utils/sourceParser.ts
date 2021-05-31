@@ -1,8 +1,8 @@
-import { frontMatterParser } from "./FrontMatterParser";
-import { Plugin } from "unified";
-import sanitize from "rehype-sanitize";
-import { FrontMatter } from "../types/FrontMatter";
 import { Options } from "@mdx-js/mdx";
+import sanitize from "rehype-sanitize";
+import { Plugin } from "unified";
+import { FrontMatter } from "../types/FrontMatter";
+import { frontMatterParser } from "./FrontMatterParser";
 
 interface Res {
   frontMatter: FrontMatter;
