@@ -1,8 +1,8 @@
 import { Options } from "@mdx-js/mdx";
-import sanitize from "rehype-sanitize";
 import { Plugin } from "unified";
 import { FrontMatter } from "../types/FrontMatter";
 import { frontMatterParser } from "./FrontMatterParser";
+import { mdxSanitizePlugin } from "./mdxSanitizePlugin";
 
 interface Res {
   frontMatter: FrontMatter;
@@ -14,7 +14,7 @@ export const sourceParser = (src: string): Res => {
   const { frontMatter, content } = frontMatterParser(src);
   const rehypePlugins: Plugin[] = [];
   if (!frontMatter.disableSanitize) {
-    rehypePlugins.push(sanitize);
+    rehypePlugins.push(mdxSanitizePlugin);
   }
   const mdxOptions = { rehypePlugins };
 
