@@ -13,7 +13,7 @@ describe("sourceParser", function () {
       rehypePlugins: [
         mdxSanitizePlugin,
         () => (ast) => {
-          /*console.log(JSON.stringify(ast, null, 4))*/
+          //console.log(JSON.stringify(ast, null, 4));
         },
       ],
     });
