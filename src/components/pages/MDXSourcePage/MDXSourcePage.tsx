@@ -7,7 +7,6 @@ import dark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 import Link from "next/link";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { Title } from "../../Metas/Title";
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
