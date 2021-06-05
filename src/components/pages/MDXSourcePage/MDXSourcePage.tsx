@@ -4,10 +4,11 @@ import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
 import dark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 
-import Link from "next/link";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
 import { Title } from "../../Metas/Title";
+import { Box, Button, Divider } from "@chakra-ui/react";
+import NextLink from "next/link";
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
 export interface MDXSourcePageProps {
@@ -22,12 +23,19 @@ export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
   const router = useRouter();
   const { pid } = router.query;
   return (
-    <div>
+    <>
       <Title title={title + "/source"} />
-      <SyntaxHighlighter language="markdown" style={dark}>
-        {`${source}`}
-      </SyntaxHighlighter>
-      <Link href={getEntryPathWithEntryName(`${pid}`)}>戻る</Link>
-    </div>
+      <article>
+        <SyntaxHighlighter language="markdown" style={dark}>
+          {`${source}`}
+        </SyntaxHighlighter>
+      </article>
+      <Box pt={3}>
+        <Divider />
+        <NextLink href={getEntryPathWithEntryName(`${pid}`)}>
+          <Button my={4}>戻る</Button>
+        </NextLink>
+      </Box>
+    </>
   );
 };
