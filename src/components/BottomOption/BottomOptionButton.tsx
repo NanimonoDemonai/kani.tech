@@ -9,6 +9,6 @@ interface Props {
 
 export const BottomOptionButton: VFC<Props> = ({ href, children }) => (
   <NextLink href={href}>
-    <Link my={1}>{children}</Link>
+    <Link fontSize="sm">{children}</Link>
   </NextLink>
 );
