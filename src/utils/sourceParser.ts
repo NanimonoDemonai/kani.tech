@@ -1,26 +1,26 @@
-import { Options } from "@mdx-js/mdx";
-import { Plugin } from "unified";
+import { bundleMDX } from "mdx-bundler";
 import { FrontMatter } from "../types/FrontMatter";
 import { frontMatterParser } from "./FrontMatterParser";
 import { mdxSanitizePlugin } from "./mdxSanitizePlugin";
 
 interface Res {
   frontMatter: FrontMatter;
-  content: string;
-  mdxOptions: Options;
+  code: string;
 }
 
-export const sourceParser = (src: string): Res => {
+export const sourceParser = async (src: string): Promise<Res> => {
   const { frontMatter, content } = frontMatterParser(src);
-  const rehypePlugins: Plugin[] = [];
-  if (!frontMatter.disableSanitize) {
-    rehypePlugins.push(mdxSanitizePlugin);
-  }
-  const mdxOptions = { rehypePlugins };
 
+  const { code } = await bundleMDX(content, {
+    xdmOptions: (options) => {
+      if (!frontMatter.disableSanitize) {
+        options.rehypePlugins?.push(mdxSanitizePlugin);
+      }
+      return options;
+    },
+  });
   return {
     frontMatter,
-    content,
-    mdxOptions,
+    code,
   };
 };

@@ -1,26 +1,28 @@
 import { NextPage } from "next";
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FrontMatter } from "../../../types/FrontMatter";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { Title } from "../../Metas/Title";
+import { useMemo } from "react";
+import { getMDXComponent } from "mdx-bundler/client";
 
 export interface EntryPageProps {
-  source: MDXRemoteSerializeResult;
+  code: string;
   frontMatter: FrontMatter;
 }
 
 export const EntryPage: NextPage<EntryPageProps> = ({
-  source,
+  code,
   frontMatter: { title },
 }) => {
   const router = useRouter();
   const { pid } = router.query;
+  const Component = useMemo(() => getMDXComponent(code), [code]);
+
   return (
     <article>
       <Title title={title} />
-      <MDXRemote {...source} components={{}} />
+      <Component />
       <Link href={`${pid}/mdx`}>ソースコード</Link>
     </article>
   );
