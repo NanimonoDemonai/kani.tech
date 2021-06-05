@@ -1,6 +1,3 @@
 {
-  "presets": [
-    "next/babel",
-    "@fower/babel-preset-fower"
-  ]
+  "presets": ["next/babel"]
 }
