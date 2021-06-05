@@ -172,7 +172,6 @@ export default {
   // ref: https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core#configure-jest-for-mdx-docs-add-on-stories
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
-    "^.+\\.mdx?$": "@storybook/addon-docs/jest-transform-mdx",
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
