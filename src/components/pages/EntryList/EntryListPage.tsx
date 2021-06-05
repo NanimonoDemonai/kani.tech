@@ -11,7 +11,6 @@ export interface EntryListProps {
 export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
   <article>
     <Title title="エントリー一覧" />
-    <h1>エントリー一覧</h1>
     <UnorderedList>
       {entryPageList.map((e) => (
         <ListItem key={e}>
