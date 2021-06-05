@@ -5,7 +5,10 @@ export const materialDarkTheme: SystemStyleObject = {
     m: 2,
     py: 1,
     code: {
+      w: "auto",
+      display: "block",
       bg: "#2f2f2f",
+      shadow: "md",
       p: 4,
       borderRadius: 3,
       fontSize: "sm",
