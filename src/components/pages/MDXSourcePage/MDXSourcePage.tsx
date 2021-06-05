@@ -7,8 +7,9 @@ import dark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
 import { Title } from "../../Metas/Title";
-import { Box, Button, Divider } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
+import { BottomOption } from "../../BottomOption/BottomOption";
+
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
 export interface MDXSourcePageProps {
@@ -30,12 +31,11 @@ export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
           {`${source}`}
         </SyntaxHighlighter>
       </article>
-      <Box pt={3}>
-        <Divider />
-        <NextLink href={getEntryPathWithEntryName(`${pid}`)}>
-          <Button my={4}>戻る</Button>
-        </NextLink>
-      </Box>
+      <BottomOption>
+        <BottomOptionButton href={getEntryPathWithEntryName(`${pid}`)}>
+          戻る
+        </BottomOptionButton>
+      </BottomOption>
     </>
   );
 };

@@ -1,13 +1,15 @@
 import { NextPage } from "next";
 import { FrontMatter } from "../../../types/FrontMatter";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { Title } from "../../Metas/Title";
 import { useMemo } from "react";
 import { getMDXComponent } from "mdx-bundler/client";
-import { Box, Button, Divider, Heading } from "@chakra-ui/react";
+import { Box, Divider, Heading } from "@chakra-ui/react";
 import { getEntryMdxPathWithEntryName } from "../../../utils/getURL";
 import { entryDefaultSX } from "../../../styles/entryDefaultSX";
+import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
+import { BottomOption } from "../../BottomOption/BottomOption";
+
 export interface EntryPageProps {
   code: string;
   frontMatter: FrontMatter;
@@ -31,12 +33,11 @@ export const EntryPage: NextPage<EntryPageProps> = ({
           <Component />
         </Box>
       </article>
-      <Box pt={3}>
-        <Divider />
-        <NextLink href={getEntryMdxPathWithEntryName(pid as string)}>
-          <Button my={4}>ソースコード</Button>
-        </NextLink>
-      </Box>
+      <BottomOption>
+        <BottomOptionButton href={getEntryMdxPathWithEntryName(pid as string)}>
+          ソースコード
+        </BottomOptionButton>
+      </BottomOption>
     </>
   );
 };
