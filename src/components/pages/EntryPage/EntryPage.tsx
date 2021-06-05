@@ -7,8 +7,7 @@ import { useMemo } from "react";
 import { getMDXComponent } from "mdx-bundler/client";
 import { Box, Button, Divider, Heading } from "@chakra-ui/react";
 import { getEntryMdxPathWithEntryName } from "../../../utils/getURL";
-import { EntryDefaultSX } from "../../../EntryDefaultSX";
-
+import { entryDefaultSX } from "../../../styles/entryDefaultSX";
 export interface EntryPageProps {
   code: string;
   frontMatter: FrontMatter;
@@ -28,7 +27,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({
         <Title title={title} />
         <Heading fontSize="2xl">{title}</Heading>
         <Divider />
-        <Box sx={EntryDefaultSX}>
+        <Box sx={entryDefaultSX}>
           <Component />
         </Box>
       </article>

@@ -1,6 +1,7 @@
 import { SystemStyleObject } from "@chakra-ui/styled-system";
+import { materialDarkTheme } from "./materialDarkTheme";
 
-export const EntryDefaultSX: SystemStyleObject = {
+export const entryDefaultSX: SystemStyleObject = {
   px: 3,
   h1: {
     fontSize: "xl",
@@ -23,7 +24,10 @@ export const EntryDefaultSX: SystemStyleObject = {
     ps: 3,
     border: "1px",
     bg: "gray.100",
+    borderRadius: 3,
+
     borderColor: "gray.600",
     boxShadow: "sm",
   },
+  ...materialDarkTheme,
 };
