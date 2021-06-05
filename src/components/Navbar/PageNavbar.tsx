@@ -1,12 +1,12 @@
 import { VFC } from "react";
 import NextLink from "next/link";
-import { Center, HStack, Link, StackDivider } from "@chakra-ui/react";
+import { Center, HStack, Link, Spacer, StackDivider } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { KaniButton } from "./KaniButton";
 import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
 
 export const PageNavbar: VFC = () => (
-  <HStack borderColor="gray.200" shadow="md" p={2} mb={3}>
+  <HStack borderColor="gray.200" shadow="md" p={2} px={30} mb={3}>
     <KaniButton />
     <NextLink href="/">
       <Link>{SITE_NAME}</Link>
@@ -17,6 +17,7 @@ export const PageNavbar: VFC = () => (
     <NextLink href="/entries">
       <Link>Entries</Link>
     </NextLink>
+    <Spacer />
     <Link href={CODE_REPOSITORY.toString()} isExternal>
       Github <ExternalLinkIcon mx="2px" />
     </Link>
