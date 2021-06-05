@@ -12,7 +12,7 @@ export const entryDefaultSX: SystemStyleObject = {
   },
   p: {
     ps: 1,
-    fontSize: "sm",
+    fontSize: "lg",
     lineHeight: "1.4",
   },
   a: {
