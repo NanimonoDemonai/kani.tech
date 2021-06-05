@@ -25,12 +25,12 @@ export const EntryPage: NextPage<EntryPageProps> = ({
 
   return (
     <>
-      <article>
+      <Box as={"article"} minH={"2xl"}>
         <Title title={title} />
         <Box sx={entryDefaultSX}>
           <Component />
         </Box>
-      </article>
+      </Box>
       <BottomOption>
         <BottomOptionButton href={getEntryMdxPathWithEntryName(pid as string)}>
           ソースコード
