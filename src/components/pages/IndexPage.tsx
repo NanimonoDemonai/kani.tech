@@ -6,6 +6,6 @@ export const IndexPage: NextPage = () => (
     <Head>
       <title>kani.tech</title>
     </Head>
-    <p text2XL>カニのページ🦀</p>
+    <h1>カニのページ🦀</h1>
   </article>
 );
