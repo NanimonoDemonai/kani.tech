@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import { GetStaticProps } from "next";
 import { revalidate } from "../../../constants/revalidate";
-import { sourceParser } from "../../../utils/sourceParser";
+import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { EntryPageProps } from "./EntryPage";
 
 export const getEntryPageStaticProps: GetStaticProps<EntryPageProps> = async ({

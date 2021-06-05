@@ -1,5 +1,5 @@
 import parser from "gray-matter";
-import { FrontMatter } from "../types/FrontMatter";
+import { FrontMatter } from "../../types/FrontMatter";
 import { unknownObjectToFrontMatter } from "../validators/unknownObjectToFrontMatter";
 
 interface Res {

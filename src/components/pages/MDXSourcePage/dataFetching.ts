@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import { GetStaticProps } from "next";
 import { revalidate } from "../../../constants/revalidate";
-import { frontMatterParser } from "../../../utils/FrontMatterParser";
+import { frontMatterParser } from "../../../utils/parsers/FrontMatterParser";
 import { MDXSourcePageProps } from "./MDXSourcePage";
 
 export const getMDXSourcePageStaticProps: GetStaticProps<MDXSourcePageProps> =
