@@ -6,3 +6,4 @@ export const allowAttributesList: {
   [name: string]: string[] | undefined;
 } = gh.attributes as never;
 export const allowProtocol = ["https:", "http:"];
+export const checkProtocolAttributeList = ["src", "cite", "href"];
