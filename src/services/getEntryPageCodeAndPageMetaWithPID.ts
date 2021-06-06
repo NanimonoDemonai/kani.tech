@@ -15,6 +15,8 @@ const setter = (source: string, modified: string) => async (): Promise<Res> => {
 export const getEntryPageCodeAndPageMetaWithPID = async (
   pid: string
 ): Promise<Res | undefined> => {
-  const { src, modified } = await readFileWithModifiedTime(pid);
+  const { src, modified } = await readFileWithModifiedTime(
+    `./src/entries/${pid}.mdx`
+  );
   return await getOrSetMDXCompileCache(pid, modified, setter(src, modified));
 };

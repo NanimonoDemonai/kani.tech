@@ -9,7 +9,9 @@ interface Res {
 export const getMDXSourcePageCodeAndPageMetaWithPID = async (
   pid: string
 ): Promise<Res> => {
-  const { src, modified } = await readFileWithModifiedTime(pid);
+  const { src, modified } = await readFileWithModifiedTime(
+    `./src/entries/${pid}.mdx`
+  );
   const { frontMatter } = await sourceParser(src);
   return { pageMeta: { modified, ...frontMatter, source: src } };
 };
