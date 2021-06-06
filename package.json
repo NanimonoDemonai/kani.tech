@@ -12,10 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest",
-    "storybook": "start-storybook -p 6006",
-    "update-storyshots": "jest src/test/Storyshots.test.ts -u",
-    "build-storybook": "build-storybook"
+    "test": "jest"
   },
   "packageManager": "yarn@1.22.5",
   "devDependencies": {
