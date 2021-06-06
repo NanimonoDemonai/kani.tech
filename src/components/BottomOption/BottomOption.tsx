@@ -8,6 +8,7 @@ import {
   Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
+import { PageModified } from "./PageModified";
 
 interface Props {
   children: ReactNode;
@@ -18,6 +19,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
 
   return (
     <Box as={"aside"}>
+      <PageModified />
       <Divider my={1} />
       <Flex>
         <Spacer />
