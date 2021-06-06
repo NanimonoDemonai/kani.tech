@@ -11,8 +11,8 @@ generator client {
 }
 
 model Entry {
-  id        Int      @id @default(autoincrement())
-  title     String
-  source    String
-  modified  DateTime
+  id       Int      @id @default(autoincrement())
+  pageName String
+  source   String
+  modified DateTime
 }
