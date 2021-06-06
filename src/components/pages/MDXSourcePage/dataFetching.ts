@@ -1,8 +1,8 @@
 import { GetStaticProps } from "next";
 import { revalidate } from "../../../constants/revalidate";
-import { MDXSourcePageProps } from "./MDXSourcePage";
-import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
 import { getMDXSourcePageCodeAndPageMetaWithPID } from "../../../services/getMDXSourcePageCodeAndPageMetaWithPID";
+import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
+import { MDXSourcePageProps } from "./MDXSourcePage";
 
 export const getMDXSourcePageStaticProps: GetStaticProps<MDXSourcePageProps> =
   async ({ params }) => {

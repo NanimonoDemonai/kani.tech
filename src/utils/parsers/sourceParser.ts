@@ -1,7 +1,7 @@
 import { bundleMDX } from "mdx-bundler";
 import { FrontMatter } from "../../types/FrontMatter";
-import { frontMatterParser } from "./FrontMatterParser";
 import { mdxSanitizePlugin } from "../rehypePlugins/mdxSanitizePlugin";
+import { frontMatterParser } from "./FrontMatterParser";
 
 interface Res {
   frontMatter: FrontMatter;

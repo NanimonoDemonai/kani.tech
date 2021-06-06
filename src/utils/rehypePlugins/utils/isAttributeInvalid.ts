@@ -1,9 +1,9 @@
+import { Attribute } from "../types";
 import {
   isAttributeNameInvalid,
   isAttributeProtocolInvalid,
   isAttributeValueInvalid,
 } from "./validators";
-import { Attribute } from "../types";
 
 /**
  * ノードに付与されている属性が妥当か検証する

@@ -1,10 +1,10 @@
 import type { Plugin } from "unified";
+import type { Node } from "unist";
 import visit from "unist-util-visit";
 import { allowTagList } from "../../constants/allowTagList";
-import { isNodeMdxJsx, stripNode } from "./utils/utils";
-import { isAttributeInvalid } from "./utils/isAttributeInvalid";
 import { Attribute } from "./types";
-import type { Node } from "unist";
+import { isAttributeInvalid } from "./utils/isAttributeInvalid";
+import { isNodeMdxJsx, stripNode } from "./utils/utils";
 
 export const mdxSanitizePlugin: Plugin = () => (ast) => {
   visit(ast, isNodeMdxJsx, (node: Node, index, parent) => {

@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { ParsedUrlQuery } from "querystring";
+import { z } from "zod";
 
 const schema = z.object({
   pid: z.string(),

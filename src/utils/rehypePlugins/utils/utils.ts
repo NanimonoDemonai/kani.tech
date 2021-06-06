@@ -1,6 +1,6 @@
 import type { Node } from "unist";
-import visit from "unist-util-visit";
 import { TestFunction } from "unist-util-is";
+import visit from "unist-util-visit";
 
 type VisitorParameters = Parameters<visit.Visitor<never>>;
 

@@ -1,12 +1,12 @@
 import { GetStaticProps } from "next";
-import { revalidate } from "../../../constants/revalidate";
-import { EntryPageProps } from "./EntryPage";
-import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
-import { getEntryPageCodeAndPageMetaWithPID } from "../../../services/getEntryPageCodeAndPageMetaWithPID";
 import {
   NotFoundResponse,
   NotFoundResponseWithRevalidate,
 } from "../../../constants/NotFoundResponse";
+import { revalidate } from "../../../constants/revalidate";
+import { getEntryPageCodeAndPageMetaWithPID } from "../../../services/getEntryPageCodeAndPageMetaWithPID";
+import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
+import { EntryPageProps } from "./EntryPage";
 
 export const getEntryPageStaticProps: GetStaticProps<EntryPageProps> = async ({
   params,
