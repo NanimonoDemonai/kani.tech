@@ -11,6 +11,7 @@ import { BottomOption } from "../../BottomOption/BottomOption";
 import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
 import { Article } from "../../Entry/Article";
+import { Fallback } from "../../Elements/Fallback";
 
 export interface EntryPageProps {
   code: string;
@@ -21,7 +22,9 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
   const router = useRouter();
   const { pid } = router.query;
   const Component = useMemo(() => getMDXComponent(code), [code]);
-
+  if (router.isFallback) {
+    return <Fallback />;
+  }
   return (
     <>
       <PageMetaComponent pageMeta={pageMeta} />
