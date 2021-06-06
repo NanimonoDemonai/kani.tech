@@ -12,7 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "setup-db": "ts-node src/script/setupDB.ts",
+    "setup-db": "ts-node --project tsconfig.cjs.json src/script/setupDB.ts",
     "init-prisma": "prisma migrate dev --name init",
     "format-prisma": "prisma format",
     "prisma-studio": "prisma studio",
