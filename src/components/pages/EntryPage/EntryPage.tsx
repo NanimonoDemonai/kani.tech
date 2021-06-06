@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import { FrontMatter } from "../../../types/FrontMatter";
 import { useRouter } from "next/router";
 import { Title } from "../../Metas/Title";
 import { useMemo } from "react";
@@ -9,19 +8,25 @@ import { getEntryMdxPathWithEntryName } from "../../../utils/getURL";
 import { entryDefaultSX } from "../../../styles/entryDefaultSX";
 import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
 import { BottomOption } from "../../BottomOption/BottomOption";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import locale_ja from "dayjs/locale/ja";
+import { PageMeta } from "../../../types/PageMeta";
 
 export interface EntryPageProps {
   code: string;
-  frontMatter: FrontMatter;
+  pageMeta: PageMeta;
 }
-
+dayjs.extend(localizedFormat);
+dayjs.locale(locale_ja);
 export const EntryPage: NextPage<EntryPageProps> = ({
   code,
-  frontMatter: { title },
+  pageMeta: { modified, title },
 }) => {
   const router = useRouter();
   const { pid } = router.query;
   const Component = useMemo(() => getMDXComponent(code), [code]);
+  dayjs.locale("ja");
 
   return (
     <>
@@ -31,6 +36,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({
           <Component />
         </Box>
       </Box>
+      {dayjs(modified).format("LLL")}
       <BottomOption>
         <BottomOptionButton href={getEntryMdxPathWithEntryName(pid as string)}>
           ソースコード

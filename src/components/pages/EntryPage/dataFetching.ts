@@ -8,9 +8,14 @@ export const getEntryPageStaticProps: GetStaticProps<EntryPageProps> = async ({
   params,
 }) => {
   if (!params) return { notFound: true, revalidate };
-  const src = await fs.readFile(`./src/entries/${params.pid}.mdx`, {
+  const path = `./src/entries/${params.pid}.mdx`;
+  const { mtime } = await fs.stat(path);
+  const src = await fs.readFile(path, {
     encoding: "utf8",
   });
   const { code, frontMatter } = await sourceParser(src);
-  return { props: { code, frontMatter }, revalidate };
+  return {
+    props: { code, pageMeta: { modified: mtime.toJSON(), ...frontMatter } },
+    revalidate,
+  };
 };

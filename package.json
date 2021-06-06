@@ -54,6 +54,7 @@
     "@mapbox/rehype-prism": "^0.6.0",
     "app-root-path": "^3.0.0",
     "clsx": "^1.1.1",
+    "dayjs": "^1.10.5",
     "framer-motion": "^4.1.17",
     "globby": "^11.0.3",
     "gray-matter": "^4.0.3",
