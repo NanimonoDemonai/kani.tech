@@ -9,14 +9,10 @@ import { Article } from "../../Entry/Article";
 import { SourceHighlighter } from "../../Entry/SourceHighlighter";
 
 export interface MDXSourcePageProps {
-  source: string;
   pageMeta: PageMeta;
 }
 
-export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
-  source,
-  pageMeta,
-}) => {
+export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({ pageMeta }) => {
   const router = useRouter();
   const { pid } = router.query;
   return (
@@ -24,7 +20,7 @@ export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
       <PageMetaComponent pageMeta={pageMeta} />
 
       <Article>
-        <SourceHighlighter source={source} />
+        <SourceHighlighter source={pageMeta.source} />
       </Article>
 
       <BottomOption>

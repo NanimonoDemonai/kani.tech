@@ -1,6 +1,6 @@
 import { PageMeta } from "../types/PageMeta";
-import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 import { sourceParser } from "../utils/parsers/sourceParser";
+import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 import { getOrSetMDXCompileCache } from "./caches/MDXCompileCache";
 
 interface Res {
@@ -8,9 +8,9 @@ interface Res {
   pageMeta: PageMeta;
 }
 
-const setter = (src: string, modified: string) => async (): Promise<Res> => {
-  const { code, frontMatter } = await sourceParser(src);
-  return { code, pageMeta: { modified, ...frontMatter } };
+const setter = (source: string, modified: string) => async (): Promise<Res> => {
+  const { code, frontMatter } = await sourceParser(source);
+  return { code, pageMeta: { modified, ...frontMatter, source } };
 };
 export const getEntryPageCodeAndPageMetaWithPID = async (
   pid: string
