@@ -1,6 +1,6 @@
 import { useEffect, VFC } from "react";
 import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../../atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../atoms/pageMetaAtoms";
 import { PageMeta } from "../../types/PageMeta";
 import { Title } from "./Title";
 

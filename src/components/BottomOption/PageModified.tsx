@@ -4,7 +4,7 @@ import locale_ja from "dayjs/locale/ja";
 import { VFC } from "react";
 import { Text } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../../atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../atoms/pageMetaAtoms";
 
 dayjs.extend(localizedFormat);
 dayjs.locale(locale_ja);
