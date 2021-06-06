@@ -1,10 +1,10 @@
 import { SystemStyleObject } from "@chakra-ui/styled-system";
 //original: https://github.com/PrismJS/prism-themes PrismJS https://github.com/PrismJS/prism-themes MIT
 export const materialDarkTheme: SystemStyleObject = {
-  'pre[class*="language-"]': {
+  pre: {
     m: 2,
     py: 1,
-    code: {
+    'code[class*="language-"]': {
       w: "auto",
       display: "block",
       bg: "#2f2f2f",
@@ -12,6 +12,7 @@ export const materialDarkTheme: SystemStyleObject = {
       p: 4,
       borderRadius: 3,
       fontSize: "sm",
+      color: "#eee",
       ".token.atrule": {
         color: "#c792ea",
       },
@@ -98,6 +99,10 @@ export const materialDarkTheme: SystemStyleObject = {
       ".token.punctuation": {
         color: "#89ddff",
       },
+      ".token.italic": {
+        color: "#89ddff",
+        fontStyle: "italic",
+      },
       ".token.regex": {
         color: "#f2ff00",
       },
@@ -112,6 +117,10 @@ export const materialDarkTheme: SystemStyleObject = {
       },
       ".token.tag": {
         color: "#ff6666",
+      },
+      ".token.bold": {
+        color: "#fd9170",
+        fontWeight: "89ddff",
       },
       ".token.unit": {
         color: "#fd9170",

@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
-import dark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { useRouter } from "next/router";
@@ -10,6 +9,8 @@ import { BottomOption } from "../../BottomOption/BottomOption";
 import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
 import { Article } from "../../Entry/Article";
+import { Box } from "@chakra-ui/react";
+import { entryDefaultSX } from "../../../styles/entryDefaultSX";
 
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
@@ -29,9 +30,9 @@ export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
       <PageMetaComponent pageMeta={pageMeta} />
 
       <Article>
-        <SyntaxHighlighter language="markdown" style={dark}>
-          {`${source}`}
-        </SyntaxHighlighter>
+        <Box sx={entryDefaultSX}>
+          <SyntaxHighlighter language="markdown">{`${source}`}</SyntaxHighlighter>
+        </Box>
       </Article>
 
       <BottomOption>
