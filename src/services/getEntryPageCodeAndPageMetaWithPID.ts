@@ -1,6 +1,6 @@
-import { PageMeta } from "../../types/PageMeta";
-import { readFileWithModifiedTime } from "../../utils/readFileWithModifiedTime";
-import { sourceParser } from "../../utils/parsers/sourceParser";
+import { PageMeta } from "../types/PageMeta";
+import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
+import { sourceParser } from "../utils/parsers/sourceParser";
 
 interface Res {
   code: string;

@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import { revalidate } from "../../../constants/revalidate";
 import { EntryPageProps } from "./EntryPage";
 import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
-import { getEntryPageCodeAndPageMetaWithPID } from "../../services/getEntryPageCodeAndPageMetaWithPID";
+import { getEntryPageCodeAndPageMetaWithPID } from "../../../services/getEntryPageCodeAndPageMetaWithPID";
 import {
   NotFoundResponse,
   NotFoundResponseWithRevalidate,
