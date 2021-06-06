@@ -9,7 +9,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export const BottomOption: VFC<{ children: ReactNode }> = ({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
