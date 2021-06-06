@@ -12,7 +12,7 @@ generator client {
 
 model Entry {
   id       Int      @id @default(autoincrement())
-  pageName String
+  pageName String   @unique
   source   String
   modified DateTime
 }
