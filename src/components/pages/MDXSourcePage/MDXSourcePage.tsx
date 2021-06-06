@@ -7,6 +7,7 @@ import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
 import { Article } from "../../Entry/Article";
 import { SourceHighlighter } from "../../Entry/SourceHighlighter";
+import { Fallback } from "../../Elements/Fallback";
 
 export interface MDXSourcePageProps {
   pageMeta: PageMeta;
@@ -14,6 +15,9 @@ export interface MDXSourcePageProps {
 
 export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({ pageMeta }) => {
   const router = useRouter();
+  if (router.isFallback) {
+    return <Fallback />;
+  }
   const { pid } = router.query;
   return (
     <>

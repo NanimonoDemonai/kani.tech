@@ -5,12 +5,15 @@ import { getEntryPagePathList } from "../constants/EntryPageList";
 export const getEntryPageList = async (): Promise<
   { pageName: string; modified: string }[]
 > => {
-  return Promise.all(
-    (await getEntryPagePathList()).map(async (e) => {
-      return {
-        pageName: path.basename(e, ".mdx"),
-        modified: (await fs.stat(e)).mtime.toJSON(),
-      };
-    })
-  );
+  try {
+    const entryPagePathList = await getEntryPagePathList();
+    const stats = entryPagePathList.map((e) => fs.stat(e));
+    const statsList = await Promise.all(stats);
+    return entryPagePathList.map((e, i) => ({
+      pageName: path.basename(e, ".mdx"),
+      modified: statsList[i].mtime.toJSON(),
+    }));
+  } catch (e) {
+    return [];
+  }
 };

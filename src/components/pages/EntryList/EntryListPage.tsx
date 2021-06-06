@@ -14,13 +14,13 @@ export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
   <Article>
     <Title title="エントリー一覧" />
     <UnorderedList>
-      {entryPageList.map((e) => (
-        <ListItem key={e.pageName}>
+      {entryPageList.map(({ pageName, modified }) => (
+        <ListItem key={pageName}>
           <HStack>
-            <NextLink href={getEntryPathWithEntryName(e.pageName)}>
-              <Link>{e.pageName}</Link>
+            <NextLink href={getEntryPathWithEntryName(pageName)}>
+              <Link>{pageName}</Link>
             </NextLink>
-            <DateTime date={e.modified} />
+            <DateTime date={modified} />
           </HStack>
         </ListItem>
       ))}
