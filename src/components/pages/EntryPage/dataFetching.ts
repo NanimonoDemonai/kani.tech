@@ -3,13 +3,13 @@ import { revalidate } from "../../../constants/revalidate";
 import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { EntryPageProps } from "./EntryPage";
 import { readFileWithModifiedTime } from "../../../utils/readFileWithModifiedTime";
+import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
 
 export const getEntryPageStaticProps: GetStaticProps<EntryPageProps> = async ({
   params,
 }) => {
-  if (!params) return { notFound: true, revalidate };
-  const pid = params.pid;
-  if (typeof pid !== "string") return { notFound: true, revalidate };
+  const pid = unknownParamsToPIDParams(params);
+  if (!pid) return { notFound: true, revalidate };
   const { src, modified } = await readFileWithModifiedTime(pid);
   const { code, frontMatter } = await sourceParser(src);
   return {
