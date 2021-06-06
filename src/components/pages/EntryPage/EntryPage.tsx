@@ -10,6 +10,7 @@ import { BottomOption } from "../../BottomOption/BottomOption";
 
 import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
+import { Article } from "../../Entry/Article";
 
 export interface EntryPageProps {
   code: string;
@@ -23,14 +24,16 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
 
   return (
     <>
-      <Box as={"article"} minH={"2xl"}>
-        <PageMetaComponent pageMeta={pageMeta} />
+      <PageMetaComponent pageMeta={pageMeta} />
+
+      <Article>
         <Box sx={entryDefaultSX}>
           <Component />
         </Box>
-      </Box>
+      </Article>
+
       <BottomOption>
-        <BottomOptionButton href={getEntryMdxPathWithEntryName(pid as string)}>
+        <BottomOptionButton href={getEntryMdxPathWithEntryName(String(pid))}>
           ソースコード
         </BottomOptionButton>
       </BottomOption>

@@ -9,6 +9,7 @@ import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
 import { BottomOption } from "../../BottomOption/BottomOption";
 import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
+import { Article } from "../../Entry/Article";
 
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
@@ -26,11 +27,13 @@ export const MDXSourcePage: NextPage<MDXSourcePageProps> = ({
   return (
     <>
       <PageMetaComponent pageMeta={pageMeta} />
-      <article>
+
+      <Article>
         <SyntaxHighlighter language="markdown" style={dark}>
           {`${source}`}
         </SyntaxHighlighter>
-      </article>
+      </Article>
+
       <BottomOption>
         <BottomOptionButton href={getEntryPathWithEntryName(`${pid}`)}>
           戻る
