@@ -15,6 +15,7 @@ export const getEntryPageStaticProps: GetStaticProps<EntryPageProps> = async ({
   if (!pid) return NotFoundResponse;
   try {
     const props = await getEntryPageCodeAndPageMetaWithPID(pid);
+    if (!props) return NotFoundResponse;
     return { props, revalidate };
   } catch (e) {
     return NotFoundResponseWithRevalidate;
