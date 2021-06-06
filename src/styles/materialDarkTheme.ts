@@ -65,11 +65,11 @@ export const materialDarkTheme: SystemStyleObject = {
       },
       ".token.id": {
         color: "#c792ea",
-        "font-weight": "bold",
+        fontWeight: "bold",
       },
       important: {
         color: "#c792ea",
-        "font-weight": "bold",
+        fontWeight: "bold",
       },
       inserted: {
         color: "#80cbc4",
