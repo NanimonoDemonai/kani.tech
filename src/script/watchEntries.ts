@@ -11,7 +11,7 @@ watch("./src/entries/*.mdx").on("all", async (event, filePath) => {
   const file = await readFileWithModifiedTime(filePath);
   const pageName = path.basename(filePath, ".mdx");
   const pageTitle = frontMatterParser(file.src).frontMatter.title;
-  const upsertUser = await prisma.entry.upsert({
+  const upsertEntry = await prisma.entry.upsert({
     where: {
       pageName,
     },
@@ -27,5 +27,5 @@ watch("./src/entries/*.mdx").on("all", async (event, filePath) => {
       modified: file.modified,
     },
   });
-  console.log("upserted", upsertUser);
+  console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
 });
