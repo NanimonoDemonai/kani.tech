@@ -12,8 +12,8 @@ const dockerOption: IDockerComposeOptions = {
 
 const watcher = watch("./src/entries/*.mdx");
 const prisma = new PrismaClient();
-const fileAdd = async (event: string, filePath: string) => {
-  console.log(event, filePath);
+const fileAdd = async (filePath: string) => {
+  console.log("change or add", filePath);
   const pageName = path.basename(filePath, ".mdx");
 
   const file = await readFileWithModifiedTime(filePath);
@@ -37,8 +37,8 @@ const fileAdd = async (event: string, filePath: string) => {
   console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
 };
 
-const fileRemove = async (event: string, filePath: string) => {
-  console.log(event, filePath);
+const fileRemove = async (filePath: string) => {
+  console.log("removed", filePath);
   const pageName = path.basename(filePath, ".mdx");
 
   const upsertEntry = await prisma.entry.delete({
