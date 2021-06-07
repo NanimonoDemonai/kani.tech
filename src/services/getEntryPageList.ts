@@ -1,19 +1,16 @@
-import { promises as fs } from "fs";
-import path from "path";
-import { getEntryPagePathList } from "../constants/EntryPageList";
+import { prisma } from "./client/PrismClient";
 
 export const getEntryPageList = async (): Promise<
   { pageName: string; modified: string }[]
 > => {
-  try {
-    const entryPagePathList = await getEntryPagePathList();
-    const stats = entryPagePathList.map((e) => fs.stat(e));
-    const statsList = await Promise.all(stats);
-    return entryPagePathList.map((e, i) => ({
-      pageName: path.basename(e, ".mdx"),
-      modified: statsList[i].mtime.toJSON(),
-    }));
-  } catch (e) {
-    return [];
-  }
+  const result = await prisma.entry.findMany({
+    select: {
+      pageName: true,
+      modified: true,
+    },
+  });
+  return result.map((e) => ({
+    pageName: e.pageName,
+    modified: e.modified.toJSON(),
+  }));
 };

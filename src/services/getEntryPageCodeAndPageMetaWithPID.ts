@@ -1,7 +1,7 @@
 import { PageMeta } from "../types/PageMeta";
 import { sourceParser } from "../utils/parsers/sourceParser";
-import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 import { getOrSetMDXCompileCache } from "./caches/MDXCompileCache";
+import { prisma } from "./client/PrismClient";
 
 interface Res {
   code: string;
@@ -15,6 +15,19 @@ const setter = (source: string, modified: string) => async (): Promise<Res> => {
 export const getEntryPageCodeAndPageMetaWithPID = async (
   pid: string
 ): Promise<Res | undefined> => {
-  const { src, modified } = await readFileWithModifiedTime(pid);
-  return await getOrSetMDXCompileCache(pid, modified, setter(src, modified));
+  const data = await prisma.entry.findFirst({
+    where: { pageName: pid },
+    select: { modified: true, source: true },
+  });
+
+  if (data) {
+    const { modified: modifiedRaw, source } = data;
+    const modified = modifiedRaw.toJSON();
+    return await getOrSetMDXCompileCache(
+      pid,
+      modified,
+      setter(source, modified)
+    );
+  }
+  return;
 };

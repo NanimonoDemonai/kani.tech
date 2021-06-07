@@ -1,15 +1,20 @@
 import { PageMeta } from "../types/PageMeta";
-import { sourceParser } from "../utils/parsers/sourceParser";
-import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
+import { prisma } from "./client/PrismClient";
 
 interface Res {
   pageMeta: PageMeta;
 }
 
 export const getMDXSourcePageCodeAndPageMetaWithPID = async (
-  pid: string
-): Promise<Res> => {
-  const { src, modified } = await readFileWithModifiedTime(pid);
-  const { frontMatter } = await sourceParser(src);
-  return { pageMeta: { modified, ...frontMatter, source: src } };
+  pageName: string
+): Promise<Res | undefined> => {
+  const entry = await prisma.entry.findUnique({ where: { pageName } });
+  if (!entry) return;
+  return {
+    pageMeta: {
+      modified: entry.modified.toJSON(),
+      source: entry.source,
+      title: entry.pageTitle,
+    },
+  };
 };
