@@ -12,6 +12,42 @@ const dockerOption: IDockerComposeOptions = {
 
 const watcher = watch("./src/entries/*.mdx");
 const prisma = new PrismaClient();
+const fileAdd = async (event: string, filePath: string) => {
+  console.log(event, filePath);
+  const pageName = path.basename(filePath, ".mdx");
+
+  const file = await readFileWithModifiedTime(filePath);
+  const pageTitle = frontMatterParser(file.src).frontMatter.title;
+  const upsertEntry = await prisma.entry.upsert({
+    where: {
+      pageName,
+    },
+    update: {
+      source: file.src,
+      pageTitle,
+      modified: file.modified,
+    },
+    create: {
+      pageName,
+      source: file.src,
+      pageTitle,
+      modified: file.modified,
+    },
+  });
+  console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
+};
+
+const fileRemove = async (event: string, filePath: string) => {
+  console.log(event, filePath);
+  const pageName = path.basename(filePath, ".mdx");
+
+  const upsertEntry = await prisma.entry.delete({
+    where: {
+      pageName,
+    },
+  });
+  console.log("removed", upsertEntry.pageName, upsertEntry.pageTitle);
+};
 
 process.on("SIGINT", function () {
   console.log("terminating");
@@ -26,31 +62,9 @@ process.on("SIGINT", function () {
 });
 
 async function main() {
-  watcher.on("all", async (event, filePath) => {
-    console.log(event, filePath);
-
-    const file = await readFileWithModifiedTime(filePath);
-    const pageName = path.basename(filePath, ".mdx");
-    const pageTitle = frontMatterParser(file.src).frontMatter.title;
-    const upsertEntry = await prisma.entry.upsert({
-      where: {
-        pageName,
-      },
-      update: {
-        source: file.src,
-        pageTitle,
-        modified: file.modified,
-      },
-      create: {
-        pageName,
-        source: file.src,
-        pageTitle,
-        modified: file.modified,
-      },
-    });
-    console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
-  });
-
+  watcher.on("add", fileAdd);
+  watcher.on("change", fileAdd);
+  watcher.on("unlink", fileRemove);
   console.log("Docker Ready");
 }
 
