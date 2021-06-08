@@ -17,21 +17,26 @@ const fileAdd = async (filePath: string) => {
   const pageName = path.basename(filePath, ".mdx");
 
   const file = await readFileWithModifiedTime(filePath);
-  const pageTitle = frontMatterParser(file.src).frontMatter.title;
+  const { title: pageTitle, tags } = frontMatterParser(file.src).frontMatter;
+
+  const connectOrCreate = tags.map((e) => ({
+    where: { tagName: e },
+    create: { tagName: e },
+  }));
+  const update = {
+    tags: { connectOrCreate },
+    source: file.src,
+    pageTitle,
+    modified: file.modified,
+  };
   const upsertEntry = await prisma.entry.upsert({
     where: {
       pageName,
     },
-    update: {
-      source: file.src,
-      pageTitle,
-      modified: file.modified,
-    },
+    update,
     create: {
       pageName,
-      source: file.src,
-      pageTitle,
-      modified: file.modified,
+      ...update,
     },
   });
   console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
