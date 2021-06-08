@@ -16,4 +16,11 @@ model Entry {
   pageTitle String   @default("")
   source    String
   modified  DateTime
+  tags      Tag[]
+}
+
+model Tag {
+  id      Int     @id @default(autoincrement())
+  tagName String  @unique
+  entries Entry[]
 }
