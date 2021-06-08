@@ -13,6 +13,7 @@ import { PageModified } from "./PageModified";
 import { useRecoilState } from "recoil";
 import { pageMetaAtoms } from "../atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
+import { Tags } from "../Elements/Tags";
 
 interface Props {
   children: ReactNode;
@@ -25,6 +26,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
 
   return (
     <Box as={"aside"}>
+      <Tags tags={pageMeta?.tags ?? []} />
       <PageModified />
       <Divider my={1} />
       <Flex>
@@ -38,15 +40,19 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         <Collapse in={isOpen} animateOpacity>
           <HStack spacing={2}>
             {children}
-            <Link onClick={onToggleSource} fontSize="sm">
-              {isOpenSource ? "-" : "+"} ソースを表示
-            </Link>
+            {pageMeta && (
+              <Link onClick={onToggleSource} fontSize="sm">
+                {isOpenSource ? "-" : "+"} ソースを表示
+              </Link>
+            )}
           </HStack>
         </Collapse>
       </Flex>
-      <Collapse in={isOpenSource} animateOpacity>
-        {pageMeta && <DynamicSourceHighlighter source={pageMeta.source} />}
-      </Collapse>
+      {pageMeta && (
+        <Collapse in={isOpenSource} animateOpacity>
+          <DynamicSourceHighlighter source={pageMeta.source} />
+        </Collapse>
+      )}
     </Box>
   );
 };
