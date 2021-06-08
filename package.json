@@ -21,7 +21,8 @@
     "nextdev": "dotenv -e .env.local -- next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "tscheck": "tsc --noEmit"
   },
   "packageManager": "yarn@1.22.5",
   "devDependencies": {
