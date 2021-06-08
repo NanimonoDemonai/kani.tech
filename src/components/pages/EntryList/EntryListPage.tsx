@@ -3,9 +3,10 @@ import { Title } from "../../Metas/Title";
 import { Article } from "../../Entry/Article";
 import { Tags } from "../../Elements/Tags";
 import { EntryList } from "../../Entry/EntryList";
+import { EntrySummary } from "../../../types/EntrySummary";
 
 export interface EntryListProps {
-  entryPageList: { pageName: string; modified: string }[];
+  entryPageList: EntrySummary[];
   tags: string[];
 }
 

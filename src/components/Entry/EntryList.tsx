@@ -3,9 +3,10 @@ import { HStack, Link, ListItem, UnorderedList } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { getEntryPathWithEntryName } from "../../utils/getURL";
 import { DateTime } from "../Elements/DateTime";
+import { EntrySummary } from "../../types/EntrySummary";
 
 interface Props {
-  entryPageList: { pageName: string; modified: string }[];
+  entryPageList: EntrySummary[];
 }
 
 export const EntryList: VFC<Props> = ({ entryPageList }) => (
