@@ -3,3 +3,6 @@ export const getEntryPathWithEntryName = (entryName: string): string =>
 
 export const getEntryMdxPathWithEntryName = (entryName: string): string =>
   `/entries/${entryName}/mdx`;
+
+export const getTaggedEntryListPathWithTagName = (tagName: string): string =>
+  `/tag/${tagName}`;

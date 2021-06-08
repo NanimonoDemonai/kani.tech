@@ -1,29 +1,24 @@
 import { NextPage } from "next";
-import NextLink from "next/link";
-import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { Title } from "../../Metas/Title";
-import { HStack, Link, ListItem, UnorderedList } from "@chakra-ui/react";
 import { Article } from "../../Entry/Article";
-import { DateTime } from "../../Elements/DateTime";
+import { Tags } from "../../Elements/Tags";
+import { EntryList } from "../../Entry/EntryList";
+import { EntrySummary } from "../../../types/EntrySummary";
 
 export interface EntryListProps {
-  entryPageList: { pageName: string; modified: string }[];
+  entryPageList: EntrySummary[];
+  tags: string[];
 }
 
-export const EntryListPage: NextPage<EntryListProps> = ({ entryPageList }) => (
-  <Article>
-    <Title title="エントリー一覧" />
-    <UnorderedList>
-      {entryPageList.map(({ pageName, modified }) => (
-        <ListItem key={pageName}>
-          <HStack>
-            <NextLink href={getEntryPathWithEntryName(pageName)}>
-              <Link>{pageName}</Link>
-            </NextLink>
-            <DateTime date={modified} />
-          </HStack>
-        </ListItem>
-      ))}
-    </UnorderedList>
-  </Article>
+export const EntryListPage: NextPage<EntryListProps> = ({
+  entryPageList,
+  tags,
+}) => (
+  <>
+    <Article>
+      <Title title="エントリー一覧" />
+      <EntryList entryPageList={entryPageList} />
+    </Article>
+    <Tags tags={tags} />
+  </>
 );
