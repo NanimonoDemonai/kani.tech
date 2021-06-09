@@ -1,6 +1,6 @@
 import path from "path";
 import { PrismaClient } from "@prisma/client";
-import { watch } from "chokidar";
+import { FSWatcher, watch } from "chokidar";
 import { IDockerComposeOptions, stop } from "docker-compose";
 import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
 import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
@@ -10,7 +10,7 @@ const dockerOption: IDockerComposeOptions = {
   cwd: "./local-docker",
 };
 
-const watcher = watch("./src/entries/*.mdx");
+let watcher: FSWatcher;
 const prisma = new PrismaClient();
 
 const fileAdd = async (filePath: string) => {
@@ -68,8 +68,10 @@ process.on("SIGINT", function () {
 });
 
 async function main() {
-  await Promise.all([prisma.tag.deleteMany(), prisma.entry.deleteMany()]);
+  await prisma.tag.deleteMany();
+  await prisma.entry.deleteMany();
   console.log("DB initialized");
+  watcher = watch("./src/entries/*.mdx");
   watcher.on("add", fileAdd);
   watcher.on("change", fileAdd);
   watcher.on("unlink", fileRemove);
