@@ -8,7 +8,6 @@ import {
   IconButton,
   Link,
   Spacer,
-  Text,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import { KaniButton } from "./KaniButton";
@@ -20,7 +19,7 @@ import { signIn, signOut, useSession } from "next-auth/client";
 
 export const PageNavbar: VFC = () => {
   const [title] = useRecoilState(titleAtoms);
-  const [session, loading] = useSession();
+  const [session] = useSession();
 
   return (
     <Box>
@@ -46,9 +45,10 @@ export const PageNavbar: VFC = () => {
               Github <ExternalLinkIcon mx="2px" />
             </Link>
 
-            {!loading && !session && (
+            {!session && (
               <IconButton
-                colorScheme="blue"
+                variant="outline"
+                colorScheme="red"
                 aria-label="ログアウト"
                 icon={<UnlockIcon />}
                 onClick={() => {
@@ -57,10 +57,16 @@ export const PageNavbar: VFC = () => {
                 size="sm"
               />
             )}
-            {!loading && session && (
+            {session && (
               <HStack>
+                <Avatar
+                  size="sm"
+                  name={session.user?.name || undefined}
+                  src={session.user?.image || undefined}
+                />
                 <IconButton
-                  colorScheme="blue"
+                  colorScheme="red"
+                  variant="outline"
                   aria-label="ログアウト"
                   icon={<LockIcon />}
                   onClick={() => {
@@ -68,12 +74,6 @@ export const PageNavbar: VFC = () => {
                   }}
                   size="sm"
                 />
-                <Avatar
-                  size="sm"
-                  name={session.user?.name || undefined}
-                  src={session.user?.image || undefined}
-                />
-                <Text fontSize="lg">{session.user?.name}</Text>
               </HStack>
             )}
           </HStack>
