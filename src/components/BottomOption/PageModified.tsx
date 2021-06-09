@@ -1,6 +1,6 @@
 import { VFC } from "react";
 import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DateTime } from "../Elements/DateTime";
 import { Box } from "@chakra-ui/react";
 

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
 import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 

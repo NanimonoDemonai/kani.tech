@@ -26,7 +26,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
     return <Fallback />;
   }
   return (
-    <>
+    <Box>
       <PageMetaComponent pageMeta={pageMeta} />
 
       <Article>
@@ -40,6 +40,6 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
           ソースコード
         </BottomOptionButton>
       </BottomOption>
-    </>
+    </Box>
   );
 };

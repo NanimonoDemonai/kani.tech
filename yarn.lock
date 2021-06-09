@@ -3807,7 +3807,7 @@ globals@^13.6.0:
   dependencies:
     type-fest "^0.20.2"
 
-globby@^11.0.1, globby@^11.0.3:
+globby@^11.0.1:
   version "11.0.3"
   resolved "https://registry.npmjs.org/globby/-/globby-11.0.3.tgz"
   integrity sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==

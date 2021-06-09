@@ -11,7 +11,7 @@ export const Tags: VFC<Props> = ({ tags }) => (
   <HStack>
     <Spacer />
     {tags.map((e) => (
-      <NextLink href={getTaggedEntryListPathWithTagName(e)}>
+      <NextLink href={getTaggedEntryListPathWithTagName(e)} key={e}>
         <Button size="xs">{e}</Button>
       </NextLink>
     ))}
