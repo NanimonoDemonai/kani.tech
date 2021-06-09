@@ -12,6 +12,7 @@ const dockerOption: IDockerComposeOptions = {
 
 const watcher = watch("./src/entries/*.mdx");
 const prisma = new PrismaClient();
+
 const fileAdd = async (filePath: string) => {
   console.log("change or add", filePath);
   const pageName = path.basename(filePath, ".mdx");
@@ -67,6 +68,8 @@ process.on("SIGINT", function () {
 });
 
 async function main() {
+  await Promise.all([prisma.tag.deleteMany(), prisma.entry.deleteMany()]);
+  console.log("DB initialized");
   watcher.on("add", fileAdd);
   watcher.on("change", fileAdd);
   watcher.on("unlink", fileRemove);
