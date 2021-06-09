@@ -45,7 +45,7 @@ export const PageNavbar: VFC = () => {
             <Link href={CODE_REPOSITORY.toString()} isExternal>
               Github <ExternalLinkIcon mx="2px" />
             </Link>
-            
+
             {!loading && !session && (
               <IconButton
                 colorScheme="blue"
