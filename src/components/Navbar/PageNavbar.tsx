@@ -5,7 +5,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { KaniButton } from "./KaniButton";
 import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
 import { useRecoilState } from "recoil";
-import { titleAtoms } from "../atoms/titleAtoms";
+import { titleAtoms } from "../hooks/atoms/titleAtoms";
 import { NavBarDivider } from "./NavBarDivider";
 
 export const PageNavbar: VFC = () => {
