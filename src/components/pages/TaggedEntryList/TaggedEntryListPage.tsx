@@ -5,6 +5,7 @@ import { EntryList } from "../../Entry/EntryList";
 import { EntrySummary } from "../../../types/EntrySummary";
 import { useRouter } from "next/router";
 import { Fallback } from "../../Elements/Fallback";
+import { Box } from "@chakra-ui/react";
 
 export interface TaggedEntryListProps {
   entryPageList: EntrySummary[];
@@ -19,11 +20,11 @@ export const TaggedEntryListPage: NextPage<TaggedEntryListProps> = ({
     return <Fallback />;
   }
   return (
-    <>
+    <Box>
       <Article>
         <Title title={`タグ: ${pid} がついたエントリー一覧`} />
         <EntryList entryPageList={entryPageList} />
       </Article>
-    </>
+    </Box>
   );
 };
