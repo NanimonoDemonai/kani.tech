@@ -27,7 +27,9 @@ export const PageNavbar: VFC = () => {
         <Spacer />
         <nav>
           <HStack>
-            <Link href="/entries">Entries</Link>
+            <NextLink href="/entries">
+              <Link>Entries</Link>
+            </NextLink>
             <NavBarDivider />
             <Link href={CODE_REPOSITORY.toString()} isExternal>
               Github <ExternalLinkIcon mx="2px" />
