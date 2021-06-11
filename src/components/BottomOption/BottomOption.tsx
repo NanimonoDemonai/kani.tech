@@ -58,6 +58,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <DynamicSourceHighlighter source={pageMeta.source} />
         </Collapse>
       )}
+      {JSON.stringify(pageMeta?.revisions)}
     </Box>
   );
 };
