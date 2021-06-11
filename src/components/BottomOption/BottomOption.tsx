@@ -28,8 +28,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
   return (
     <Box as={"aside"}>
       <Tags tags={pageMeta?.tags ?? []} />
-      <PageRevision />
-      <PageModified />
+      <HStack spacing={2}>
+        <Spacer />
+        <PageModified />
+        <PageRevision />
+      </HStack>
       <Divider my={1} />
       <Flex>
         <Spacer />
