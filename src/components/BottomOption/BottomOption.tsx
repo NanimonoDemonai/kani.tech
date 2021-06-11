@@ -8,7 +8,6 @@ import {
   Link,
   Spacer,
   Table,
-  TableCaption,
   Tbody,
   Td,
   Th,
@@ -77,7 +76,6 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       {pageMeta?.revisions && (
         <Collapse in={isOpenHistory} animateOpacity>
           <Table variant="simple">
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
                 <Th>リビジョン</Th>
