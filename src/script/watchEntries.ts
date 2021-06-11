@@ -51,8 +51,9 @@ process.on("SIGINT", function () {
 });
 
 async function main() {
-  await prisma.tag.deleteMany();
+  await prisma.history.deleteMany();
   await prisma.entry.deleteMany();
+  //await prisma.tag.deleteMany();
   console.log("DB initialized");
   watcher = watch("./src/entries/*.mdx");
   watcher.on("add", fileAdd);
@@ -62,8 +63,9 @@ async function main() {
 }
 
 main()
-  .catch(async () => {
-    await watcher.close();
+  .catch(async (e) => {
+    console.log(e);
+    await watcher?.close();
     await stop(dockerOption);
   })
   .finally(async () => {
