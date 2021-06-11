@@ -1,40 +1,40 @@
 import LRUCache from "lru-cache";
-import { PageMeta } from "../../types/PageMeta";
+import { FrontMatter } from "../../types/FrontMatter";
+import { sourceParser } from "../../utils/parsers/sourceParser";
 
 interface CacheValue {
   code: string;
-  pageMeta: PageMeta;
+  frontMatter: FrontMatter;
 }
 
 const MDXCompileCache = new LRUCache<string, CacheValue>(10000);
 
-const setMDXCompileCache = (pid: string, value: CacheValue): void => {
-  MDXCompileCache.set(pid, value);
+const setMDXCompileCache = (
+  pid: string,
+  revision: number,
+  value: CacheValue
+): void => {
+  MDXCompileCache.set(`${pid}/${revision}`, value);
 };
 
 const getMDXCompileCacheWithModified = (
   pid: string,
-  modified: string
+  revision: number
 ): CacheValue | undefined => {
-  const data = MDXCompileCache.get(pid);
+  const data = MDXCompileCache.get(`${pid}/${revision}`);
   if (!data) return undefined;
-  if (data.pageMeta.modified !== modified) {
-    MDXCompileCache.del(pid);
-    return undefined;
-  }
   return data;
 };
 
 export const getOrSetMDXCompileCache = async (
   pid: string,
-  modified: string,
-  setter: () => Promise<CacheValue | undefined>
+  revision: number,
+  source: string
 ): Promise<CacheValue | undefined> => {
-  const data = getMDXCompileCacheWithModified(pid, modified);
+  const data = getMDXCompileCacheWithModified(pid, revision);
   if (data) return data;
-
-  const newData = await setter();
+  const newData = await sourceParser(source);
   if (!newData) return undefined;
-  setMDXCompileCache(pid, newData);
+  setMDXCompileCache(pid, revision, newData);
   return newData;
 };

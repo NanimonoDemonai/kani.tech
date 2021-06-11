@@ -1,5 +1,4 @@
 import { PageMeta } from "../types/PageMeta";
-import { sourceParser } from "../utils/parsers/sourceParser";
 import { getOrSetMDXCompileCache } from "./caches/MDXCompileCache";
 import { prisma } from "./client/PrismClient";
 
@@ -7,11 +6,6 @@ interface Res {
   code: string;
   pageMeta: PageMeta;
 }
-
-const setter = (source: string, modified: string) => async (): Promise<Res> => {
-  const { code, frontMatter } = await sourceParser(source);
-  return { code, pageMeta: { modified, ...frontMatter, source } };
-};
 
 export const getEntryPageCodeAndPageMetaWithPID = async (
   pid: string
@@ -30,18 +24,19 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
   });
 
   if (data) {
-    const { updatedAt: modifiedRaw, source } = data;
-    const modified = modifiedRaw.toJSON();
+    const { source } = data;
     const cacheValue = await getOrSetMDXCompileCache(
       pid,
-      modified,
-      setter(source, modified)
+      data.revision,
+      source
     );
     if (!cacheValue) return;
     return {
       code: cacheValue.code,
       pageMeta: {
-        ...cacheValue.pageMeta,
+        ...cacheValue.frontMatter,
+        source,
+        modified: data.updatedAt.toJSON(),
         revision: data.revision,
         revisions: data.history.map((e) => ({
           revision: e.revision,
