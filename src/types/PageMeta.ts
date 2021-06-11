@@ -1,5 +1,6 @@
 export interface PageMeta {
   title: string;
+  pageName: string;
   modified: string;
   source: string;
   tags: string[];

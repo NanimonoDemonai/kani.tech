@@ -35,6 +35,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
       code: cacheValue.code,
       pageMeta: {
         ...cacheValue.frontMatter,
+        pageName: pid,
         source,
         modified: data.updatedAt.toJSON(),
         revision: data.revision,

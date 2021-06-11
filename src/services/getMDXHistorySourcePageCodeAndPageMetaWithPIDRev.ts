@@ -19,6 +19,7 @@ export const getMDXHistorySourcePageCodeAndPageMetaWithPIDRev = async (
   if (!entry) return;
   return {
     pageMeta: {
+      pageName,
       modified: entry.updatedAt.toJSON(),
       source: entry.history[0]?.source || "",
       title: entry.pageTitle,
