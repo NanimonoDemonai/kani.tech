@@ -23,6 +23,7 @@ export const getMDXHistorySourcePageCodeAndPageMetaWithPIDRev = async (
       source: entry.history[0]?.source || "",
       title: entry.pageTitle,
       tags: entry.tags.map((e) => e.tagName),
+      revision,
     },
   };
 };

@@ -38,11 +38,11 @@ export const MDXHistorySourcePage: NextPage<MDXHistorySourcePageProps> = ({
       >
         <BreadcrumbItem>
           <Link href={getEntryPathWithEntryName(`${pid}`)}>
-            <BreadcrumbLink>{pid}</BreadcrumbLink>
+            <BreadcrumbLink>{pid}の更新履歴</BreadcrumbLink>
           </Link>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink href="#">mdx</BreadcrumbLink>
+          <BreadcrumbLink href="#">Revision {pageMeta.revision}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
 
