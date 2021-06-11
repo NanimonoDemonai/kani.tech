@@ -4,4 +4,5 @@ export interface PageMeta {
   source: string;
   tags: string[];
   revision?: number;
+  revisions?: { revision: number; createdAt: string }[];
 }

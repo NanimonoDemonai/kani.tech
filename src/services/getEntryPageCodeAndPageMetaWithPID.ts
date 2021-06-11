@@ -6,7 +6,6 @@ import { prisma } from "./client/PrismClient";
 interface Res {
   code: string;
   pageMeta: PageMeta;
-  revisions?: { revision: number; createdAt: string }[];
 }
 
 const setter = (source: string, modified: string) => async (): Promise<Res> => {
@@ -41,11 +40,14 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
     if (!cacheValue) return;
     return {
       code: cacheValue.code,
-      pageMeta: { ...cacheValue.pageMeta, revision: data.revision },
-      revisions: data.history.map((e) => ({
-        revision: e.revision,
-        createdAt: e.createdAt.toJSON(),
-      })),
+      pageMeta: {
+        ...cacheValue.pageMeta,
+        revision: data.revision,
+        revisions: data.history.map((e) => ({
+          revision: e.revision,
+          createdAt: e.createdAt.toJSON(),
+        })),
+      },
     };
   }
 };
