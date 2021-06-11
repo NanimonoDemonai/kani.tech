@@ -16,9 +16,14 @@ import { Fallback } from "../../Elements/Fallback";
 export interface EntryPageProps {
   code: string;
   pageMeta: PageMeta;
+  revisions?: { revision: number; createdAt: string }[];
 }
 
-export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
+export const EntryPage: NextPage<EntryPageProps> = ({
+  code,
+  pageMeta,
+  revisions,
+}) => {
   const router = useRouter();
   const { pid } = router.query;
   const Component = useMemo(() => getMDXComponent(code), [code]);
@@ -34,7 +39,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
           <Component />
         </Box>
       </Article>
-
+      {JSON.stringify(revisions)}
       <BottomOption>
         <BottomOptionButton href={getEntryMdxPathWithEntryName(String(pid))}>
           ソースコード
