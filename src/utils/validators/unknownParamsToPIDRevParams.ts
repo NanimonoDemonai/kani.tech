@@ -10,6 +10,5 @@ export const unknownParamsToPIDRevParams = (
   params: ParsedUrlQuery | undefined
 ): false | z.infer<typeof schema> => {
   const result = schema.safeParse(params);
-  console.log(result);
   return result.success ? result.data : false;
 };
