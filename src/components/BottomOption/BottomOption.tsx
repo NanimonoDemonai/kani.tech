@@ -14,6 +14,7 @@ import { useRecoilState } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
+import { PageRevision } from "./PageRevision";
 
 interface Props {
   children: ReactNode;
@@ -27,6 +28,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
   return (
     <Box as={"aside"}>
       <Tags tags={pageMeta?.tags ?? []} />
+      <PageRevision />
       <PageModified />
       <Divider my={1} />
       <Flex>

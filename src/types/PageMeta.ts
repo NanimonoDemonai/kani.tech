@@ -3,4 +3,5 @@ export interface PageMeta {
   modified: string;
   source: string;
   tags: string[];
+  revision?: number;
 }
