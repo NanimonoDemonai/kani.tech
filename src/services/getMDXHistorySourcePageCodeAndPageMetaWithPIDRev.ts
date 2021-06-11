@@ -13,10 +13,10 @@ export const getMDXHistorySourcePageCodeAndPageMetaWithPIDRev = async (
     where: { pageName },
     include: {
       history: { select: { source: true }, where: { revision } },
-      tags: true,
+      tags: { select: { tagName: true } },
     },
   });
-  if (!entry) return;
+  if (!entry || !entry.history[0]?.source) return;
   return {
     pageMeta: {
       pageName,
