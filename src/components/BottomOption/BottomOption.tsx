@@ -7,6 +7,13 @@ import {
   HStack,
   Link,
   Spacer,
+  Table,
+  TableCaption,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
@@ -15,6 +22,8 @@ import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
+import { DateTime } from "../Elements/DateTime";
+import NextLink from "next/link";
 
 interface Props {
   children: ReactNode;
@@ -23,6 +32,8 @@ interface Props {
 export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
   const { isOpen: isOpenSource, onToggle: onToggleSource } = useDisclosure();
+  const { isOpen: isOpenHistory, onToggle: onToggleHistory } = useDisclosure();
+
   const pageMeta = useRecoilState(pageMetaAtoms)[0];
 
   return (
@@ -50,6 +61,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
                 {isOpenSource ? "-" : "+"} ソースを表示
               </Link>
             )}
+            {pageMeta?.revisions && (
+              <Link onClick={onToggleHistory} fontSize="sm">
+                {isOpenHistory ? "-" : "+"} 履歴を表示
+              </Link>
+            )}
           </HStack>
         </Collapse>
       </Flex>
@@ -58,7 +74,35 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <DynamicSourceHighlighter source={pageMeta.source} />
         </Collapse>
       )}
-      {JSON.stringify(pageMeta?.revisions)}
+      {pageMeta?.revisions && (
+        <Collapse in={isOpenHistory} animateOpacity>
+          <Table variant="simple">
+            <TableCaption>Imperial to metric conversion factors</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>リビジョン</Th>
+                <Th>更新日</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {pageMeta.revisions.map((e) => (
+                <Tr>
+                  <Td>
+                    <NextLink
+                      href={`/entries/${pageMeta.pageName}/history/${pageMeta.revision}`}
+                    >
+                      <Link>{e.revision}</Link>
+                    </NextLink>
+                  </Td>
+                  <Td>
+                    <DateTime date={e.createdAt} />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Collapse>
+      )}
     </Box>
   );
 };
