@@ -18,6 +18,18 @@ model Entry {
   createdAt DateTime
   updatedAt DateTime  @updatedAt
   tags      Tag[]
+  history   History[]
+}
+
+model History {
+  id        Int      @id @default(autoincrement())
+  entry     Entry    @relation(fields: [entryId], references: [id])
+  entryId   Int
+  source    String
+  revison   Int
+  createdAt DateTime
+
+  @@unique([entryId, revison])
 }
 
 model Tag {
