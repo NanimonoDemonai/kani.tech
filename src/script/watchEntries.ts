@@ -2,6 +2,7 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { FSWatcher, watch } from "chokidar";
 import { IDockerComposeOptions, stop } from "docker-compose";
+import { createOrUpsertEntry } from "../services/createOrUpsertEntry";
 import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
 import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 
@@ -20,25 +21,11 @@ const fileAdd = async (filePath: string) => {
   const file = await readFileWithModifiedTime(filePath);
   const { title: pageTitle, tags } = frontMatterParser(file.src).frontMatter;
 
-  const connectOrCreate = tags.map((e) => ({
-    where: { tagName: e },
-    create: { tagName: e },
-  }));
-  const update = {
-    tags: { connectOrCreate },
+  const upsertEntry = await createOrUpsertEntry({
+    tags,
     source: file.src,
+    pageName,
     pageTitle,
-  };
-  const upsertEntry = await prisma.entry.upsert({
-    where: {
-      pageName,
-    },
-    update,
-    create: {
-      createdAt: new Date(),
-      pageName,
-      ...update,
-    },
   });
   console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
 };
