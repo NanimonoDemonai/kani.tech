@@ -28,7 +28,6 @@ const fileAdd = async (filePath: string) => {
     tags: { connectOrCreate },
     source: file.src,
     pageTitle,
-    modified: file.modified,
   };
   const upsertEntry = await prisma.entry.upsert({
     where: {
@@ -36,6 +35,7 @@ const fileAdd = async (filePath: string) => {
     },
     update,
     create: {
+      createdAt: new Date(),
       pageName,
       ...update,
     },

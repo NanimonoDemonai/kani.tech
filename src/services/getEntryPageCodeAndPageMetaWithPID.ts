@@ -17,11 +17,11 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
 ): Promise<Res | undefined> => {
   const data = await prisma.entry.findFirst({
     where: { pageName: pid },
-    select: { modified: true, source: true },
+    select: { updatedAt: true, source: true },
   });
 
   if (data) {
-    const { modified: modifiedRaw, source } = data;
+    const { updatedAt: modifiedRaw, source } = data;
     const modified = modifiedRaw.toJSON();
     return await getOrSetMDXCompileCache(
       pid,

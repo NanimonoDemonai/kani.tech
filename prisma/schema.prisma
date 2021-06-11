@@ -11,11 +11,12 @@ generator client {
 }
 
 model Entry {
-  id        Int      @id @default(autoincrement())
-  pageName  String   @unique
-  pageTitle String   @default("")
+  id        Int       @id @default(autoincrement())
+  pageName  String    @unique
+  pageTitle String    @default("")
   source    String
-  modified  DateTime
+  createdAt DateTime
+  updatedAt DateTime  @updatedAt
   tags      Tag[]
 }
 

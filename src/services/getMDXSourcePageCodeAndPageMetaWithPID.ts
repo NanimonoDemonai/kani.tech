@@ -15,7 +15,7 @@ export const getMDXSourcePageCodeAndPageMetaWithPID = async (
   if (!entry) return;
   return {
     pageMeta: {
-      modified: entry.modified.toJSON(),
+      modified: entry.updatedAt.toJSON(),
       source: entry.source,
       title: entry.pageTitle,
       tags: entry.tags.map((e) => e.tagName),
