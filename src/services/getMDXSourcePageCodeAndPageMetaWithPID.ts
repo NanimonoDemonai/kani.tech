@@ -10,7 +10,7 @@ export const getMDXSourcePageCodeAndPageMetaWithPID = async (
 ): Promise<Res | undefined> => {
   const entry = await prisma.entry.findUnique({
     where: { pageName },
-    include: { tags: true },
+    include: { tags: { select: { tagName: true } } },
   });
   if (!entry) return;
   return {
