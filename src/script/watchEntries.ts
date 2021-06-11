@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { FSWatcher, watch } from "chokidar";
 import { IDockerComposeOptions, stop } from "docker-compose";
 import { createOrUpsertEntry } from "../services/createOrUpsertEntry";
+import { deleteEntry } from "../services/deleteEntry";
 import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
 import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 
@@ -17,7 +18,6 @@ const prisma = new PrismaClient();
 const fileAdd = async (filePath: string) => {
   console.log("change or add", filePath);
   const pageName = path.basename(filePath, ".mdx");
-
   const file = await readFileWithModifiedTime(filePath);
   const { title: pageTitle, tags } = frontMatterParser(file.src).frontMatter;
 
@@ -34,12 +34,8 @@ const fileRemove = async (filePath: string) => {
   console.log("removed", filePath);
   const pageName = path.basename(filePath, ".mdx");
 
-  const upsertEntry = await prisma.entry.delete({
-    where: {
-      pageName,
-    },
-  });
-  console.log("removed", upsertEntry.pageName, upsertEntry.pageTitle);
+  const deletedEntry = await deleteEntry(pageName);
+  console.log("removed", deletedEntry.pageName, deletedEntry.pageTitle);
 };
 
 process.on("SIGINT", function () {
