@@ -1,9 +1,14 @@
-type Product {
-    id: Int
-    name: String
-    price: Int
+input ArticleInput {
+  tags: [String!]!
+  source: String!
+  pageTitle: String!
+  pageName: String!
 }
 
-type Query {
-    products: [Product]
+type Id {
+  id: String
+}
+
+type Mutation {
+  postArticle(input: ArticleInput!): Id
 }
