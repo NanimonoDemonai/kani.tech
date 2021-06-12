@@ -1,7 +1,7 @@
 import { Entry } from "@prisma/client";
 import { prisma } from "./client/PrismClient";
 
-interface Params {
+export interface CreateOrUpsertEntryParams {
   tags: string[];
   source: string;
   pageTitle: string;
@@ -13,7 +13,7 @@ export const createOrUpsertEntry = async ({
   source,
   pageName,
   pageTitle,
-}: Params): Promise<Entry> => {
+}: CreateOrUpsertEntryParams): Promise<Entry> => {
   const revisionData = (revision: number) => ({
     source,
     pageTitle,
