@@ -1,0 +1,19 @@
+overwrite: true
+schema: "schema.graphql"
+documents: src/**/*.graphql
+generates:
+  src/types/generated/graphqlCodeGen.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+    config:
+      contextType: ../../services/graphql/context#SessionContextType
+      useIndexSignature: true
+  src/services/client/generated/graphqlCodeGen.tsx:
+    plugins:
+      - "typescript"
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withMutationFn: true

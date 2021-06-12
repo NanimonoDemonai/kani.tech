@@ -1,0 +1,17 @@
+mutation PostArticle(
+  $tags: [String!]!
+  $source: String!
+  $pageTitle: String!
+  $pageName: String!
+) {
+  postArticle(
+    input: {
+      tags: $tags
+      source: $source
+      pageTitle: $pageTitle
+      pageName: $pageName
+    }
+  ) {
+    id
+  }
+}

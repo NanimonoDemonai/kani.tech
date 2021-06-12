@@ -1,0 +1,18 @@
+input ArticleInput {
+  tags: [String!]!
+  source: String!
+  pageTitle: String!
+  pageName: String!
+}
+
+type Id {
+  id: ID!
+}
+
+type Mutation {
+  postArticle(input: ArticleInput!): Id
+}
+
+type Query {
+  healthCheck: String
+}

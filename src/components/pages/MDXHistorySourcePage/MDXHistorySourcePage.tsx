@@ -48,8 +48,10 @@ export const MDXHistorySourcePage: NextPage<MDXHistorySourcePageProps> = ({
 
       <Article>
         <SourceHighlighter source={pageMeta.source} />
+        <BottomOptionButton href={getEntryPathWithEntryName(`${pid}`)}>
+          ページに戻る
+        </BottomOptionButton>
       </Article>
-
       <BottomOption>
         <BottomOptionButton href={getEntryPathWithEntryName(`${pid}`)}>
           戻る

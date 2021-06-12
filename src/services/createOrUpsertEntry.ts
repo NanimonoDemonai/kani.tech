@@ -1,7 +1,7 @@
 import { Entry } from "@prisma/client";
 import { prisma } from "./client/PrismClient";
 
-interface Params {
+export interface CreateOrUpsertEntryParams {
   tags: string[];
   source: string;
   pageTitle: string;
@@ -9,21 +9,19 @@ interface Params {
 }
 
 export const createOrUpsertEntry = async ({
-  tags,
+  tags: newTags,
   source,
   pageName,
   pageTitle,
-}: Params): Promise<Entry> => {
+}: CreateOrUpsertEntryParams): Promise<Entry> => {
+  const latest = await prisma.entry.findUnique({
+    where: { pageName },
+    select: { revision: true, tags: true },
+  });
   const revisionData = (revision: number) => ({
     source,
     pageTitle,
     pageName,
-    tags: {
-      connectOrCreate: tags.map((e) => ({
-        where: { tagName: e },
-        create: { tagName: e },
-      })),
-    },
     revision,
     history: {
       create: [
@@ -34,19 +32,31 @@ export const createOrUpsertEntry = async ({
       ],
     },
   });
-
-  const latest = await prisma.entry.findUnique({
-    where: { pageName },
-    select: { revision: true },
-  });
+  const tags = {
+    connectOrCreate: newTags.map((e) => ({
+      where: { tagName: e },
+      create: { tagName: e },
+    })),
+  };
   if (!latest) {
     return prisma.entry.create({
-      data: revisionData(0),
+      data: {
+        ...revisionData(0),
+        tags,
+      },
     });
   }
   const revision = latest.revision + 1;
   return prisma.entry.update({
     where: { pageName },
-    data: revisionData(revision),
+    data: {
+      ...revisionData(revision),
+      tags: {
+        ...tags,
+        disconnect: latest.tags
+          .filter((e) => !newTags.includes(e.tagName))
+          .map((e) => ({ id: e.id })),
+      },
+    },
   });
 };

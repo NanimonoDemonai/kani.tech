@@ -5,14 +5,7 @@ import {
   Divider,
   Flex,
   HStack,
-  Link,
   Spacer,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
@@ -21,17 +14,34 @@ import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
-import { DateTime } from "../Elements/DateTime";
-import NextLink from "next/link";
+import { RevisionTable } from "./RevisionTable";
+import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
+import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 
 interface Props {
   children: ReactNode;
 }
 
+const DynamicMDXEditor = dynamic<{}>(() =>
+  import("./MDXEditor").then((mod) => mod.MDXEditor)
+);
+
 export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
-  const { isOpen: isOpenSource, onToggle: onToggleSource } = useDisclosure();
-  const { isOpen: isOpenHistory, onToggle: onToggleHistory } = useDisclosure();
+  const {
+    isOpen: isOpenSource,
+    onToggle: onToggleSource,
+    onClose: onCloseSource,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenHistory,
+    onToggle: onToggleHistory,
+    onClose: onCloseHistory,
+  } = useDisclosure();
+  const { isOpen: isOpenEditor, onToggle: onToggleEditor } = useDisclosure();
+
+  const [session, loading] = useSession();
 
   const pageMeta = useRecoilState(pageMetaAtoms)[0];
 
@@ -44,26 +54,45 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         <PageRevision />
       </HStack>
       <Divider my={1} />
-      <Flex>
+      <HStack spacing={2}>
         <Spacer />
-        <Link onClick={onToggle} fontSize="sm">
-          {isOpen ? "-" : "+"} オプション
-        </Link>
-      </Flex>
+        <BottomOptionToggleButton
+          onToggle={() => {
+            if (isOpen) {
+              onCloseHistory();
+              onCloseSource();
+            }
+            onToggle();
+          }}
+          isOpen={isOpen}
+          label={"オプション"}
+        />
+        {!loading && session && session.role === "USER" && (
+          <BottomOptionToggleButton
+            onToggle={onToggleEditor}
+            isOpen={isOpenEditor}
+            label={"編集する"}
+          />
+        )}
+      </HStack>
       <Flex>
         <Spacer />
         <Collapse in={isOpen} animateOpacity>
           <HStack spacing={2}>
             {children}
             {pageMeta && (
-              <Link onClick={onToggleSource} fontSize="sm">
-                {isOpenSource ? "-" : "+"} ソースを表示
-              </Link>
+              <BottomOptionToggleButton
+                onToggle={onToggleSource}
+                isOpen={isOpenSource}
+                label={"ソースを表示"}
+              />
             )}
             {pageMeta?.revisions && (
-              <Link onClick={onToggleHistory} fontSize="sm">
-                {isOpenHistory ? "-" : "+"} 履歴を表示
-              </Link>
+              <BottomOptionToggleButton
+                onToggle={onToggleHistory}
+                isOpen={isOpenHistory}
+                label={"履歴を表示"}
+              />
             )}
           </HStack>
         </Collapse>
@@ -75,30 +104,12 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       )}
       {pageMeta?.revisions && (
         <Collapse in={isOpenHistory} animateOpacity>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>リビジョン</Th>
-                <Th>更新日</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {pageMeta.revisions.map((e) => (
-                <Tr>
-                  <Td>
-                    <NextLink
-                      href={`/entries/${pageMeta.pageName}/history/${pageMeta.revision}`}
-                    >
-                      <Link>{e.revision}</Link>
-                    </NextLink>
-                  </Td>
-                  <Td>
-                    <DateTime date={e.createdAt} />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+          <RevisionTable />
+        </Collapse>
+      )}
+      {!loading && session && session.role === "USER" && (
+        <Collapse in={isOpenEditor} animateOpacity>
+          <DynamicMDXEditor />
         </Collapse>
       )}
     </Box>
