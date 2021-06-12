@@ -1,8 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,16 +14,26 @@ export type Scalars = {
   Float: number;
 };
 
-export type Product = {
-  __typename?: 'Product';
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+export type ArticleInput = {
+  tags: Array<Scalars['String']>;
+  source: Scalars['String'];
+  pageTitle: Scalars['String'];
+  pageName: Scalars['String'];
 };
 
-export type Query = {
-  __typename?: 'Query';
-  products?: Maybe<Array<Maybe<Product>>>;
+export type Id = {
+  __typename?: 'Id';
+  id?: Maybe<Scalars['String']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  postArticle?: Maybe<Id>;
+};
+
+
+export type MutationPostArticleArgs = {
+  input: ArticleInput;
 };
 
 
@@ -102,36 +114,34 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Product: ResolverTypeWrapper<Product>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  ArticleInput: ArticleInput;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Query: ResolverTypeWrapper<{}>;
+  Id: ResolverTypeWrapper<Id>;
+  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Product: Product;
-  Int: Scalars['Int'];
+  ArticleInput: ArticleInput;
   String: Scalars['String'];
-  Query: {};
+  Id: Id;
+  Mutation: {};
   Boolean: Scalars['Boolean'];
 };
 
-export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  price?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+export type IdResolvers<ContextType = any, ParentType extends ResolversParentTypes['Id'] = ResolversParentTypes['Id']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  postArticle?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationPostArticleArgs, 'input'>>;
 };
 
 export type Resolvers<ContextType = any> = {
-  Product?: ProductResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
+  Id?: IdResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
 };
 
 
