@@ -1,9 +1,10 @@
-import { ApolloServer } from "apollo-server-micro";
+import { ApolloError, ApolloServer } from "apollo-server-micro";
 import typeDefs from "../../../schema.graphql";
 import { Resolvers } from "../../types/generated/graphqlCodeGen";
 import { createOrUpsertEntry } from "../../services/createOrUpsertEntry";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/client";
+import { MicroRequest } from "apollo-server-micro/dist/types";
 
 interface ContextType {
   session: Session;
@@ -18,7 +19,7 @@ const resolvers: Resolvers<ContextType> = {
       context
     ) => {
       if (context.session.role !== "USER") {
-        throw new Error("permission denied");
+        return new ApolloError("permission denied");
       }
       await createOrUpsertEntry({ tags, source, pageName, pageTitle });
       return { id: "1" };
@@ -32,8 +33,8 @@ const resolvers: Resolvers<ContextType> = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({
-    session: getSession({ req }),
+  context: async ({ req }: { req: MicroRequest }) => ({
+    session: await getSession({ req }),
   }),
 });
 
