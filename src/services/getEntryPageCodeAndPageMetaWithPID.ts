@@ -20,6 +20,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
       history: {
         select: { revision: true, createdAt: true },
       },
+      tags: { select: { tagName: true } },
     },
   });
 
@@ -35,6 +36,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
       code: cacheValue.code,
       pageMeta: {
         ...cacheValue.frontMatter,
+        tags: data.tags.map((e) => e.tagName),
         pageName: pid,
         source,
         modified: data.updatedAt.toJSON(),
