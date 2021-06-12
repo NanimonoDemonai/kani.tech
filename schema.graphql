@@ -6,9 +6,13 @@ input ArticleInput {
 }
 
 type Id {
-  id: String
+  id: ID!
 }
 
 type Mutation {
   postArticle(input: ArticleInput!): Id
+}
+
+type Query {
+  healthCheck: String
 }

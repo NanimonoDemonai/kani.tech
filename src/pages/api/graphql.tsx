@@ -24,6 +24,9 @@ const resolvers: Resolvers<ContextType> = {
       return { id: "1" };
     },
   },
+  Query: {
+    healthCheck: () => "hello",
+  },
 };
 
 const server = new ApolloServer({

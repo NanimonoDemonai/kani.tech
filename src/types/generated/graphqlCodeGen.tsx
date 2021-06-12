@@ -1,5 +1,4 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -23,7 +22,7 @@ export type ArticleInput = {
 
 export type Id = {
   __typename?: 'Id';
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
@@ -34,6 +33,11 @@ export type Mutation = {
 
 export type MutationPostArticleArgs = {
   input: ArticleInput;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  healthCheck?: Maybe<Scalars['String']>;
 };
 
 
@@ -117,7 +121,9 @@ export type ResolversTypes = {
   ArticleInput: ArticleInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   Id: ResolverTypeWrapper<Id>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -126,12 +132,14 @@ export type ResolversParentTypes = {
   ArticleInput: ArticleInput;
   String: Scalars['String'];
   Id: Id;
+  ID: Scalars['ID'];
   Mutation: {};
+  Query: {};
   Boolean: Scalars['Boolean'];
 };
 
 export type IdResolvers<ContextType = any, ParentType extends ResolversParentTypes['Id'] = ResolversParentTypes['Id']> = {
-  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -139,9 +147,14 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   postArticle?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationPostArticleArgs, 'input'>>;
 };
 
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Id?: IdResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
 };
 
 
