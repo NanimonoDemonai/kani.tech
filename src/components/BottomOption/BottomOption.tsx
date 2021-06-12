@@ -29,8 +29,18 @@ const DynamicMDXEditor = dynamic<{}>(() =>
 
 export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
-  const { isOpen: isOpenSource, onToggle: onToggleSource } = useDisclosure();
-  const { isOpen: isOpenHistory, onToggle: onToggleHistory } = useDisclosure();
+  const {
+    isOpen: isOpenSource,
+    onToggle: onToggleSource,
+    onClose: onCloseSource,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenHistory,
+    onToggle: onToggleHistory,
+    onClose: onCloseHistory,
+  } = useDisclosure();
+  const { isOpen: isOpenEditor, onToggle: onToggleEditor } = useDisclosure();
+
   const [session, loading] = useSession();
 
   const pageMeta = useRecoilState(pageMetaAtoms)[0];
@@ -44,14 +54,27 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         <PageRevision />
       </HStack>
       <Divider my={1} />
-      <Flex>
+      <HStack spacing={2}>
         <Spacer />
         <BottomOptionToggleButton
-          onToggle={onToggle}
+          onToggle={() => {
+            if (isOpen) {
+              onCloseHistory();
+              onCloseSource();
+            }
+            onToggle();
+          }}
           isOpen={isOpen}
           label={"オプション"}
         />
-      </Flex>
+        {!loading && session && session.role === "USER" && (
+          <BottomOptionToggleButton
+            onToggle={onToggleEditor}
+            isOpen={isOpenEditor}
+            label={"編集する"}
+          />
+        )}
+      </HStack>
       <Flex>
         <Spacer />
         <Collapse in={isOpen} animateOpacity>
@@ -84,7 +107,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <RevisionTable />
         </Collapse>
       )}
-      {!loading && session && session.role === "USER" && <DynamicMDXEditor />}
+      {!loading && session && session.role === "USER" && (
+        <Collapse in={isOpenEditor} animateOpacity>
+          <DynamicMDXEditor />
+        </Collapse>
+      )}
     </Box>
   );
 };
