@@ -5,7 +5,6 @@ import {
   Divider,
   Flex,
   HStack,
-  Link,
   Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -16,6 +15,7 @@ import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
 import { RevisionTable } from "./RevisionTable";
+import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 
 interface Props {
   children: ReactNode;
@@ -39,9 +39,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       <Divider my={1} />
       <Flex>
         <Spacer />
-        <Link onClick={onToggle} fontSize="sm">
-          {isOpen ? "-" : "+"} オプション
-        </Link>
+        <BottomOptionToggleButton
+          onToggle={onToggle}
+          isOpen={isOpen}
+          label={"オプション"}
+        />
       </Flex>
       <Flex>
         <Spacer />
@@ -49,14 +51,18 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <HStack spacing={2}>
             {children}
             {pageMeta && (
-              <Link onClick={onToggleSource} fontSize="sm">
-                {isOpenSource ? "-" : "+"} ソースを表示
-              </Link>
+              <BottomOptionToggleButton
+                onToggle={onToggleSource}
+                isOpen={isOpenSource}
+                label={"ソースを表示"}
+              />
             )}
             {pageMeta?.revisions && (
-              <Link onClick={onToggleHistory} fontSize="sm">
-                {isOpenHistory ? "-" : "+"} 履歴を表示
-              </Link>
+              <BottomOptionToggleButton
+                onToggle={onToggleHistory}
+                isOpen={isOpenHistory}
+                label={"履歴を表示"}
+              />
             )}
           </HStack>
         </Collapse>
