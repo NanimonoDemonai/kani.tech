@@ -7,7 +7,6 @@ import { titleAtoms } from "../hooks/atoms/titleAtoms";
 export const Title: VFC<{ title: string }> = ({ title }) => {
   const setTitle = useRecoilState(titleAtoms)[1];
   useEffect(() => {
-    console.log(title);
     setTitle(title);
   }, [title]);
   return (

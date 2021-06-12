@@ -34,7 +34,6 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
           <Component />
         </Box>
       </Article>
-
       <BottomOption>
         <BottomOptionButton href={getEntryMdxPathWithEntryName(String(pid))}>
           ソースコード

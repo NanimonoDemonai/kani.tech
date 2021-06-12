@@ -11,12 +11,26 @@ generator client {
 }
 
 model Entry {
-  id        Int      @id @default(autoincrement())
-  pageName  String   @unique
-  pageTitle String   @default("")
+  id        Int       @id @default(autoincrement())
+  pageName  String    @unique
+  pageTitle String    @default("")
   source    String
-  modified  DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   tags      Tag[]
+  revision  Int
+  history   History[]
+}
+
+model History {
+  id        Int      @id @default(autoincrement())
+  entry     Entry    @relation(fields: [entryId], references: [id])
+  entryId   Int
+  source    String
+  revision  Int
+  createdAt DateTime @default(now())
+
+  @@unique([entryId, revision])
 }
 
 model Tag {

@@ -6,11 +6,11 @@ export const getEntryPageList = async (): Promise<
   const result = await prisma.entry.findMany({
     select: {
       pageName: true,
-      modified: true,
+      updatedAt: true,
     },
   });
   return result.map((e) => ({
     pageName: e.pageName,
-    modified: e.modified.toJSON(),
+    modified: e.updatedAt.toJSON(),
   }));
 };

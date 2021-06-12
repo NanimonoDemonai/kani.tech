@@ -2,6 +2,8 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { FSWatcher, watch } from "chokidar";
 import { IDockerComposeOptions, stop } from "docker-compose";
+import { createOrUpsertEntry } from "../services/createOrUpsertEntry";
+import { deleteEntry } from "../services/deleteEntry";
 import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
 import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 
@@ -16,29 +18,14 @@ const prisma = new PrismaClient();
 const fileAdd = async (filePath: string) => {
   console.log("change or add", filePath);
   const pageName = path.basename(filePath, ".mdx");
-
   const file = await readFileWithModifiedTime(filePath);
   const { title: pageTitle, tags } = frontMatterParser(file.src).frontMatter;
 
-  const connectOrCreate = tags.map((e) => ({
-    where: { tagName: e },
-    create: { tagName: e },
-  }));
-  const update = {
-    tags: { connectOrCreate },
+  const upsertEntry = await createOrUpsertEntry({
+    tags,
     source: file.src,
+    pageName,
     pageTitle,
-    modified: file.modified,
-  };
-  const upsertEntry = await prisma.entry.upsert({
-    where: {
-      pageName,
-    },
-    update,
-    create: {
-      pageName,
-      ...update,
-    },
   });
   console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
 };
@@ -47,12 +34,8 @@ const fileRemove = async (filePath: string) => {
   console.log("removed", filePath);
   const pageName = path.basename(filePath, ".mdx");
 
-  const upsertEntry = await prisma.entry.delete({
-    where: {
-      pageName,
-    },
-  });
-  console.log("removed", upsertEntry.pageName, upsertEntry.pageTitle);
+  const deletedEntry = await deleteEntry(pageName);
+  console.log("removed", deletedEntry.pageName, deletedEntry.pageTitle);
 };
 
 process.on("SIGINT", function () {
@@ -68,8 +51,9 @@ process.on("SIGINT", function () {
 });
 
 async function main() {
-  await prisma.tag.deleteMany();
+  await prisma.history.deleteMany();
   await prisma.entry.deleteMany();
+  //await prisma.tag.deleteMany();
   console.log("DB initialized");
   watcher = watch("./src/entries/*.mdx");
   watcher.on("add", fileAdd);
@@ -79,8 +63,9 @@ async function main() {
 }
 
 main()
-  .catch(async () => {
-    await watcher.close();
+  .catch(async (e) => {
+    console.log(e);
+    await watcher?.close();
     await stop(dockerOption);
   })
   .finally(async () => {
