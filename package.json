@@ -65,6 +65,8 @@
     "@next-auth/prisma-adapter": "^0.4.4-canary.64",
     "@prisma/client": "^2.24.1",
     "@uiw/react-md-editor": "^3.3.6",
+    "axios": "^0.21.1",
+    "axios-hooks": "^2.6.3",
     "chokidar": "^3.5.1",
     "dayjs": "^1.10.5",
     "framer-motion": "^4.1.17",
