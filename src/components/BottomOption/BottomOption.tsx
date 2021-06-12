@@ -7,12 +7,6 @@ import {
   HStack,
   Link,
   Spacer,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
@@ -21,8 +15,7 @@ import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
-import { DateTime } from "../Elements/DateTime";
-import NextLink from "next/link";
+import { RevisionTable } from "./RevisionTable";
 
 interface Props {
   children: ReactNode;
@@ -75,30 +68,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       )}
       {pageMeta?.revisions && (
         <Collapse in={isOpenHistory} animateOpacity>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>リビジョン</Th>
-                <Th>更新日</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {pageMeta.revisions.map((e) => (
-                <Tr>
-                  <Td>
-                    <NextLink
-                      href={`/entries/${pageMeta.pageName}/history/${pageMeta.revision}`}
-                    >
-                      <Link>{e.revision}</Link>
-                    </NextLink>
-                  </Td>
-                  <Td>
-                    <DateTime date={e.createdAt} />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+          <RevisionTable />
         </Collapse>
       )}
     </Box>
