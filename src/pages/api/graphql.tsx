@@ -1,5 +1,6 @@
 import { ApolloServer } from "apollo-server-micro";
 import typeDefs from "../../../schema.graphql";
+import { Resolvers } from "../../types/generated/graphqlCodeGen";
 // This data will be returned by our test endpoint
 const products = [
   {
@@ -15,7 +16,7 @@ const products = [
 ];
 
 // Provide resolver functions for your schema fields
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     products: () => {
       return products;

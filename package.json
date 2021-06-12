@@ -23,11 +23,15 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "tscheck": "tsc --noEmit"
+    "tscheck": "tsc --noEmit",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "packageManager": "yarn@1.22.5",
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@graphql-codegen/cli": "1.21.5",
+    "@graphql-codegen/typescript": "1.22.1",
+    "@graphql-codegen/typescript-resolvers": "1.19.2",
     "@types/jest": "^26.0.20",
     "@types/lru-cache": "^5.1.0",
     "@types/node": "^15.6.0",
