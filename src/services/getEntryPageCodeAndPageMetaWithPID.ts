@@ -15,6 +15,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
     select: {
       updatedAt: true,
       source: true,
+      pageTitle: true,
       revision: true,
       id: true,
       history: {
@@ -35,9 +36,9 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
     return {
       code: cacheValue.code,
       pageMeta: {
-        ...cacheValue.frontMatter,
         tags: data.tags.map((e) => e.tagName),
         pageName: pid,
+        title: data.pageTitle,
         source,
         modified: data.updatedAt.toJSON(),
         revision: data.revision,
