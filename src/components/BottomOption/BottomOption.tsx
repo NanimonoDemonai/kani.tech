@@ -17,11 +17,15 @@ import { PageRevision } from "./PageRevision";
 import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import { useSession } from "next-auth/client";
-import { MDXEditor } from "./MDXEditor";
 
 interface Props {
   children: ReactNode;
 }
+import dynamic from "next/dynamic";
+
+const DynamicMDXEditor = dynamic<{}>(() =>
+  import("./MDXEditor").then((mod) => mod.MDXEditor)
+);
 
 export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
@@ -80,7 +84,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <RevisionTable />
         </Collapse>
       )}
-      {!loading && session && <MDXEditor />}
+      {!loading && session && <DynamicMDXEditor />}
     </Box>
   );
 };
