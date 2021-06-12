@@ -17,11 +17,11 @@ import { PageRevision } from "./PageRevision";
 import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 
 interface Props {
   children: ReactNode;
 }
-import dynamic from "next/dynamic";
 
 const DynamicMDXEditor = dynamic<{}>(() =>
   import("./MDXEditor").then((mod) => mod.MDXEditor)
@@ -84,7 +84,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <RevisionTable />
         </Collapse>
       )}
-      {!loading && session && <DynamicMDXEditor />}
+      {!loading && session && session.role === "USER" && <DynamicMDXEditor />}
     </Box>
   );
 };
