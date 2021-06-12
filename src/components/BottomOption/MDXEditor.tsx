@@ -6,8 +6,7 @@ import { extractContent } from "../../utils/extractContent";
 import { Box, Button, Input } from "@chakra-ui/react";
 import "@uiw/react-md-editor/dist/markdown-editor.css";
 import "@uiw/react-markdown-preview/dist/markdown.css";
-import useAxios from "axios-hooks";
-import { CreateOrUpsertEntryParams } from "../../services/createOrUpsertEntry";
+import { usePostArticleMutation } from "../../services/client/generated/graphqlCodeGen";
 
 export const MDXEditor: VFC = () => {
   const pageMeta = useRecoilState(pageMetaAtoms)[0];
@@ -17,12 +16,7 @@ export const MDXEditor: VFC = () => {
   const [tags, setTags] = useState<string | undefined>(
     pageMeta?.tags.join(",")
   );
-  const [{ loading, error }, refetch] = useAxios<
-    void,
-    CreateOrUpsertEntryParams
-  >("/api/post/article", {
-    manual: true,
-  });
+  const [postArticle, { loading, error }] = usePostArticleMutation();
   return (
     <Box className="container">
       <Input
@@ -36,14 +30,13 @@ export const MDXEditor: VFC = () => {
       <Button
         disabled={loading || !!error}
         onClick={() => {
-          refetch({
-            data: {
-              tags: tags?.split(",").map((e) => e.trim()),
-              source: value,
-              pageTitle: pageMeta?.title,
-              pageName: pageMeta?.pageName,
+          postArticle({
+            variables: {
+              pageName: pageMeta?.pageName || "",
+              pageTitle: pageMeta?.title || "",
+              source: value || "",
+              tags: tags?.split(",").map((e) => e.trim()) || [],
             },
-            method: "post",
           });
         }}
       >
