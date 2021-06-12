@@ -16,6 +16,8 @@ import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
 import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
+import { useSession } from "next-auth/client";
+import { MDXEditor } from "./MDXEditor";
 
 interface Props {
   children: ReactNode;
@@ -25,6 +27,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
   const { isOpen, onToggle } = useDisclosure();
   const { isOpen: isOpenSource, onToggle: onToggleSource } = useDisclosure();
   const { isOpen: isOpenHistory, onToggle: onToggleHistory } = useDisclosure();
+  const [session, loading] = useSession();
 
   const pageMeta = useRecoilState(pageMetaAtoms)[0];
 
@@ -77,6 +80,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <RevisionTable />
         </Collapse>
       )}
+      {!loading && session && <MDXEditor />}
     </Box>
   );
 };
