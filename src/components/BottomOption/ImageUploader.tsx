@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
 import { useGetUploadUrlLazyQuery } from "../../services/client/generated/graphqlCodeGen";
 import {
@@ -10,28 +10,36 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
+import useAxios from "axios-hooks";
 
 export const ImageUploader: VFC = () => {
   const pageMeta = useRecoilValue(pageMetaAtoms);
+  const [files, setFiles] = useState<File[]>([]);
+  const [{ loading }, refetch] = useAxios({}, { manual: true });
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
+      onDropAccepted: (e) => {
+        setFiles(e);
+      },
       accept: "image/*",
       maxFiles: 1,
     });
+
   const [getUrl, {}] = useGetUploadUrlLazyQuery({
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       const { getUploadUrl } = data;
       if (getUploadUrl) {
-        axios.put(
-          getUploadUrl,
-          {
+        await refetch({
+          method: "put",
+          url: getUploadUrl,
+          data: {
             data: acceptedFiles[0],
           },
-          { headers: { "Content-Type": acceptedFiles[0].type } }
-        );
+          headers: { "Content-Type": acceptedFiles[0].type },
+        });
+        setFiles([]);
       }
     },
   });
@@ -55,18 +63,22 @@ export const ImageUploader: VFC = () => {
       </Box>
       <Flex>
         <Box h={20}>
-          {acceptedFiles.map((file) => (
-            <img src={URL.createObjectURL(file)} alt="image preview" />
+          {files.map((file) => (
+            <img
+              src={URL.createObjectURL(file)}
+              alt="image preview"
+              style={{ width: 30, height: "auto" }}
+            />
           ))}
         </Box>
         <Spacer />
         <Button
-          disabled={acceptedFiles.length < 1}
+          disabled={files.length < 1 || loading}
           onClick={() =>
             getUrl({
               variables: {
-                contentType: acceptedFiles[0].type,
-                key: `${pageMeta?.title}/${acceptedFiles[0].name}`,
+                contentType: files[0].type,
+                key: `${pageMeta?.title}/${files[0].name}`,
               },
             })
           }
