@@ -17,5 +17,5 @@ export const useSetMDXEditorAtomsEffect = (): void => {
     setTileInput(pageMeta?.title || "");
     setSourceInput(pageMeta?.source || "");
     setTags(pageMeta?.tags || []);
-  }, []);
+  }, [setTileInput, setSourceInput, setTags, pageMeta]);
 };
