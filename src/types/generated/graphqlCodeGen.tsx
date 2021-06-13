@@ -44,6 +44,7 @@ export type Query = {
 
 
 export type QueryGetUploadUrlArgs = {
+  key?: Maybe<Scalars['String']>;
   contentType?: Maybe<Scalars['String']>;
 };
 

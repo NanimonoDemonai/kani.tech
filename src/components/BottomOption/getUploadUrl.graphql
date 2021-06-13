@@ -1,5 +1,3 @@
-query GetUploadUrl(
-    $contentType: String!
-){
-    getUploadUrl(contentType: $contentType)
+query GetUploadUrl($key: String!, $contentType: String!) {
+  getUploadUrl(contentType: $contentType, key: $key)
 }

@@ -11,8 +11,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 
 export const ImageUploader: VFC = () => {
+  const pageMeta = useRecoilValue(pageMetaAtoms);
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
       accept: "image/*",
@@ -56,7 +59,12 @@ export const ImageUploader: VFC = () => {
         <Button
           disabled={acceptedFiles.length < 1}
           onClick={() =>
-            getUrl({ variables: { contentType: acceptedFiles[0].type } })
+            getUrl({
+              variables: {
+                contentType: acceptedFiles[0].type,
+                key: `${pageMeta?.title}/acceptedFiles[0].name`,
+              },
+            })
           }
         >
           アップロード

@@ -19,13 +19,13 @@ export const rootResolvers: Resolvers = {
   },
   Query: {
     healthCheck: () => "hello",
-    getUploadUrl: async (parent, { contentType }, context) => {
+    getUploadUrl: async (parent, { contentType, key }, context) => {
       if (context.session?.role !== "USER") {
         throw new AuthenticationError("permission denied");
       }
       return await s3.getSignedUrlPromise("putObject", {
         Bucket: "example-space-name",
-        Key: "new-file.ext",
+        Key: key,
         ContentType: contentType,
         Expires: 30,
       });

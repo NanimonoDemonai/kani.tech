@@ -44,10 +44,12 @@ export type Query = {
 
 
 export type QueryGetUploadUrlArgs = {
+  key?: Maybe<Scalars['String']>;
   contentType?: Maybe<Scalars['String']>;
 };
 
 export type GetUploadUrlQueryVariables = Exact<{
+  key: Scalars['String'];
   contentType: Scalars['String'];
 }>;
 
@@ -75,8 +77,8 @@ export type PostArticleMutation = (
 
 
 export const GetUploadUrlDocument = gql`
-    query GetUploadUrl($contentType: String!) {
-  getUploadUrl(contentType: $contentType)
+    query GetUploadUrl($key: String!, $contentType: String!) {
+  getUploadUrl(contentType: $contentType, key: $key)
 }
     `;
 
@@ -92,6 +94,7 @@ export const GetUploadUrlDocument = gql`
  * @example
  * const { data, loading, error } = useGetUploadUrlQuery({
  *   variables: {
+ *      key: // value for 'key'
  *      contentType: // value for 'contentType'
  *   },
  * });
