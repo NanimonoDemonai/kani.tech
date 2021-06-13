@@ -16,9 +16,11 @@ services:
       - ./initdb:/docker-entrypoint-initdb.d
   minio:
     image: minio/minio
+    env_file:
+      - ../.env.local
     environment:
-      MINIO_ACCESS_KEY: hogehoge
-      MINIO_SECRET_KEY: fugafuga
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
     command: server /data
     volumes:
       - "s3-data:/data"
