@@ -12,10 +12,12 @@ import {
   MDXTitleInputAtoms,
 } from "./hooks/atoms";
 import { MDEditor } from "./MDEditor";
+import { useSetMDXEditorAtomsEffect } from "./hooks/useSetMDXEditorAtomsEffect";
 
 export const MDXEditor: VFC = () => {
   const router = useRouter();
   const pageMeta = useRecoilValue(pageMetaAtoms);
+  useSetMDXEditorAtomsEffect();
   const [postArticle, { loading, error }] = usePostArticleMutation({
     onCompleted: () => {
       router.reload();
