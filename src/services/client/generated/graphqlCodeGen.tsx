@@ -38,7 +38,13 @@ export type MutationPostArticleArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getUploadUrl?: Maybe<Scalars['String']>;
   healthCheck?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetUploadUrlArgs = {
+  contentType?: Maybe<Scalars['String']>;
 };
 
 export type PostArticleMutationVariables = Exact<{

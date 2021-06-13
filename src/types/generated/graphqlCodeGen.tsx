@@ -38,7 +38,13 @@ export type MutationPostArticleArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getUploadUrl?: Maybe<Scalars['String']>;
   healthCheck?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetUploadUrlArgs = {
+  contentType?: Maybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -150,6 +156,7 @@ export type MutationResolvers<ContextType = SessionContextType, ParentType exten
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, never>>;
   healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 

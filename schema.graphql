@@ -14,5 +14,6 @@ type Mutation {
 }
 
 type Query {
+  getUploadUrl(contentType: String): String
   healthCheck: String
 }
