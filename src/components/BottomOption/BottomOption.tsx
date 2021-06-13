@@ -23,7 +23,7 @@ interface Props {
 }
 
 const DynamicMDXEditor = dynamic<{}>(() =>
-  import("./MDXEditor").then((mod) => mod.MDXEditor)
+  import("./MDXEditor/MDXEditor").then((mod) => mod.MDXEditor)
 );
 
 export const BottomOption: VFC<Props> = ({ children }) => {
@@ -49,7 +49,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       onCloseSource();
     }
     onToggle();
-  }, []);
+  }, [isOpen, onCloseHistory, onCloseSource, onToggle]);
 
   const isHistoryShown = !!pageMeta?.revisions;
   const source = pageMeta?.source;
