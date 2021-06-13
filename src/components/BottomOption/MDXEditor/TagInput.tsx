@@ -9,13 +9,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import { useRecoilState } from "recoil";
+import { MDXTagsInputAtoms } from "./hooks/atoms";
 
-interface Props {
-  setTags: (tags: string[]) => void;
-  tags: string[];
-}
-
-export const TagInput: VFC<Props> = ({ tags, setTags }) => {
+export const TagInput: VFC = () => {
+  const [tags, setTags] = useRecoilState(MDXTagsInputAtoms);
   const [tagInput, setTagInput] = useState("");
   const onRemoveTag = useCallback(() => {
     if (tagInput.length <= 0) return;

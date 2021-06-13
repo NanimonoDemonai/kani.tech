@@ -11,7 +11,7 @@ import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import { usePostArticleMutation } from "../../../services/client/generated/graphqlCodeGen";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
-import { MDXTitleInputAtoms } from "./hooks/atoms";
+import { MDXTagsInputAtoms, MDXTitleInputAtoms } from "./hooks/atoms";
 
 export const MDXEditor: VFC = () => {
   const router = useRouter();
@@ -20,7 +20,6 @@ export const MDXEditor: VFC = () => {
   const [source, setSource] = useState<string | undefined>(
     extractContent(pageMeta?.source)
   );
-  const [tags, setTags] = useState<string[]>(pageMeta?.tags || []);
   const [postArticle, { loading, error }] = usePostArticleMutation({
     onCompleted: () => {
       router.reload();
@@ -30,6 +29,8 @@ export const MDXEditor: VFC = () => {
     ({ snapshot }) =>
       async () => {
         const title = await snapshot.getPromise(MDXTitleInputAtoms);
+        const tags = await snapshot.getPromise(MDXTagsInputAtoms);
+
         await postArticle({
           variables: {
             pageName: pageMeta?.pageName || "",
@@ -39,7 +40,7 @@ export const MDXEditor: VFC = () => {
           },
         });
       },
-    [source, tags, pageMeta]
+    [source, pageMeta]
   );
 
   return (
@@ -54,7 +55,7 @@ export const MDXEditor: VFC = () => {
             height={512}
           />
         </Box>
-        <TagInput tags={tags} setTags={setTags} />
+        <TagInput />
       </Stack>
       <Divider my={2} />
       <HStack>
