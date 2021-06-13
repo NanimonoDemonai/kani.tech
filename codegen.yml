@@ -17,3 +17,4 @@ generates:
     config:
       withHooks: true
       withMutationFn: true
+      withRefetchFn: true

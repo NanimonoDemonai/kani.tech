@@ -1,0 +1,5 @@
+query GetUploadUrl(
+    $contentType: String!
+){
+    getUploadUrl(contentType: $contentType)
+}

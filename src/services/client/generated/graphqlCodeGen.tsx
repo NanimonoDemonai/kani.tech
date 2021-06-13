@@ -47,6 +47,16 @@ export type QueryGetUploadUrlArgs = {
   contentType?: Maybe<Scalars['String']>;
 };
 
+export type GetUploadUrlQueryVariables = Exact<{
+  contentType: Scalars['String'];
+}>;
+
+
+export type GetUploadUrlQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'getUploadUrl'>
+);
+
 export type PostArticleMutationVariables = Exact<{
   tags: Array<Scalars['String']> | Scalars['String'];
   source: Scalars['String'];
@@ -64,6 +74,42 @@ export type PostArticleMutation = (
 );
 
 
+export const GetUploadUrlDocument = gql`
+    query GetUploadUrl($contentType: String!) {
+  getUploadUrl(contentType: $contentType)
+}
+    `;
+
+/**
+ * __useGetUploadUrlQuery__
+ *
+ * To run a query within a React component, call `useGetUploadUrlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUploadUrlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUploadUrlQuery({
+ *   variables: {
+ *      contentType: // value for 'contentType'
+ *   },
+ * });
+ */
+export function useGetUploadUrlQuery(baseOptions: Apollo.QueryHookOptions<GetUploadUrlQuery, GetUploadUrlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUploadUrlQuery, GetUploadUrlQueryVariables>(GetUploadUrlDocument, options);
+      }
+export function useGetUploadUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUploadUrlQuery, GetUploadUrlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUploadUrlQuery, GetUploadUrlQueryVariables>(GetUploadUrlDocument, options);
+        }
+export type GetUploadUrlQueryHookResult = ReturnType<typeof useGetUploadUrlQuery>;
+export type GetUploadUrlLazyQueryHookResult = ReturnType<typeof useGetUploadUrlLazyQuery>;
+export type GetUploadUrlQueryResult = Apollo.QueryResult<GetUploadUrlQuery, GetUploadUrlQueryVariables>;
+export function refetchGetUploadUrlQuery(variables?: GetUploadUrlQueryVariables) {
+      return { query: GetUploadUrlDocument, variables: variables }
+    }
 export const PostArticleDocument = gql`
     mutation PostArticle($tags: [String!]!, $source: String!, $pageTitle: String!, $pageName: String!) {
   postArticle(
