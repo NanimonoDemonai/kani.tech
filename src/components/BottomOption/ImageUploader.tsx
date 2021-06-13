@@ -25,9 +25,13 @@ export const ImageUploader: VFC = () => {
     onCompleted: (data) => {
       const { getUploadUrl } = data;
       if (getUploadUrl) {
-        axios.put(getUploadUrl, {
-          data: acceptedFiles[0],
-        });
+        axios.put(
+          getUploadUrl,
+          {
+            data: acceptedFiles[0],
+          },
+          { headers: { "Content-Type": acceptedFiles[0].type } }
+        );
       }
     },
   });
@@ -62,7 +66,7 @@ export const ImageUploader: VFC = () => {
             getUrl({
               variables: {
                 contentType: acceptedFiles[0].type,
-                key: `${pageMeta?.title}/acceptedFiles[0].name`,
+                key: `${pageMeta?.title}/${acceptedFiles[0].name}`,
               },
             })
           }
