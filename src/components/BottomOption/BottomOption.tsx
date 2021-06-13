@@ -1,33 +1,35 @@
-import { ReactNode, VFC } from "react";
+import { ReactNode, useCallback, VFC } from "react";
 import {
   Box,
   Collapse,
   Divider,
-  Flex,
   HStack,
   Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
 import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
-import { useSession } from "next-auth/client";
 import dynamic from "next/dynamic";
+import { useEditorIsShown } from "./hooks/useEditorIsShown";
 
 interface Props {
   children: ReactNode;
 }
 
 const DynamicMDXEditor = dynamic<{}>(() =>
-  import("./MDXEditor").then((mod) => mod.MDXEditor)
+  import("./MDXEditor/MDXEditor").then((mod) => mod.MDXEditor)
 );
 
 export const BottomOption: VFC<Props> = ({ children }) => {
+  const pageMeta = useRecoilValue(pageMetaAtoms);
+  const editorIsShown = useEditorIsShown();
+
   const { isOpen, onToggle } = useDisclosure();
   const {
     isOpen: isOpenSource,
@@ -41,13 +43,23 @@ export const BottomOption: VFC<Props> = ({ children }) => {
   } = useDisclosure();
   const { isOpen: isOpenEditor, onToggle: onToggleEditor } = useDisclosure();
 
-  const [session, loading] = useSession();
+  const toggleOptionButton = useCallback(() => {
+    if (isOpen) {
+      onCloseHistory();
+      onCloseSource();
+    }
+    onToggle();
+  }, [isOpen, onCloseHistory, onCloseSource, onToggle]);
 
-  const pageMeta = useRecoilState(pageMetaAtoms)[0];
+  const isHistoryShown = !!pageMeta?.revisions;
+  const source = pageMeta?.source;
 
   return (
     <Box as={"aside"}>
-      <Tags tags={pageMeta?.tags ?? []} />
+      <HStack spacing={2}>
+        <Tags tags={pageMeta?.tags ?? []} />
+      </HStack>
+
       <HStack spacing={2}>
         <Spacer />
         <PageModified />
@@ -57,17 +69,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       <HStack spacing={2}>
         <Spacer />
         <BottomOptionToggleButton
-          onToggle={() => {
-            if (isOpen) {
-              onCloseHistory();
-              onCloseSource();
-            }
-            onToggle();
-          }}
+          onToggle={toggleOptionButton}
           isOpen={isOpen}
           label={"オプション"}
         />
-        {!loading && session && session.role === "USER" && (
+        {editorIsShown && (
           <BottomOptionToggleButton
             onToggle={onToggleEditor}
             isOpen={isOpenEditor}
@@ -75,19 +81,20 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           />
         )}
       </HStack>
-      <Flex>
+
+      <HStack>
         <Spacer />
         <Collapse in={isOpen} animateOpacity>
           <HStack spacing={2}>
             {children}
-            {pageMeta && (
+            {source && (
               <BottomOptionToggleButton
                 onToggle={onToggleSource}
                 isOpen={isOpenSource}
                 label={"ソースを表示"}
               />
             )}
-            {pageMeta?.revisions && (
+            {isHistoryShown && (
               <BottomOptionToggleButton
                 onToggle={onToggleHistory}
                 isOpen={isOpenHistory}
@@ -96,18 +103,21 @@ export const BottomOption: VFC<Props> = ({ children }) => {
             )}
           </HStack>
         </Collapse>
-      </Flex>
-      {pageMeta && (
+      </HStack>
+
+      {source && (
         <Collapse in={isOpenSource} animateOpacity>
-          <DynamicSourceHighlighter source={pageMeta.source} />
+          <DynamicSourceHighlighter source={source} />
         </Collapse>
       )}
-      {pageMeta?.revisions && (
+
+      {isHistoryShown && (
         <Collapse in={isOpenHistory} animateOpacity>
           <RevisionTable />
         </Collapse>
       )}
-      {!loading && session && session.role === "USER" && (
+
+      {editorIsShown && (
         <Collapse in={isOpenEditor} animateOpacity>
           <DynamicMDXEditor />
         </Collapse>
