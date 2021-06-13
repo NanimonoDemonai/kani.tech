@@ -5,6 +5,11 @@ export const MDXTitleInputAtoms = atom<string>({
   default: "",
 });
 
+export const MDXSourceInputAtoms = atom<string>({
+  key: "MDXEditor/SourceInput",
+  default: "",
+});
+
 export const MDXTagsInputAtoms = atom<string[]>({
   key: "MDXEditor/MDXTagsInput",
   default: [],
