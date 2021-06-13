@@ -14,7 +14,17 @@ services:
     volumes:
       - database:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
-
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ACCESS_KEY: hogehoge
+      MINIO_SECRET_KEY: fugafuga
+    command: server /data
+    volumes:
+      - "s3-data:/data"
+    ports:
+      - "9090:9000"
 volumes:
+  s3-data:
   database:
     driver: local
