@@ -1,9 +1,9 @@
 import "@uiw/react-md-editor/dist/markdown-editor.css";
 import "@uiw/react-markdown-preview/dist/markdown.css";
 
-import { useCallback, useState, VFC } from "react";
+import { useState, VFC } from "react";
 import MDEditor from "@uiw/react-md-editor";
-import { useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { extractContent } from "../../../utils/extractContent";
@@ -11,6 +11,7 @@ import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import { usePostArticleMutation } from "../../../services/client/generated/graphqlCodeGen";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
+import { MDXTitleInputAtoms } from "./hooks/atoms";
 
 export const MDXEditor: VFC = () => {
   const router = useRouter();
@@ -20,27 +21,31 @@ export const MDXEditor: VFC = () => {
     extractContent(pageMeta?.source)
   );
   const [tags, setTags] = useState<string[]>(pageMeta?.tags || []);
-  const [title, setTitle] = useState<string>(pageMeta?.title || "");
   const [postArticle, { loading, error }] = usePostArticleMutation({
     onCompleted: () => {
       router.reload();
     },
   });
-  const onPost = useCallback(async () => {
-    await postArticle({
-      variables: {
-        pageName: pageMeta?.pageName || "",
-        pageTitle: title || "",
-        source: source || "",
-        tags,
+  const onPost = useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        const title = await snapshot.getPromise(MDXTitleInputAtoms);
+        await postArticle({
+          variables: {
+            pageName: pageMeta?.pageName || "",
+            pageTitle: title,
+            source: source || "",
+            tags,
+          },
+        });
       },
-    });
-  }, [title, source, tags, pageMeta]);
+    [source, tags, pageMeta]
+  );
 
   return (
     <Box>
       <Stack spacing={2}>
-        <TitleInput setTitle={setTitle} title={title} />
+        <TitleInput />
         <Box className="container" h={"lg"}>
           <MDEditor
             value={source}
