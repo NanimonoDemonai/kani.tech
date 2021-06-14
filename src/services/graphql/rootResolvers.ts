@@ -30,5 +30,19 @@ export const rootResolvers: Resolvers = {
         Expires: 30,
       });
     },
+    getObjectList: async (parent, { key }, context) => {
+      if (context.session?.role !== "USER") {
+        throw new AuthenticationError("permission denied");
+      }
+
+      const { Contents } = await s3
+        .listObjectsV2({
+          Bucket: "example-space-name",
+          Prefix: key,
+        })
+        .promise();
+      if (!Contents) return [];
+      return Contents.map((e) => e.Key || "");
+    },
   },
 };

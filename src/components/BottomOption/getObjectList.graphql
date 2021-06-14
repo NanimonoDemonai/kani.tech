@@ -1,0 +1,3 @@
+query GetObjectList($key: String!) {
+  getObjectList(key: $key)
+}

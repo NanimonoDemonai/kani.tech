@@ -39,14 +39,30 @@ export type MutationPostArticleArgs = {
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
+  getObjectList: Array<Scalars['String']>;
   healthCheck?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryGetUploadUrlArgs = {
-  key?: Maybe<Scalars['String']>;
-  contentType?: Maybe<Scalars['String']>;
+  key: Scalars['String'];
+  contentType: Scalars['String'];
 };
+
+
+export type QueryGetObjectListArgs = {
+  key: Scalars['String'];
+};
+
+export type GetObjectListQueryVariables = Exact<{
+  key: Scalars['String'];
+}>;
+
+
+export type GetObjectListQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'getObjectList'>
+);
 
 export type GetUploadUrlQueryVariables = Exact<{
   key: Scalars['String'];
@@ -76,6 +92,42 @@ export type PostArticleMutation = (
 );
 
 
+export const GetObjectListDocument = gql`
+    query GetObjectList($key: String!) {
+  getObjectList(key: $key)
+}
+    `;
+
+/**
+ * __useGetObjectListQuery__
+ *
+ * To run a query within a React component, call `useGetObjectListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetObjectListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetObjectListQuery({
+ *   variables: {
+ *      key: // value for 'key'
+ *   },
+ * });
+ */
+export function useGetObjectListQuery(baseOptions: Apollo.QueryHookOptions<GetObjectListQuery, GetObjectListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetObjectListQuery, GetObjectListQueryVariables>(GetObjectListDocument, options);
+      }
+export function useGetObjectListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetObjectListQuery, GetObjectListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetObjectListQuery, GetObjectListQueryVariables>(GetObjectListDocument, options);
+        }
+export type GetObjectListQueryHookResult = ReturnType<typeof useGetObjectListQuery>;
+export type GetObjectListLazyQueryHookResult = ReturnType<typeof useGetObjectListLazyQuery>;
+export type GetObjectListQueryResult = Apollo.QueryResult<GetObjectListQuery, GetObjectListQueryVariables>;
+export function refetchGetObjectListQuery(variables?: GetObjectListQueryVariables) {
+      return { query: GetObjectListDocument, variables: variables }
+    }
 export const GetUploadUrlDocument = gql`
     query GetUploadUrl($key: String!, $contentType: String!) {
   getUploadUrl(contentType: $contentType, key: $key)

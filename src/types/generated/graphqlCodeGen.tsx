@@ -39,13 +39,19 @@ export type MutationPostArticleArgs = {
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
+  getObjectList: Array<Scalars['String']>;
   healthCheck?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryGetUploadUrlArgs = {
-  key?: Maybe<Scalars['String']>;
-  contentType?: Maybe<Scalars['String']>;
+  key: Scalars['String'];
+  contentType: Scalars['String'];
+};
+
+
+export type QueryGetObjectListArgs = {
+  key: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -157,7 +163,8 @@ export type MutationResolvers<ContextType = SessionContextType, ParentType exten
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, never>>;
+  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'key' | 'contentType'>>;
+  getObjectList?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetObjectListArgs, 'key'>>;
   healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
