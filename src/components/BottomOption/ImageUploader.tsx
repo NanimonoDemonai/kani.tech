@@ -13,6 +13,7 @@ import {
 import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import useAxios from "axios-hooks";
+import { ObjectList } from "./ObjectList";
 
 export const ImageUploader: VFC = () => {
   const pageMeta = useRecoilValue(pageMetaAtoms);
@@ -26,7 +27,6 @@ export const ImageUploader: VFC = () => {
       accept: "image/*",
       maxFiles: 1,
     });
-
   const [getUrl, {}] = useGetUploadUrlLazyQuery({
     onCompleted: async (data) => {
       const { getUploadUrl } = data;
@@ -34,15 +34,15 @@ export const ImageUploader: VFC = () => {
         await refetch({
           method: "put",
           url: getUploadUrl,
-          data: {
-            data: acceptedFiles[0],
-          },
+          data: acceptedFiles[0],
+
           headers: { "Content-Type": acceptedFiles[0].type },
         });
-        setFiles([]);
+        //setFiles([]);
       }
     },
   });
+  const pageName = pageMeta?.pageName;
   return (
     <Stack spacing={3}>
       <Text size="md">アップロード</Text>
@@ -78,7 +78,7 @@ export const ImageUploader: VFC = () => {
             getUrl({
               variables: {
                 contentType: files[0].type,
-                key: `${pageMeta?.title}/${files[0].name}`,
+                key: `${pageName}/${files[0].name}`,
               },
             })
           }
@@ -86,6 +86,7 @@ export const ImageUploader: VFC = () => {
           アップロード
         </Button>
       </Flex>
+      {pageName && <ObjectList pageName={pageName} loading={loading} />}
     </Stack>
   );
 };
