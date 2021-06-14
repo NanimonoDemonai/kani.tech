@@ -38,7 +38,7 @@ export const ImageUploader: VFC = () => {
 
           headers: { "Content-Type": acceptedFiles[0].type },
         });
-        //setFiles([]);
+        setFiles([]);
       }
     },
   });
