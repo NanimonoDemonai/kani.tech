@@ -29,7 +29,15 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
     <Box>
       <UnorderedList>
         {data.getObjectList.map((e) => (
-          <ListItem>{e}</ListItem>
+          <ListItem>
+            {e}
+            <img
+              src={`http://localhost:8082/auto/plain/s3://example-space-name/${encodeURI(
+                e
+              )}`}
+              alt="my_skin"
+            />
+          </ListItem>
         ))}
       </UnorderedList>
     </Box>
