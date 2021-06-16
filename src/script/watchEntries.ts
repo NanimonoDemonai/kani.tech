@@ -20,14 +20,17 @@ const fileAdd = async (filePath: string) => {
   const pageName = path.basename(filePath, ".mdx");
   const file = await readFileWithModifiedTime(filePath);
   const { title: pageTitle, tags } = frontMatterParser(file.src).frontMatter;
-
-  const upsertEntry = await createOrUpsertEntry({
-    tags,
-    source: file.src,
-    pageName,
-    pageTitle,
-  });
-  console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
+  try {
+    const upsertEntry = await createOrUpsertEntry({
+      tags,
+      source: file.src,
+      pageName,
+      pageTitle,
+    });
+    console.log("upstarted", upsertEntry.pageName, upsertEntry.pageTitle);
+  } catch (e) {
+    console.log(e, pageTitle, tags);
+  }
 };
 
 const fileRemove = async (filePath: string) => {
