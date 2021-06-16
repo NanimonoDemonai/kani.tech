@@ -21,6 +21,7 @@ services:
     environment:
       - MINIO_ACCESS_KEY=locallocal
       - MINIO_SECRET_KEY=locallocal
+    command: server /data
     volumes:
       - "s3-data:/data"
     ports:
