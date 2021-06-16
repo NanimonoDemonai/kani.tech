@@ -43,7 +43,6 @@ export const ImageUploaderDropzone: VFC<Props> = ({ refetch, loading }) => {
 
   return (
     <Box>
-      <Text size="md">アップロード</Text>
       <Box
         {...getRootProps()}
         h={20}

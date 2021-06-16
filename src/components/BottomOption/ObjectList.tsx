@@ -32,6 +32,7 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
         {data.getObjectList.map((e) => (
           <ListItem key={e}>
             {e}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={getImageUrl(e)}
               alt="my_skin"

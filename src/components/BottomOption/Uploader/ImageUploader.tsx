@@ -1,5 +1,5 @@
 import { VFC } from "react";
-import { Stack } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import useAxios from "axios-hooks";
@@ -13,7 +13,9 @@ export const ImageUploader: VFC = () => {
   const pageName = pageMeta?.pageName;
   return (
     <Stack spacing={3}>
-      {pageName && <ObjectList pageName={pageName} loading={loading} />}
+      <Text fontSize="2xl">ファイル一覧</Text>
+      {pageName && <ObjectList pageName={pageName} loading={loading} />}{" "}
+      <Text fontSize="2xl">アップロード</Text>
       <ImageUploaderDropzone refetch={refetch} loading={loading} />
     </Stack>
   );
