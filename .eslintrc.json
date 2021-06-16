@@ -60,6 +60,12 @@
               "order": "asc"
             }
           }
+        ],
+        "react-hooks/exhaustive-deps": [
+          "warn",
+          {
+            "additionalHooks": "useRecoilCallback"
+          }
         ]
       }
     }
