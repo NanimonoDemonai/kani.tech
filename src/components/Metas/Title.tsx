@@ -8,7 +8,7 @@ export const Title: VFC<{ title: string }> = ({ title }) => {
   const setTitle = useRecoilState(titleAtoms)[1];
   useEffect(() => {
     setTitle(title);
-  }, [title]);
+  }, [title, setTitle]);
   return (
     <Head>
       <title>

@@ -19,7 +19,7 @@ export const RevisionTable: VFC = () => {
       </Thead>
       <Tbody>
         {pageMeta.revisions.map((e) => (
-          <Tr>
+          <Tr key={e.revision}>
             <Td>
               <NextLink
                 href={`/entries/${pageMeta.pageName}/history/${pageMeta.revision}`}

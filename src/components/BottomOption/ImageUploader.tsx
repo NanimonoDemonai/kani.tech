@@ -14,7 +14,6 @@ import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import useAxios from "axios-hooks";
 import { ObjectList } from "./ObjectList";
-
 export const ImageUploader: VFC = () => {
   const pageMeta = useRecoilValue(pageMetaAtoms);
   const [files, setFiles] = useState<File[]>([]);
@@ -27,7 +26,7 @@ export const ImageUploader: VFC = () => {
       accept: "image/*",
       maxFiles: 1,
     });
-  const [getUrl, {}] = useGetUploadUrlLazyQuery({
+  const [getUrl] = useGetUploadUrlLazyQuery({
     onCompleted: async (data) => {
       const { getUploadUrl } = data;
       if (getUploadUrl) {
@@ -65,9 +64,10 @@ export const ImageUploader: VFC = () => {
         <Box h={20}>
           {files.map((file) => (
             <img
+              key={file.name}
               src={URL.createObjectURL(file)}
               alt="image preview"
-              style={{ width: 30, height: "auto" }}
+              width={30}
             />
           ))}
         </Box>

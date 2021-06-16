@@ -21,7 +21,7 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
       refetch({ key: pageName }).then(() => {
         /*noop*/
       });
-  }, [loading, loadingData, refetch]);
+  }, [loading, loadingData, refetch, pageName]);
   if (loadingData) return <Fallback />;
   if (!data) return null;
 
@@ -29,7 +29,7 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
     <Box>
       <UnorderedList>
         {data.getObjectList.map((e) => (
-          <ListItem>
+          <ListItem key={e}>
             {e}
             <img
               src={`http://localhost:8082/auto/plain/s3://example-space-name/${encodeURI(
