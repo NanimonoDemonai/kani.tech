@@ -37,7 +37,7 @@ export const MDXHistorySourcePage: NextPage<MDXHistorySourcePageProps> = ({
         separator={<ChevronRightIcon color="gray.500" />}
       >
         <BreadcrumbItem>
-          <Link href={getEntryPathWithEntryName(`${pid}`)}>
+          <Link href={getEntryPathWithEntryName(`${pid}`)} passHref>
             <BreadcrumbLink>{pid}の更新履歴</BreadcrumbLink>
           </Link>
         </BreadcrumbItem>

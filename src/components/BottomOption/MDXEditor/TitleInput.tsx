@@ -7,7 +7,7 @@ export const TitleInput: VFC = () => {
   const [title, setTitle] = useRecoilState(MDXTitleInputAtoms);
   return (
     <InputGroup>
-      <InputLeftAddon children="タイトル" />
+      <InputLeftAddon>タイトル</InputLeftAddon>
       <Input
         placeholder="タイトル"
         value={title}

@@ -4,12 +4,15 @@
     "es2021": true
   },
   "extends": [
+    "next",
     "eslint:recommended",
     "prettier"
   ],
   "rules": {
-    "no-undef": "off"
+    "no-undef": "off",
+    "no-redeclare": "warn"
   },
+  "parser": "@typescript-eslint/parser",
   "overrides": [
     {
       "files": [
@@ -56,6 +59,12 @@
             "alphabetize": {
               "order": "asc"
             }
+          }
+        ],
+        "react-hooks/exhaustive-deps": [
+          "warn",
+          {
+            "additionalHooks": "useRecoilCallback"
           }
         ]
       }

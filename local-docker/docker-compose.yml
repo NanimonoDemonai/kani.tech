@@ -6,15 +6,39 @@ services:
     env_file:
       - ../.env.local
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
+      - POSTGRES_USER=local
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_DB=local
     ports:
       - "15432:5432"
     volumes:
       - database:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
-
+  minio:
+    image: minio/minio
+    env_file:
+      - ../.env.local
+    environment:
+      - MINIO_ACCESS_KEY=locallocal
+      - MINIO_SECRET_KEY=locallocal
+    command: server /data
+    volumes:
+      - "s3-data:/data"
+    ports:
+      - "9090:9000"
+  imgproxy:
+    image: darthsim/imgproxy
+    restart: always
+    env_file:
+      - ../.env.local
+    environment:
+      - IMGPROXY_USE_S3=true
+      - AWS_ACCESS_KEY_ID=locallocal
+      - AWS_SECRET_ACCESS_KEY=locallocal
+      - IMGPROXY_S3_ENDPOINT=http://minio:9000
+    ports:
+      - "8082:8080"
 volumes:
+  s3-data:
   database:
     driver: local

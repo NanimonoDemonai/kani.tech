@@ -12,6 +12,6 @@ export const PageMetaComponent: VFC<Props> = ({ pageMeta }) => {
   const setPageMeta = useRecoilState(pageMetaAtoms)[1];
   useEffect(() => {
     setPageMeta(pageMeta);
-  }, [pageMeta]);
+  }, [pageMeta, setPageMeta]);
   return <Title title={pageMeta.title} />;
 };
