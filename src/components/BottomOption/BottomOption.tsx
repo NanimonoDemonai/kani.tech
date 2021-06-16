@@ -1,12 +1,5 @@
-import { ReactNode, useCallback, VFC } from "react";
-import {
-  Box,
-  Collapse,
-  Divider,
-  HStack,
-  Spacer,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { ReactNode, VFC } from "react";
+import { Box, Collapse, Divider, HStack, Spacer } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
 import { useRecoilValue } from "recoil";
 import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
@@ -17,6 +10,13 @@ import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import dynamic from "next/dynamic";
 import { useEditorIsShown } from "./hooks/useEditorIsShown";
+import {
+  useBottomOption,
+  useIsBottomOptionShowEditor,
+  useIsBottomOptionShowFilList,
+  useIsBottomOptionShowHistory,
+  useIsBottomOptionShowSource,
+} from "./hooks/atoms";
 
 interface Props {
   children: ReactNode;
@@ -34,26 +34,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
   const pageMeta = useRecoilValue(pageMetaAtoms);
   const editorIsShown = useEditorIsShown();
 
-  const { isOpen, onToggle } = useDisclosure();
-  const {
-    isOpen: isOpenSource,
-    onToggle: onToggleSource,
-    onClose: onCloseSource,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenHistory,
-    onToggle: onToggleHistory,
-    onClose: onCloseHistory,
-  } = useDisclosure();
-  const { isOpen: isOpenEditor, onToggle: onToggleEditor } = useDisclosure();
-
-  const toggleOptionButton = useCallback(() => {
-    if (isOpen) {
-      onCloseHistory();
-      onCloseSource();
-    }
-    onToggle();
-  }, [isOpen, onCloseHistory, onCloseSource, onToggle]);
+  const [isOpen, toggleOptionButton] = useBottomOption();
+  const [isOpenSource, onToggleSource] = useIsBottomOptionShowSource();
+  const [isOpenHistory, onToggleHistory] = useIsBottomOptionShowHistory();
+  const [isOpenEditor, onToggleEditor] = useIsBottomOptionShowEditor();
+  const [isOpenFileList, onToggleFileList] = useIsBottomOptionShowFilList();
 
   const isHistoryShown = !!pageMeta?.revisions;
   const source = pageMeta?.source;
@@ -105,6 +90,13 @@ export const BottomOption: VFC<Props> = ({ children }) => {
                 label={"履歴を表示"}
               />
             )}
+            {editorIsShown && (
+              <BottomOptionToggleButton
+                onToggle={onToggleFileList}
+                isOpen={isOpenFileList}
+                label={"ファイルを表示"}
+              />
+            )}
           </HStack>
         </Collapse>
       </HStack>
@@ -126,8 +118,11 @@ export const BottomOption: VFC<Props> = ({ children }) => {
           <DynamicMDXEditor />
         </Collapse>
       )}
-
-      <DynamicImageUploader />
+      {editorIsShown && (
+        <Collapse in={isOpenFileList} animateOpacity>
+          <DynamicImageUploader />
+        </Collapse>
+      )}
     </Box>
   );
 };
