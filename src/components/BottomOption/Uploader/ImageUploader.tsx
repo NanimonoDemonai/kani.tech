@@ -1,9 +1,9 @@
 import { VFC } from "react";
 import { Stack } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
-import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import useAxios from "axios-hooks";
-import { ObjectList } from "./ObjectList";
+import { ObjectList } from "../ObjectList";
 import { ImageUploaderDropzone } from "./ImageUploaderDropzone";
 
 export const ImageUploader: VFC = () => {

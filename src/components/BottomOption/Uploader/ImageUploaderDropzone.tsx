@@ -1,9 +1,9 @@
 import { useState, VFC } from "react";
 import { Box, Button, Center, Flex, Spacer, Text } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
-import { useGetUploadUrlLazyQuery } from "../../services/client/generated/graphqlCodeGen";
+import { useGetUploadUrlLazyQuery } from "../../../services/client/generated/graphqlCodeGen";
 import { useRecoilValue } from "recoil";
-import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
+import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import useAxios from "axios-hooks";
 
 interface Props {

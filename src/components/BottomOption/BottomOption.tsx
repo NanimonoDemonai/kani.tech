@@ -27,7 +27,7 @@ const DynamicMDXEditor = dynamic<{}>(() =>
 );
 
 const DynamicImageUploader = dynamic<{}>(() =>
-  import("./ImageUploader").then((mod) => mod.ImageUploader)
+  import("./Uploader/ImageUploader").then((mod) => mod.ImageUploader)
 );
 
 export const BottomOption: VFC<Props> = ({ children }) => {
