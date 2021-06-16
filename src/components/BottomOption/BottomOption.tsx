@@ -17,7 +17,6 @@ import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import dynamic from "next/dynamic";
 import { useEditorIsShown } from "./hooks/useEditorIsShown";
-import { ImageUploader } from "./ImageUploader";
 
 interface Props {
   children: ReactNode;
@@ -25,6 +24,10 @@ interface Props {
 
 const DynamicMDXEditor = dynamic<{}>(() =>
   import("./MDXEditor/MDXEditor").then((mod) => mod.MDXEditor)
+);
+
+const DynamicImageUploader = dynamic<{}>(() =>
+  import("./ImageUploader").then((mod) => mod.ImageUploader)
 );
 
 export const BottomOption: VFC<Props> = ({ children }) => {
@@ -124,7 +127,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         </Collapse>
       )}
 
-      <ImageUploader />
+      <DynamicImageUploader />
     </Box>
   );
 };
