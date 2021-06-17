@@ -1,9 +1,8 @@
 import { VFC } from "react";
-import { useRecoilCallback, useRecoilValue } from "recoil";
+import { useRecoilSnapshot, useRecoilValue } from "recoil";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
-import { usePostArticleMutation } from "../../../services/client/generated/graphqlCodeGen";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
 import {
@@ -13,34 +12,27 @@ import {
 } from "./hooks/atoms";
 import { MDEditor } from "./MDEditor";
 import { useSetMDXEditorAtomsEffect } from "./hooks/useSetMDXEditorAtomsEffect";
+import { useAsyncCallback } from "react-async-hook";
+import { gqlClient } from "../../../services/client/graphqlRequest";
 
 export const MDXEditor: VFC = () => {
+  useSetMDXEditorAtomsEffect();
   const router = useRouter();
   const pageMeta = useRecoilValue(pageMetaAtoms);
-  useSetMDXEditorAtomsEffect();
-  const [postArticle, { loading, error }] = usePostArticleMutation({
-    onCompleted: () => {
-      router.reload();
-    },
-  });
-  const onPost = useRecoilCallback(
-    ({ snapshot }) =>
-      async () => {
-        const title = await snapshot.getPromise(MDXTitleInputAtoms);
-        const tags = await snapshot.getPromise(MDXTagsInputAtoms);
-        const source = await snapshot.getPromise(MDXSourceInputAtoms);
+  const snapshot = useRecoilSnapshot();
 
-        await postArticle({
-          variables: {
-            pageName: pageMeta?.pageName || "",
-            pageTitle: title,
-            source: source,
-            tags,
-          },
-        });
-      },
-    [pageMeta]
-  );
+  const { loading, error, execute } = useAsyncCallback(async () => {
+    const title = await snapshot.getPromise(MDXTitleInputAtoms);
+    const tags = await snapshot.getPromise(MDXTagsInputAtoms);
+    const source = await snapshot.getPromise(MDXSourceInputAtoms);
+    await gqlClient.PostArticle({
+      pageName: pageMeta?.pageName || "",
+      pageTitle: title,
+      source: source,
+      tags,
+    });
+    await router.reload();
+  });
 
   return (
     <Box>
@@ -51,7 +43,7 @@ export const MDXEditor: VFC = () => {
       </Stack>
       <Divider my={2} />
       <HStack>
-        <Button disabled={loading || !!error} onClick={onPost}>
+        <Button disabled={loading || !!error} onClick={execute}>
           投稿
         </Button>
       </HStack>
