@@ -18,3 +18,8 @@ generates:
       withHooks: true
       withMutationFn: true
       withRefetchFn: true
+  src/services/client/generated/graphqlRequestCodeGen.ts:
+    plugins:
+      - "typescript"
+      - typescript-operations
+      - typescript-graphql-request
