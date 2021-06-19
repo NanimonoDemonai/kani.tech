@@ -2,13 +2,14 @@ import { NextPage } from "next";
 import { AppProps } from "next/app";
 import { ChakraProvider, Container } from "@chakra-ui/react";
 import { PageNavbar } from "../Navbar/PageNavbar";
-import { RecoilRoot } from "recoil";
 import { Footer } from "../Footer/Footer";
 import { Provider as NextAuthProvide } from "next-auth/client";
+import { Provider } from "react-redux";
+import { store } from "../hooks/store";
 
 export const MyApp: NextPage<AppProps> = ({ Component, pageProps }) => (
   <NextAuthProvide session={pageProps.session}>
-    <RecoilRoot>
+    <Provider store={store}>
       <ChakraProvider>
         <PageNavbar />
         <Container
@@ -26,6 +27,6 @@ export const MyApp: NextPage<AppProps> = ({ Component, pageProps }) => (
         </Container>
         <Footer />
       </ChakraProvider>
-    </RecoilRoot>
+    </Provider>
   </NextAuthProvide>
 );

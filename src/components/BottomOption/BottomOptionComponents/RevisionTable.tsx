@@ -1,14 +1,13 @@
 import { VFC } from "react";
 import { Link, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { DateTime } from "../Elements/DateTime";
-import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
+import { DateTime } from "../../Elements/DateTime";
+import { usePageName, useRevisions } from "../../hooks/usePageMeta";
 
 export const RevisionTable: VFC = () => {
-  const pageMeta = useRecoilState(pageMetaAtoms)[0];
-  if (!pageMeta) return null;
-  if (!pageMeta.revisions) return null;
+  const revisions = useRevisions();
+  const pageName = usePageName();
+  if (!revisions) return null;
   return (
     <Table variant="simple">
       <Thead>
@@ -18,12 +17,10 @@ export const RevisionTable: VFC = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {pageMeta.revisions.map((e) => (
+        {revisions.map((e) => (
           <Tr key={e.revision}>
             <Td>
-              <NextLink
-                href={`/entries/${pageMeta.pageName}/history/${pageMeta.revision}`}
-              >
+              <NextLink href={`/entries/${pageName}/history/${e.revision}`}>
                 <Link>{e.revision}</Link>
               </NextLink>
             </Td>

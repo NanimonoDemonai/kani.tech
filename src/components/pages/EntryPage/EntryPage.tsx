@@ -3,9 +3,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { getMDXComponent } from "mdx-bundler/client";
 import { Box } from "@chakra-ui/react";
-import { getEntryMdxPathWithEntryName } from "../../../utils/getURL";
 import { entryDefaultSX } from "../../../styles/entryDefaultSX";
-import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
 import { BottomOption } from "../../BottomOption/BottomOption";
 
 import { PageMeta } from "../../../types/PageMeta";
@@ -20,7 +18,6 @@ export interface EntryPageProps {
 
 export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
   const router = useRouter();
-  const { pid } = router.query;
   const Component = useMemo(() => getMDXComponent(code), [code]);
   if (router.isFallback) {
     return <Fallback />;
@@ -34,11 +31,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
           <Component />
         </Box>
       </Article>
-      <BottomOption>
-        <BottomOptionButton href={getEntryMdxPathWithEntryName(String(pid))}>
-          ソースコード
-        </BottomOptionButton>
-      </BottomOption>
+      <BottomOption />
     </Box>
   );
 };

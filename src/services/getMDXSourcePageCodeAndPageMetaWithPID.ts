@@ -20,6 +20,8 @@ export const getMDXSourcePageCodeAndPageMetaWithPID = async (
       source: entry.source,
       title: entry.pageTitle,
       tags: entry.tags.map((e) => e.tagName),
+      revision: 0,
+      revisions: [],
     },
   };
 };

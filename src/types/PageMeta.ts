@@ -4,6 +4,11 @@ export interface PageMeta {
   modified: string;
   source: string;
   tags: string[];
-  revision?: number;
-  revisions?: { revision: number; createdAt: string }[];
+  revision: number;
+  revisions: Revision[];
+}
+
+export interface Revision {
+  revision: number;
+  createdAt: string;
 }

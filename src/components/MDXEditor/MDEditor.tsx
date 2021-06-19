@@ -4,16 +4,18 @@ import "@uiw/react-md-editor/dist/markdown-editor.css";
 import "@uiw/react-markdown-preview/dist/markdown.css";
 
 import MDEditorComponent from "@uiw/react-md-editor";
-import { useRecoilState } from "recoil";
-import { MDXSourceInputAtoms } from "./hooks/atoms";
+import { useSource } from "../hooks/useMDXEditor";
+import { useDispatch } from "../hooks/store";
+import { setSource } from "../hooks/slices/MDXInputSlice";
 
 export const MDEditor: VFC = () => {
-  const [source, setSource] = useRecoilState(MDXSourceInputAtoms);
+  const source = useSource();
+  const dispatch = useDispatch();
   return (
     <Box className="container" h={"lg"}>
       <MDEditorComponent
         value={source}
-        onChange={(e) => setSource(`${e}`)}
+        onChange={(e) => dispatch(setSource(`${e}`))}
         preview={"edit"}
         height={512}
       />

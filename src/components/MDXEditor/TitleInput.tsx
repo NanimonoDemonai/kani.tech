@@ -1,10 +1,12 @@
 import { VFC } from "react";
 import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
-import { MDXTitleInputAtoms } from "./hooks/atoms";
+import { useTitle } from "../hooks/useMDXEditor";
+import { useDispatch } from "../hooks/store";
+import { setTitle } from "../hooks/slices/MDXInputSlice";
 
 export const TitleInput: VFC = () => {
-  const [title, setTitle] = useRecoilState(MDXTitleInputAtoms);
+  const title = useTitle();
+  const dispatch = useDispatch();
   return (
     <InputGroup>
       <InputLeftAddon>タイトル</InputLeftAddon>
@@ -12,7 +14,7 @@ export const TitleInput: VFC = () => {
         placeholder="タイトル"
         value={title}
         onChange={(e) => {
-          setTitle(e.target.value);
+          dispatch(setTitle(e.target.value));
         }}
       />
     </InputGroup>
