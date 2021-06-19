@@ -12,13 +12,12 @@ import {
 import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import { KaniButton } from "./KaniButton";
 import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
-import { useRecoilState } from "recoil";
-import { titleAtoms } from "../hooks/atoms/titleAtoms";
 import { NavBarDivider } from "./NavBarDivider";
 import { signIn, signOut, useSession } from "next-auth/client";
+import { useTitle } from "../hooks/usePageMeta";
 
 export const PageNavbar: VFC = () => {
-  const [title] = useRecoilState(titleAtoms);
+  const title = useTitle();
   const [session] = useSession();
 
   return (

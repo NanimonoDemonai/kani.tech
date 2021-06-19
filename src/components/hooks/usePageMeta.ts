@@ -4,6 +4,9 @@ import { useSelector } from "./store";
 export const usePageMeta = (): PageMeta | undefined =>
   useSelector((state) => state.pageMeta);
 
+export const useTitle = (): string | undefined =>
+  useSelector((state) => state.pageMeta?.title);
+
 export const useModified = (): string | undefined =>
   useSelector((state) => state.pageMeta?.modified);
 
