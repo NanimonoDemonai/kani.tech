@@ -1,5 +1,5 @@
 import { PageMeta } from "../types/PageMeta";
-import { getOrSetMDXCompileCache } from "./caches/MDXCompileCache";
+import { sourceParser } from "../utils/parsers/sourceParser";
 import { prisma } from "./client/PrismClient";
 
 interface Res {
@@ -27,14 +27,9 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
 
   if (data) {
     const { source } = data;
-    const cacheValue = await getOrSetMDXCompileCache(
-      pid,
-      data.revision,
-      source
-    );
-    if (!cacheValue) return;
+    const { code } = await sourceParser(source);
     return {
-      code: cacheValue.code,
+      code,
       pageMeta: {
         tags: data.tags.map((e) => e.tagName),
         pageName: pid,

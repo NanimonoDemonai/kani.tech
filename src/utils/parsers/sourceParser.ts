@@ -1,3 +1,4 @@
+import rehypePrism from "@mapbox/rehype-prism";
 import { bundleMDX } from "mdx-bundler";
 import { FrontMatter } from "../../types/FrontMatter";
 import { mdxSanitizePlugin } from "../rehypePlugins/mdxSanitizePlugin";
@@ -7,8 +8,6 @@ interface Res {
   frontMatter: FrontMatter;
   code: string;
 }
-
-const rehypePrism = require("@mapbox/rehype-prism");
 
 export const sourceParser = async (src: string): Promise<Res> => {
   const { frontMatter, content } = frontMatterParser(src);
