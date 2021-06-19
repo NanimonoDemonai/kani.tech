@@ -6,10 +6,10 @@ import { TitleInput } from "./TitleInput";
 
 import { MDEditor } from "./MDEditor";
 import { useAsyncCallback } from "react-async-hook";
-import { gqlClient } from "../../../services/client/graphqlRequest";
-import { usePageMeta } from "../../hooks/usePageMeta";
-import { useDispatch, useSelector } from "../../hooks/store";
-import { setMDXInput } from "../../hooks/slices/MDXInputSlice";
+import { gqlClient } from "../../services/client/graphqlRequest";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { useDispatch, useSelector } from "../hooks/store";
+import { setMDXInput } from "../hooks/slices/MDXInputSlice";
 
 export const MDXEditor: VFC = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export const MDXEditor: VFC = () => {
         title: pageMeta.title,
       })
     );
-  }, []);
+  }, [dispatch, pageMeta]);
   const { loading, execute } = useAsyncCallback(async () => {
     await gqlClient.PostArticle({
       pageName: pageMeta.pageName,

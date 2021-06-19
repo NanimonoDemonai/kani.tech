@@ -4,9 +4,9 @@ import "@uiw/react-md-editor/dist/markdown-editor.css";
 import "@uiw/react-markdown-preview/dist/markdown.css";
 
 import MDEditorComponent from "@uiw/react-md-editor";
-import { useSource } from "../../hooks/useMDXEditor";
-import { useDispatch } from "../../hooks/store";
-import { setSource } from "../../hooks/slices/MDXInputSlice";
+import { useSource } from "../hooks/useMDXEditor";
+import { useDispatch } from "../hooks/store";
+import { setSource } from "../hooks/slices/MDXInputSlice";
 
 export const MDEditor: VFC = () => {
   const source = useSource();

@@ -4,8 +4,8 @@ export interface PageMeta {
   modified: string;
   source: string;
   tags: string[];
-  revision?: number;
-  revisions?: Revision[];
+  revision: number;
+  revisions: Revision[];
 }
 
 export interface Revision {

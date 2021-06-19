@@ -13,16 +13,19 @@ export const MDXInputSlice = createSlice({
   initialState,
   reducers: {
     setMDXInput: (state, { payload }: PayloadAction<MDXInputState>) => {
-      state = payload;
+      return payload;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;
+      return state;
     },
     setSource: (state, { payload }: PayloadAction<string>) => {
       state.source = payload;
+      return state;
     },
     setTags: (state, { payload }: PayloadAction<string[]>) => {
       state.tags = payload;
+      return state;
     },
   },
 });

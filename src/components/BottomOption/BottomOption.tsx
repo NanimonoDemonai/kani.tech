@@ -8,12 +8,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
-import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
-import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
-import dynamic from "next/dynamic";
 import { useEditorIsShown } from "./hooks/useEditorIsShown";
 
 import { usePageMeta } from "../hooks/usePageMeta";
@@ -25,32 +22,28 @@ import {
   toggleBottomOptionShowSource,
 } from "../hooks/slices/pageOptionSlice";
 import { usePageOption } from "../hooks/usePageOption";
+import { BottomImageUploader } from "./BottomImageUploader";
+import { BottomEditor } from "./BottomEditor";
+import { BottomHistory } from "./BottomHistory";
+import { BottomSource } from "./BottomSource";
 
 interface Props {
   children: ReactNode;
 }
-
-const DynamicMDXEditor = dynamic<{}>(() =>
-  import("./MDXEditor/MDXEditor").then((mod) => mod.MDXEditor)
-);
-
-const DynamicImageUploader = dynamic<{}>(() =>
-  import("./Uploader/ImageUploader").then((mod) => mod.ImageUploader)
-);
 
 export const BottomOption: VFC<Props> = ({ children }) => {
   const pageMeta = usePageMeta();
   const editorIsShown = useEditorIsShown();
   const pageOption = usePageOption();
   const dispatch = useDispatch();
-  const { onToggle, isOpen } = useDisclosure();
+  const { onToggle: toggleEditor, isOpen: editorIsOpen } = useDisclosure();
   const isHistoryShown = !!pageMeta?.revisions;
   const source = pageMeta?.source;
 
   return (
     <Box as={"aside"}>
       <HStack spacing={2}>
-        <Tags tags={pageMeta?.tags ?? []} />
+        <Tags tags={pageMeta.tags} />
       </HStack>
 
       <HStack spacing={2}>
@@ -68,8 +61,8 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         />
         {editorIsShown && (
           <BottomOptionToggleButton
-            onToggle={onToggle}
-            isOpen={isOpen}
+            onToggle={toggleEditor}
+            isOpen={editorIsOpen}
             label={"編集する"}
           />
         )}
@@ -77,7 +70,7 @@ export const BottomOption: VFC<Props> = ({ children }) => {
 
       <HStack>
         <Spacer />
-        <Collapse in={isOpen} animateOpacity>
+        <Collapse in={pageOption.isBottomOptionShow} animateOpacity>
           <HStack spacing={2}>
             {children}
             {source && (
@@ -105,28 +98,10 @@ export const BottomOption: VFC<Props> = ({ children }) => {
         </Collapse>
       </HStack>
 
-      {source && (
-        <Collapse in={pageOption.isBottomOptionShowSource} animateOpacity>
-          <DynamicSourceHighlighter source={source} />
-        </Collapse>
-      )}
-
-      {isHistoryShown && (
-        <Collapse in={pageOption.isBottomOptionShowHistory} animateOpacity>
-          <RevisionTable />
-        </Collapse>
-      )}
-
-      {editorIsShown && (
-        <Collapse in={pageOption.isBottomOptionShowEditor} animateOpacity>
-          <DynamicMDXEditor />
-        </Collapse>
-      )}
-      {editorIsShown && (
-        <Collapse in={pageOption.isBottomOptionFileListEditor} animateOpacity>
-          <DynamicImageUploader />
-        </Collapse>
-      )}
+      <BottomSource />
+      <BottomHistory />
+      {editorIsShown && <BottomEditor editorIsOpen={editorIsOpen} />}
+      {editorIsShown && <BottomImageUploader />}
     </Box>
   );
 };

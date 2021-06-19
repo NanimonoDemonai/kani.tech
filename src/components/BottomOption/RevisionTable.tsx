@@ -7,7 +7,7 @@ import { usePageName, useRevisions } from "../hooks/usePageMeta";
 export const RevisionTable: VFC = () => {
   const revisions = useRevisions();
   const pageName = usePageName();
-  if (!(revisions && pageName)) return null;
+  if (!revisions) return null;
   return (
     <Table variant="simple">
       <Thead>

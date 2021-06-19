@@ -15,10 +15,11 @@ export const pageMetaSlice = createSlice({
   initialState,
   reducers: {
     setPageMeta: (state, { payload }: PayloadAction<PageMeta>) => {
-      state = payload;
+      return payload;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;
+      return state;
     },
   },
 });

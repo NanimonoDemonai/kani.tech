@@ -21,7 +21,7 @@ export const pageOptionSlice = createSlice({
   reducers: {
     toggleBottomOptionShow: (state) => {
       if (state.isBottomOptionShow) {
-        state = initialState;
+        return initialState;
       } else {
         state.isBottomOptionShow = true;
       }

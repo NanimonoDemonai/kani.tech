@@ -9,9 +9,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { useTags } from "../../hooks/useMDXEditor";
-import { useDispatch } from "../../hooks/store";
-import { setTags } from "../../hooks/slices/MDXInputSlice";
+import { useTags } from "../hooks/useMDXEditor";
+import { useDispatch } from "../hooks/store";
+import { setTags } from "../hooks/slices/MDXInputSlice";
 
 export const TagInput: VFC = () => {
   const dispatch = useDispatch();
