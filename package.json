@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "run-s dev:server:up prisma:init-local dev:server:start",
+    "dev": "run-s dev:server:up dev:server:start",
     "dev:backend": "run-s dev:server:up prisma:init-local dev:watch-entries",
     "dev:server:start": "run-p nextdev dev:watch-entries",
     "dev:watch-entries": "dotenv -e .env.local -- ts-node --project tsconfig.cjs.json src/script/watchEntries.ts",
@@ -37,6 +37,7 @@
     "@graphql-codegen/typescript-react-apollo": "^2.2.5",
     "@graphql-codegen/typescript-resolvers": "1.19.2",
     "@mapbox/rehype-prism": "^0.6.0",
+    "@next/bundle-analyzer": "^11.0.0",
     "@types/jest": "^26.0.20",
     "@types/lru-cache": "^5.1.0",
     "@types/node": "^15.6.0",
