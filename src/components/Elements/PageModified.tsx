@@ -1,5 +1,5 @@
 import { VFC } from "react";
-import { DateTime } from "../Elements/DateTime";
+import { DateTime } from "./DateTime";
 import { useModified } from "../hooks/usePageMeta";
 
 export const PageModified: VFC = () => {

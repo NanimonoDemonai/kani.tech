@@ -19,5 +19,7 @@ export const useRevision = (): number =>
 export const useSource = (): string =>
   useSelector((state) => state.pageMeta.source);
 
+export const useTags = (): string[] =>
+  useSelector((state) => state.pageMeta.tags);
 export const useRevisions = (): Revision[] | undefined =>
   useSelector((state) => state.pageMeta.revisions);

@@ -21,7 +21,10 @@ export const pageOptionSlice = createSlice({
   reducers: {
     toggleBottomOptionShow: (state) => {
       if (state.isBottomOptionShow) {
-        return initialState;
+        return {
+          ...initialState,
+          isBottomOptionShowEditor: state.isBottomOptionShowEditor,
+        };
       } else {
         state.isBottomOptionShow = true;
       }

@@ -1,8 +1,8 @@
 import { VFC } from "react";
 import { Link, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { DateTime } from "../Elements/DateTime";
-import { usePageName, useRevisions } from "../hooks/usePageMeta";
+import { DateTime } from "../../Elements/DateTime";
+import { usePageName, useRevisions } from "../../hooks/usePageMeta";
 
 export const RevisionTable: VFC = () => {
   const revisions = useRevisions();

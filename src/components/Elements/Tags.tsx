@@ -1,18 +1,18 @@
 import { VFC } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { getTaggedEntryListPathWithTagName } from "../../utils/getURL";
 import NextLink from "next/link";
+import { useTags } from "../hooks/usePageMeta";
 
-interface Props {
-  tags: string[];
-}
-
-export const Tags: VFC<Props> = ({ tags }) => (
-  <Box>
-    {tags.map((e) => (
-      <NextLink href={getTaggedEntryListPathWithTagName(e)} key={e}>
-        <Button size="xs">{e}</Button>
-      </NextLink>
-    ))}
-  </Box>
-);
+export const Tags: VFC = () => {
+  const tags = useTags();
+  return (
+    <>
+      {tags.map((e) => (
+        <NextLink href={getTaggedEntryListPathWithTagName(e)} key={e}>
+          <Button size="xs">{e}</Button>
+        </NextLink>
+      ))}
+    </>
+  );
+};

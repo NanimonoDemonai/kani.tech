@@ -1,11 +1,10 @@
-import { useEffect, VFC } from "react";
+import { useCallback, useEffect, useState, VFC } from "react";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
 
 import { MDEditor } from "./MDEditor";
-import { useAsyncCallback } from "react-async-hook";
 import { gqlClient } from "../../services/client/graphqlRequest";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { useDispatch, useSelector } from "../hooks/store";
@@ -16,6 +15,7 @@ export const MDXEditor: VFC = () => {
   const router = useRouter();
   const pageMeta = usePageMeta();
   const { title, tags, source } = useSelector((state) => state.MDXInput);
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     dispatch(
       setMDXInput({
@@ -25,7 +25,8 @@ export const MDXEditor: VFC = () => {
       })
     );
   }, [dispatch, pageMeta]);
-  const { loading, execute } = useAsyncCallback(async () => {
+  const execute = useCallback(async () => {
+    setDisabled(true);
     await gqlClient.PostArticle({
       pageName: pageMeta.pageName,
       pageTitle: title,
@@ -33,7 +34,7 @@ export const MDXEditor: VFC = () => {
       tags,
     });
     await router.reload();
-  });
+  }, [setDisabled, pageMeta, tags, title, source, router]);
 
   return (
     <Box>
@@ -44,7 +45,7 @@ export const MDXEditor: VFC = () => {
       </Stack>
       <Divider my={2} />
       <HStack>
-        <Button disabled={loading} onClick={execute}>
+        <Button disabled={disabled} onClick={execute}>
           投稿
         </Button>
       </HStack>

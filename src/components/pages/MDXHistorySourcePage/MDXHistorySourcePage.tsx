@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
-import { BottomOptionButton } from "../../BottomOption/BottomOptionButton";
+import { BottomOptionButton } from "../../BottomOption/BottomOptionButtons/BottomOptionButton";
 import { BottomOption } from "../../BottomOption/BottomOption";
 import { PageMeta } from "../../../types/PageMeta";
 import { PageMetaComponent } from "../../Metas/PageMeta";
