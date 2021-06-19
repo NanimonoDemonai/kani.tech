@@ -9,19 +9,20 @@ interface Props {
 }
 
 export const ImageUploaderDropzone: VFC<Props> = ({ execute, loading }) => {
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({
-      onDropAccepted: (e) => {
-        setFiles(e);
-      },
-      accept: "image/*",
-      maxFiles: 1,
-    });
   const [files, setFiles] = useState<File[]>([]);
-  const onClick = useCallback(
-    () => execute(acceptedFiles[0]),
-    [acceptedFiles, execute]
-  );
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDropAccepted: (e) => {
+      setFiles(e);
+    },
+    accept: "image/*",
+    maxFiles: 1,
+  });
+  const onClick = useCallback(() => {
+    execute(files[0]).then(() => {
+      /* noop */
+    });
+    setFiles([]);
+  }, [files, execute]);
 
   return (
     <Box>

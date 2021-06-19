@@ -21,7 +21,7 @@ export const MDXEditor: VFC = () => {
   const pageMeta = useRecoilValue(pageMetaAtoms);
   const snapshot = useRecoilSnapshot();
 
-  const { loading, error, execute } = useAsyncCallback(async () => {
+  const { loading, execute } = useAsyncCallback(async () => {
     const title = await snapshot.getPromise(MDXTitleInputAtoms);
     const tags = await snapshot.getPromise(MDXTagsInputAtoms);
     const source = await snapshot.getPromise(MDXSourceInputAtoms);
@@ -43,7 +43,7 @@ export const MDXEditor: VFC = () => {
       </Stack>
       <Divider my={2} />
       <HStack>
-        <Button disabled={loading || !!error} onClick={execute}>
+        <Button disabled={loading} onClick={execute}>
           投稿
         </Button>
       </HStack>
