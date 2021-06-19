@@ -52,11 +52,7 @@ export const MDXHistorySourcePage: NextPage<MDXHistorySourcePageProps> = ({
           ページに戻る
         </BottomOptionButton>
       </Article>
-      <BottomOption>
-        <BottomOptionButton href={getEntryPathWithEntryName(`${pid}`)}>
-          戻る
-        </BottomOptionButton>
-      </BottomOption>
+      <BottomOption />
     </Box>
   );
 };
