@@ -1,14 +1,14 @@
 import { useEffect, VFC } from "react";
 import Head from "next/head";
 import { SITE_NAME } from "../../constants/envNames";
-import { useRecoilState } from "recoil";
-import { titleAtoms } from "../hooks/atoms/titleAtoms";
+import { useDispatch } from "../hooks/store";
+import { setTitle } from "../hooks/slices/pageMetaSlice";
 
 export const Title: VFC<{ title: string }> = ({ title }) => {
-  const setTitle = useRecoilState(titleAtoms)[1];
+  const dispatch = useDispatch();
   useEffect(() => {
-    setTitle(title);
-  }, [title, setTitle]);
+    dispatch(setTitle(title));
+  }, [title, dispatch]);
   return (
     <Head>
       <title>

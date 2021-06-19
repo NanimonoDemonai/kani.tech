@@ -3,13 +3,16 @@ import { PageMeta } from "../../../types/PageMeta";
 
 export const pageMetaSlice = createSlice({
   name: "pageMeta",
-  initialState: undefined as PageMeta | undefined,
+  initialState: { title: "" } as Partial<PageMeta>,
   reducers: {
     setPageMeta: (state, { payload }: PayloadAction<PageMeta>) => {
       state = payload;
     },
+    setTitle: (state, { payload }: PayloadAction<string>) => {
+      state.title = payload;
+    },
   },
 });
 
-export const { setPageMeta } = pageMetaSlice.actions;
+export const { setPageMeta, setTitle } = pageMetaSlice.actions;
 export const pageMetaReducer = pageMetaSlice.reducer;
