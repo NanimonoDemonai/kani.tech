@@ -1,8 +1,6 @@
 import { ReactNode, VFC } from "react";
 import { Box, Collapse, Divider, HStack, Spacer } from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
-import { useRecoilValue } from "recoil";
-import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
 import { PageRevision } from "./PageRevision";
@@ -17,6 +15,7 @@ import {
   useIsBottomOptionShowHistory,
   useIsBottomOptionShowSource,
 } from "./hooks/atoms";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 interface Props {
   children: ReactNode;
@@ -31,7 +30,7 @@ const DynamicImageUploader = dynamic<{}>(() =>
 );
 
 export const BottomOption: VFC<Props> = ({ children }) => {
-  const pageMeta = useRecoilValue(pageMetaAtoms);
+  const pageMeta = usePageMeta();
   const editorIsShown = useEditorIsShown();
 
   const [isOpen, toggleOptionButton] = useBottomOption();

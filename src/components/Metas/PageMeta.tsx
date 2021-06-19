@@ -1,17 +1,17 @@
 import { useEffect, VFC } from "react";
-import { useRecoilState } from "recoil";
-import { pageMetaAtoms } from "../hooks/atoms/pageMetaAtoms";
 import { PageMeta } from "../../types/PageMeta";
 import { Title } from "./Title";
+import { useDispatch } from "../hooks/store";
+import { setPageMeta } from "../hooks/slices/pageMetaSlice";
 
 interface Props {
   pageMeta: PageMeta;
 }
 
 export const PageMetaComponent: VFC<Props> = ({ pageMeta }) => {
-  const setPageMeta = useRecoilState(pageMetaAtoms)[1];
+  const dispatch = useDispatch();
   useEffect(() => {
-    setPageMeta(pageMeta);
-  }, [pageMeta, setPageMeta]);
+    dispatch(setPageMeta(pageMeta));
+  }, [pageMeta, dispatch]);
   return <Title title={pageMeta.title} />;
 };

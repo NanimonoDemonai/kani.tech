@@ -1,8 +1,7 @@
 import { VFC } from "react";
-import { useRecoilSnapshot, useRecoilValue } from "recoil";
+import { useRecoilSnapshot } from "recoil";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { pageMetaAtoms } from "../../hooks/atoms/pageMetaAtoms";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
 import {
@@ -14,11 +13,12 @@ import { MDEditor } from "./MDEditor";
 import { useSetMDXEditorAtomsEffect } from "./hooks/useSetMDXEditorAtomsEffect";
 import { useAsyncCallback } from "react-async-hook";
 import { gqlClient } from "../../../services/client/graphqlRequest";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 export const MDXEditor: VFC = () => {
   useSetMDXEditorAtomsEffect();
   const router = useRouter();
-  const pageMeta = useRecoilValue(pageMetaAtoms);
+  const pageMeta = usePageMeta();
   const snapshot = useRecoilSnapshot();
 
   const { loading, execute } = useAsyncCallback(async () => {

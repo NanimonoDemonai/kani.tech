@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { pageMetaAtoms } from "../../../hooks/atoms/pageMetaAtoms";
+import { useSetRecoilState } from "recoil";
+import { usePageMeta } from "../../../hooks/usePageMeta";
 import {
   MDXSourceInputAtoms,
   MDXTagsInputAtoms,
@@ -8,7 +8,7 @@ import {
 } from "./atoms";
 
 export const useSetMDXEditorAtomsEffect = (): void => {
-  const pageMeta = useRecoilValue(pageMetaAtoms);
+  const pageMeta = usePageMeta();
 
   const setTileInput = useSetRecoilState(MDXTitleInputAtoms);
   const setSourceInput = useSetRecoilState(MDXSourceInputAtoms);
