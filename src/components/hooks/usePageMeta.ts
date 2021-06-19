@@ -1,7 +1,7 @@
 import { PageMeta, Revision } from "../../types/PageMeta";
 import { useSelector } from "./store";
 
-export const usePageMeta = (): Partial<PageMeta> =>
+export const usePageMeta = (): PageMeta =>
   useSelector((state) => state.pageMeta);
 
 export const useTitle = (): string | undefined =>

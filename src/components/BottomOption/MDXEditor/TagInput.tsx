@@ -9,17 +9,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { useRecoilState } from "recoil";
-import { MDXTagsInputAtoms } from "./hooks/atoms";
+import { useTags } from "../../hooks/useMDXEditor";
+import { useDispatch } from "../../hooks/store";
+import { setTags } from "../../hooks/slices/MDXInputSlice";
 
 export const TagInput: VFC = () => {
-  const [tags, setTags] = useRecoilState(MDXTagsInputAtoms);
+  const dispatch = useDispatch();
+
+  const tags = useTags();
   const [tagInput, setTagInput] = useState("");
   const onRemoveTag = useCallback(() => {
     if (tagInput.length <= 0) return;
-    setTags([...new Set([...tags, tagInput])]);
+    dispatch(setTags([...new Set([...tags, tagInput])]));
     setTagInput("");
-  }, [setTags, setTagInput, tagInput, tags]);
+  }, [setTagInput, tagInput, tags, dispatch]);
 
   return (
     <Box>
@@ -33,7 +36,7 @@ export const TagInput: VFC = () => {
             rightIcon={<CloseIcon boxSize={2} />}
             key={e}
             onClick={() => {
-              setTags(tags.filter((f) => f !== e));
+              dispatch(setTags(tags.filter((f) => f !== e)));
             }}
           >
             {e}
@@ -49,7 +52,7 @@ export const TagInput: VFC = () => {
             if (e.key == "Enter") {
               e.preventDefault();
               if (tagInput.length <= 0) return;
-              setTags([...new Set([...tags, tagInput])]);
+              dispatch(setTags([...new Set([...tags, tagInput])]));
               setTagInput("");
             }
           }}

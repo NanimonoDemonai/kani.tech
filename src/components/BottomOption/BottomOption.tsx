@@ -1,5 +1,12 @@
 import { ReactNode, VFC } from "react";
-import { Box, Collapse, Divider, HStack, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Collapse,
+  Divider,
+  HStack,
+  Spacer,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { PageModified } from "./PageModified";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 import { Tags } from "../Elements/Tags";
@@ -8,14 +15,16 @@ import { RevisionTable } from "./RevisionTable";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import dynamic from "next/dynamic";
 import { useEditorIsShown } from "./hooks/useEditorIsShown";
-import {
-  useBottomOption,
-  useIsBottomOptionShowEditor,
-  useIsBottomOptionShowFilList,
-  useIsBottomOptionShowHistory,
-  useIsBottomOptionShowSource,
-} from "./hooks/atoms";
+
 import { usePageMeta } from "../hooks/usePageMeta";
+import { useDispatch } from "../hooks/store";
+import {
+  toggleBottomOptionFileListEditor,
+  toggleBottomOptionShow,
+  toggleBottomOptionShowHistory,
+  toggleBottomOptionShowSource,
+} from "../hooks/slices/pageOptionSlice";
+import { usePageOption } from "../hooks/usePageOption";
 
 interface Props {
   children: ReactNode;
@@ -32,13 +41,9 @@ const DynamicImageUploader = dynamic<{}>(() =>
 export const BottomOption: VFC<Props> = ({ children }) => {
   const pageMeta = usePageMeta();
   const editorIsShown = useEditorIsShown();
-
-  const [isOpen, toggleOptionButton] = useBottomOption();
-  const [isOpenSource, onToggleSource] = useIsBottomOptionShowSource();
-  const [isOpenHistory, onToggleHistory] = useIsBottomOptionShowHistory();
-  const [isOpenEditor, onToggleEditor] = useIsBottomOptionShowEditor();
-  const [isOpenFileList, onToggleFileList] = useIsBottomOptionShowFilList();
-
+  const pageOption = usePageOption();
+  const dispatch = useDispatch();
+  const { onToggle, isOpen } = useDisclosure();
   const isHistoryShown = !!pageMeta?.revisions;
   const source = pageMeta?.source;
 
@@ -57,14 +62,14 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       <HStack spacing={2}>
         <Spacer />
         <BottomOptionToggleButton
-          onToggle={toggleOptionButton}
-          isOpen={isOpen}
+          onToggle={() => dispatch(toggleBottomOptionShow())}
+          isOpen={pageOption.isBottomOptionShow}
           label={"オプション"}
         />
         {editorIsShown && (
           <BottomOptionToggleButton
-            onToggle={onToggleEditor}
-            isOpen={isOpenEditor}
+            onToggle={onToggle}
+            isOpen={isOpen}
             label={"編集する"}
           />
         )}
@@ -77,22 +82,22 @@ export const BottomOption: VFC<Props> = ({ children }) => {
             {children}
             {source && (
               <BottomOptionToggleButton
-                onToggle={onToggleSource}
-                isOpen={isOpenSource}
+                onToggle={() => dispatch(toggleBottomOptionShowSource())}
+                isOpen={pageOption.isBottomOptionShowSource}
                 label={"ソースを表示"}
               />
             )}
             {isHistoryShown && (
               <BottomOptionToggleButton
-                onToggle={onToggleHistory}
-                isOpen={isOpenHistory}
+                onToggle={() => dispatch(toggleBottomOptionShowHistory())}
+                isOpen={pageOption.isBottomOptionShowHistory}
                 label={"履歴を表示"}
               />
             )}
             {editorIsShown && (
               <BottomOptionToggleButton
-                onToggle={onToggleFileList}
-                isOpen={isOpenFileList}
+                onToggle={() => dispatch(toggleBottomOptionFileListEditor())}
+                isOpen={pageOption.isBottomOptionFileListEditor}
                 label={"ファイルを表示"}
               />
             )}
@@ -101,24 +106,24 @@ export const BottomOption: VFC<Props> = ({ children }) => {
       </HStack>
 
       {source && (
-        <Collapse in={isOpenSource} animateOpacity>
+        <Collapse in={pageOption.isBottomOptionShowSource} animateOpacity>
           <DynamicSourceHighlighter source={source} />
         </Collapse>
       )}
 
       {isHistoryShown && (
-        <Collapse in={isOpenHistory} animateOpacity>
+        <Collapse in={pageOption.isBottomOptionShowHistory} animateOpacity>
           <RevisionTable />
         </Collapse>
       )}
 
       {editorIsShown && (
-        <Collapse in={isOpenEditor} animateOpacity>
+        <Collapse in={pageOption.isBottomOptionShowEditor} animateOpacity>
           <DynamicMDXEditor />
         </Collapse>
       )}
       {editorIsShown && (
-        <Collapse in={isOpenFileList} animateOpacity>
+        <Collapse in={pageOption.isBottomOptionFileListEditor} animateOpacity>
           <DynamicImageUploader />
         </Collapse>
       )}

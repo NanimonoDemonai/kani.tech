@@ -1,32 +1,33 @@
-import { VFC } from "react";
-import { useRecoilSnapshot } from "recoil";
+import { useEffect, VFC } from "react";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
-import {
-  MDXSourceInputAtoms,
-  MDXTagsInputAtoms,
-  MDXTitleInputAtoms,
-} from "./hooks/atoms";
+
 import { MDEditor } from "./MDEditor";
-import { useSetMDXEditorAtomsEffect } from "./hooks/useSetMDXEditorAtomsEffect";
 import { useAsyncCallback } from "react-async-hook";
 import { gqlClient } from "../../../services/client/graphqlRequest";
 import { usePageMeta } from "../../hooks/usePageMeta";
+import { useDispatch, useSelector } from "../../hooks/store";
+import { setMDXInput } from "../../hooks/slices/MDXInputSlice";
 
 export const MDXEditor: VFC = () => {
-  useSetMDXEditorAtomsEffect();
+  const dispatch = useDispatch();
   const router = useRouter();
   const pageMeta = usePageMeta();
-  const snapshot = useRecoilSnapshot();
-
+  const { title, tags, source } = useSelector((state) => state.MDXInput);
+  useEffect(() => {
+    dispatch(
+      setMDXInput({
+        source: pageMeta.source,
+        tags: pageMeta.tags,
+        title: pageMeta.title,
+      })
+    );
+  }, []);
   const { loading, execute } = useAsyncCallback(async () => {
-    const title = await snapshot.getPromise(MDXTitleInputAtoms);
-    const tags = await snapshot.getPromise(MDXTagsInputAtoms);
-    const source = await snapshot.getPromise(MDXSourceInputAtoms);
     await gqlClient.PostArticle({
-      pageName: pageMeta?.pageName || "",
+      pageName: pageMeta.pageName,
       pageTitle: title,
       source: source,
       tags,
