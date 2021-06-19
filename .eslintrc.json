@@ -64,7 +64,7 @@
         "react-hooks/exhaustive-deps": [
           "warn",
           {
-            "additionalHooks": "useRecoilCallback"
+            "additionalHooks": "(useAsync|useAsyncCallback|useRecoilCallback)"
           }
         ]
       }
