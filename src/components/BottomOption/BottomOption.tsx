@@ -7,14 +7,15 @@ import { usePageOption } from "../hooks/usePageOption";
 import { BottomOptionComponents } from "./BottomOptionComponents/BottomOptionComponents";
 import { BottomOptionUpperButtons } from "./BottomOptionButtons/BottomOptionUpperButtons";
 import { BottomOptionBottomButtons } from "./BottomOptionButtons/BottomOptionBottomButtons";
+import { useTags } from "../hooks/usePageMeta";
 
 export const BottomOption: VFC = () => {
   const pageOption = usePageOption();
-
+  const tags = useTags();
   return (
     <Box as={"aside"}>
       <HStack spacing={2}>
-        <Tags />
+        <Tags tags={tags} />
       </HStack>
 
       <HStack spacing={2}>
