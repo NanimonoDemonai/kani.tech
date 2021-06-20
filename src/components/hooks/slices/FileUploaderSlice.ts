@@ -4,7 +4,6 @@ import {
   createSlice,
   Reducer,
 } from "@reduxjs/toolkit";
-import axios from "axios";
 import { gqlClient } from "../../../services/client/graphqlRequest";
 import { AsyncThunkConfig } from "../store";
 
@@ -55,12 +54,12 @@ export const uploadFile = createAsyncThunk<
     key: `${pageName}/${file.name}`,
   });
   if (!url) return;
-  await axios.request({
+  await fetch(url, {
     method: "put",
-    url,
-    data: file,
+    body: file,
     headers: { "Content-Type": file.type },
   });
+
   dispatch(loadObject());
 });
 
