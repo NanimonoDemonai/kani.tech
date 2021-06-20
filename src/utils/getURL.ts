@@ -8,3 +8,8 @@ export const getTaggedEntryListPathWithTagName = (tagName: string): string =>
 
 export const getImageUrl = (key: string): string =>
   `http://localhost:8082/auto/plain/s3://${Bucket}/${encodeURI(key)}`;
+
+export const getOptimizedImageURL = (key: string, width: number): string =>
+  `http://localhost:8082/rs:fit:${width}/plain/s3://${Bucket}/${encodeURI(
+    key
+  )}@webp`;

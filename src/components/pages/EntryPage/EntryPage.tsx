@@ -1,20 +1,33 @@
 import { Box } from "@chakra-ui/react";
 import { getMDXComponent } from "mdx-bundler/client";
 import { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, VFC } from "react";
 import { entryDefaultSX } from "../../../styles/entryDefaultSX";
 import { PageMeta } from "../../../types/PageMeta";
+import { getOptimizedImageURL } from "../../../utils/getURL";
 import { BottomOption } from "../../BottomOption/BottomOption";
-
 import { Fallback } from "../../Elements/Fallback";
 import { Article } from "../../Entry/Article";
 import { PageMetaComponent } from "../../Metas/PageMeta";
-
 export interface EntryPageProps {
   code: string;
   pageMeta: PageMeta;
 }
+
+const ImageComponent: VFC<{ src: string } | any> = ({ src }) => (
+  <Image
+    loader={({ src, width }) => {
+      return getOptimizedImageURL(src, width);
+    }}
+    src={src}
+    alt={src}
+    layout={"fill"}
+    //width={30}
+    //height={30}
+  />
+);
 
 export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
   const router = useRouter();
@@ -28,7 +41,11 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
 
       <Article>
         <Box sx={entryDefaultSX}>
-          <Component />
+          <Component
+            components={{
+              img: ImageComponent,
+            }}
+          />
         </Box>
       </Article>
       <BottomOption />

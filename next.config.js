@@ -14,5 +14,8 @@ module.exports = withBundleAnalyzer(
 
       return config;
     },
+    images: {
+      domains: ["localhost:8082"],
+    },
   })
 );
