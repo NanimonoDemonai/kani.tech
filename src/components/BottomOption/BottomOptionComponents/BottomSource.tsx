@@ -1,8 +1,8 @@
-import { VFC } from "react";
 import { Collapse } from "@chakra-ui/react";
-import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
-import { useIsBottomOptionShowSource } from "../../hooks/usePageOption";
+import { VFC } from "react";
 import { useSource } from "../../hooks/useMDXEditor";
+import { useIsBottomOptionShowSource } from "../../hooks/usePageOption";
+import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 
 export const BottomSource: VFC = () => {
   const isBottomOptionShowSource = useIsBottomOptionShowSource();

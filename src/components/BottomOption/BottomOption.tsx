@@ -1,13 +1,13 @@
-import { VFC } from "react";
 import { Box, Collapse, Divider, HStack, Spacer } from "@chakra-ui/react";
+import { VFC } from "react";
 import { PageModified } from "../Elements/PageModified";
-import { Tags } from "../Elements/Tags";
 import { PageRevision } from "../Elements/PageRevision";
-import { usePageOption } from "../hooks/usePageOption";
-import { BottomOptionComponents } from "./BottomOptionComponents/BottomOptionComponents";
-import { BottomOptionUpperButtons } from "./BottomOptionButtons/BottomOptionUpperButtons";
-import { BottomOptionBottomButtons } from "./BottomOptionButtons/BottomOptionBottomButtons";
+import { Tags } from "../Elements/Tags";
 import { useTags } from "../hooks/usePageMeta";
+import { usePageOption } from "../hooks/usePageOption";
+import { BottomOptionBottomButtons } from "./BottomOptionButtons/BottomOptionBottomButtons";
+import { BottomOptionUpperButtons } from "./BottomOptionButtons/BottomOptionUpperButtons";
+import { BottomOptionComponents } from "./BottomOptionComponents/BottomOptionComponents";
 
 export const BottomOption: VFC = () => {
   const pageOption = usePageOption();

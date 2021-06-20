@@ -1,9 +1,9 @@
-import { VFC } from "react";
 import { Collapse } from "@chakra-ui/react";
-import { useIsBottomOptionFileListEditor } from "../../hooks/usePageOption";
 import dynamic from "next/dynamic";
+import { VFC } from "react";
+import { useIsBottomOptionFileListEditor } from "../../hooks/usePageOption";
 
-const DynamicImageUploader = dynamic<{}>(() =>
+const DynamicImageUploader = dynamic<unknown>(() =>
   import("../../Uploader/ImageUploader").then((mod) => mod.ImageUploader)
 );
 

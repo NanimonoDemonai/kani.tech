@@ -1,10 +1,9 @@
-import { useCallback, useState, VFC } from "react";
 import { Box, Button, Center, Flex, Spacer, Text } from "@chakra-ui/react";
+import { useCallback, useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
 
 interface Props {
   loading: boolean;
-  // eslint-disable-next-line no-unused-vars
   execute: (file: File) => Promise<void>;
 }
 

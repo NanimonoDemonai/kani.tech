@@ -1,11 +1,19 @@
 import type { Node } from "unist";
 import { TestFunction } from "unist-util-is";
 import visit from "unist-util-visit";
-
+import { z } from "zod";
 type VisitorParameters = Parameters<visit.Visitor<never>>;
 
-export const isNodeMdxJsx: TestFunction<Node> = (node: any): node is Node =>
-  node.type.startsWith("mdxJsx");
+const schema = z.object({
+  type: z.string(),
+});
+export const isNodeMdxJsx: TestFunction<Node> = (node): node is Node => {
+  const res = schema.safeParse(node);
+  if (res.success) {
+    return res.data.type.startsWith("mdxJsx");
+  }
+  return false;
+};
 
 /**
  * visitで訪れたノードを削除する

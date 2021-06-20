@@ -1,5 +1,5 @@
-import { ReactNode, VFC } from "react";
 import { Box } from "@chakra-ui/react";
+import { ReactNode, VFC } from "react";
 
 interface Props {
   children: ReactNode;

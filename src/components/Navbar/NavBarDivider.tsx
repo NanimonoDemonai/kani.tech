@@ -1,5 +1,5 @@
-import { VFC } from "react";
 import { Center, StackDivider } from "@chakra-ui/react";
+import { VFC } from "react";
 
 export const NavBarDivider: VFC = () => (
   <Center h="5">

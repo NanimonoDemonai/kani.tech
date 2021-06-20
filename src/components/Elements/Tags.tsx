@@ -1,7 +1,7 @@
-import { VFC } from "react";
 import { Box, Button } from "@chakra-ui/react";
-import { getTaggedEntryListPathWithTagName } from "../../utils/getURL";
 import NextLink from "next/link";
+import { VFC } from "react";
+import { getTaggedEntryListPathWithTagName } from "../../utils/getURL";
 
 interface Props {
   tags: string[];

@@ -25,6 +25,7 @@
     "start": "next start",
     "test": "jest",
     "tscheck": "tsc --noEmit",
+    "lint": "eslint src",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "packageManager": "yarn@1.22.5",

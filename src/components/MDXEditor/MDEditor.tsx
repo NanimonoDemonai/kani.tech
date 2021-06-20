@@ -1,12 +1,11 @@
-import { VFC } from "react";
 import { Box } from "@chakra-ui/react";
+import MDEditorComponent from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/dist/markdown-editor.css";
 import "@uiw/react-markdown-preview/dist/markdown.css";
-
-import MDEditorComponent from "@uiw/react-md-editor";
-import { useSource } from "../hooks/useMDXEditor";
-import { useDispatch } from "../hooks/store";
+import { VFC } from "react";
 import { setSource } from "../hooks/slices/MDXInputSlice";
+import { useDispatch } from "../hooks/store";
+import { useSource } from "../hooks/useMDXEditor";
 
 export const MDEditor: VFC = () => {
   const source = useSource();

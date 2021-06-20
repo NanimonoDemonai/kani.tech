@@ -1,8 +1,8 @@
 import { useEffect, VFC } from "react";
 import { PageMeta } from "../../types/PageMeta";
-import { Title } from "./Title";
-import { useDispatch } from "../hooks/store";
 import { setPageMeta } from "../hooks/slices/pageMetaSlice";
+import { useDispatch } from "../hooks/store";
+import { Title } from "./Title";
 
 interface Props {
   pageMeta: PageMeta;

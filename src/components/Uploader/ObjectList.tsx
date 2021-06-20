@@ -1,9 +1,9 @@
-import { useEffect, VFC } from "react";
 import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
-import { Fallback } from "../Elements/Fallback";
-import { getImageUrl } from "../../utils/getURL";
+import { useEffect, VFC } from "react";
 import { useAsync } from "react-async-hook";
 import { gqlClient } from "../../services/client/graphqlRequest";
+import { getImageUrl } from "../../utils/getURL";
+import { Fallback } from "../Elements/Fallback";
 
 interface Props {
   pageName: string;
@@ -18,7 +18,7 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
   } = useAsync<string[]>(async () => {
     const { getObjectList } = await gqlClient.GetObjectList({ key: pageName });
     return getObjectList;
-  }, []);
+  }, [pageName]);
   useEffect(() => {
     if (loading && loading) execute();
   }, [loading, loadingData, execute, pageName]);

@@ -1,10 +1,10 @@
-import { NextPage } from "next";
-import { AppProps } from "next/app";
 import { ChakraProvider, Container } from "@chakra-ui/react";
-import { PageNavbar } from "../Navbar/PageNavbar";
-import { Footer } from "../Footer/Footer";
+import { NextPage } from "next";
 import { Provider as NextAuthProvide } from "next-auth/client";
+import { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import { Footer } from "../Footer/Footer";
+import { PageNavbar } from "../Navbar/PageNavbar";
 import { store } from "../hooks/store";
 
 export const MyApp: NextPage<AppProps> = ({ Component, pageProps }) => (

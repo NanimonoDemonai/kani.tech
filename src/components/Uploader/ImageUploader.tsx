@@ -1,12 +1,12 @@
-import { VFC } from "react";
 import { Stack, Text } from "@chakra-ui/react";
-import { ObjectList } from "./ObjectList";
-import { ImageUploaderDropzone } from "./ImageUploaderDropzone";
+import axios from "axios";
+import { VFC } from "react";
 import { useAsyncCallback } from "react-async-hook";
 import { gqlClient } from "../../services/client/graphqlRequest";
-import axios from "axios";
-import { usePageName } from "../hooks/usePageMeta";
 import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
+import { usePageName } from "../hooks/usePageMeta";
+import { ImageUploaderDropzone } from "./ImageUploaderDropzone";
+import { ObjectList } from "./ObjectList";
 
 export const ImageUploader: VFC = () => {
   const editorIsShown = useEditorIsShown();

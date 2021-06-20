@@ -1,8 +1,7 @@
-import { GetStaticPropsResult } from "next";
 import { revalidate } from "./revalidate";
 
-export const NotFoundResponse: GetStaticPropsResult<any> = { notFound: true };
-export const NotFoundResponseWithRevalidate: GetStaticPropsResult<any> = {
+export const NotFoundResponse = { notFound: true };
+export const NotFoundResponseWithRevalidate = {
   notFound: true,
   revalidate,
 };
