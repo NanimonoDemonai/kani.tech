@@ -1,6 +1,6 @@
 import { Box, Table, Tr, Th, Thead, Tbody, Button } from "@chakra-ui/react";
 import { useEffect, VFC } from "react";
-import { useAsync } from "react-async-hook";
+import { useAsync, useAsyncCallback } from "react-async-hook";
 import { gqlClient } from "../../services/client/graphqlRequest";
 import { getImageUrl } from "../../utils/getURL";
 import { noop } from "../../utils/noop";
@@ -18,8 +18,14 @@ const useGetObjectList = (pageName: string) =>
     return getObjectList;
   }, [pageName]);
 
+const useDeleteObject = () =>
+  useAsyncCallback<void, [string]>(async (key) => {
+    await gqlClient.DeleteObject({ key });
+  });
+
 export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
   const { loading: loadingData, result, execute } = useGetObjectList(pageName);
+  const { loading: loadingDelete, execute: deleteObject } = useDeleteObject();
   const isEditorShown = useEditorIsShown();
   useEffect(() => {
     if (loading && loadingData) execute().then(noop);
@@ -51,7 +57,14 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
               </Th>
               {isEditorShown && (
                 <Th>
-                  <Button>削除</Button>
+                  <Button
+                    disabled={loadingDelete || loading}
+                    onClick={() => {
+                      deleteObject(e).then(noop);
+                    }}
+                  >
+                    削除
+                  </Button>
                 </Th>
               )}
             </Tr>
