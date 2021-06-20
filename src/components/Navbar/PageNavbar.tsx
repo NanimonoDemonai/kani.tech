@@ -1,5 +1,4 @@
-import { VFC } from "react";
-import NextLink from "next/link";
+import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -9,12 +8,13 @@ import {
   Link,
   Spacer,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
-import { KaniButton } from "./KaniButton";
-import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
-import { NavBarDivider } from "./NavBarDivider";
 import { signIn, signOut, useSession } from "next-auth/client";
+import NextLink from "next/link";
+import { VFC } from "react";
+import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
 import { useTitle } from "../hooks/usePageMeta";
+import { KaniButton } from "./KaniButton";
+import { NavBarDivider } from "./NavBarDivider";
 
 export const PageNavbar: VFC = () => {
   const title = useTitle();

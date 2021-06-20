@@ -1,5 +1,4 @@
 import { VFC } from "react";
-import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import {
   toggleBottomOptionShow,
   toggleBottomOptionShowEditor,
@@ -7,6 +6,7 @@ import {
 import { useDispatch } from "../../hooks/store";
 import { usePageOption } from "../../hooks/usePageOption";
 import { useEditorIsShown } from "../hooks/useEditorIsShown";
+import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 
 export const BottomOptionUpperButtons: VFC = () => {
   const dispatch = useDispatch();

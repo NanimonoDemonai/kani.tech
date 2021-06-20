@@ -1,6 +1,6 @@
-import { VFC } from "react";
 import { Link } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { VFC } from "react";
 
 interface Props {
   href: string;

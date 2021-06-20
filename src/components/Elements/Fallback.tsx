@@ -1,5 +1,5 @@
-import { VFC } from "react";
 import { Skeleton, Stack } from "@chakra-ui/react";
+import { VFC } from "react";
 
 export const Fallback: VFC = () => (
   <Stack>

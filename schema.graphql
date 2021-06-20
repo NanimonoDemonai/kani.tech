@@ -11,6 +11,7 @@ type Id {
 
 type Mutation {
   postArticle(input: ArticleInput!): Id
+  deleteObject(key: String!): Id
 }
 
 type Query {

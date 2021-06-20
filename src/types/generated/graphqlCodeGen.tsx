@@ -29,11 +29,17 @@ export type Id = {
 export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
+  deleteObject?: Maybe<Id>;
 };
 
 
 export type MutationPostArticleArgs = {
   input: ArticleInput;
+};
+
+
+export type MutationDeleteObjectArgs = {
+  key: Scalars['String'];
 };
 
 export type Query = {
@@ -160,6 +166,7 @@ export type IdResolvers<ContextType = SessionContextType, ParentType extends Res
 
 export type MutationResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   postArticle?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationPostArticleArgs, 'input'>>;
+  deleteObject?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationDeleteObjectArgs, 'key'>>;
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{

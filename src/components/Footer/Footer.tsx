@@ -1,5 +1,5 @@
-import { VFC } from "react";
 import { Center } from "@chakra-ui/react";
+import { VFC } from "react";
 
 export const Footer: VFC = () => {
   return (

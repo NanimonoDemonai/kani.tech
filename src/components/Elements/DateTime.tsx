@@ -1,12 +1,13 @@
-import { VFC } from "react";
 import { Text } from "@chakra-ui/react";
-import dayjs from "dayjs";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import locale_ja from "dayjs/locale/ja";
+import dayjs, { ConfigType, extend, locale } from "dayjs";
 
-dayjs.extend(localizedFormat);
-dayjs.locale(locale_ja);
-export const DateTime: VFC<{ date: any; label?: string }> = ({
+import locale_ja from "dayjs/locale/ja";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import { VFC } from "react";
+
+extend(localizedFormat);
+locale(locale_ja);
+export const DateTime: VFC<{ date: ConfigType; label?: string }> = ({
   date,
   label,
 }) => (

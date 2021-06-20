@@ -1,7 +1,7 @@
-import { VFC } from "react";
 import { Collapse } from "@chakra-ui/react";
-import { RevisionTable } from "./RevisionTable";
+import { VFC } from "react";
 import { useIsBottomOptionShowHistory } from "../../hooks/usePageOption";
+import { RevisionTable } from "./RevisionTable";
 
 export const BottomHistory: VFC = () => {
   const isBottomOptionShowHistory = useIsBottomOptionShowHistory();

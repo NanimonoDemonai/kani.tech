@@ -1,5 +1,5 @@
-import { VFC } from "react";
 import { Link } from "@chakra-ui/react";
+import { VFC } from "react";
 
 interface Props {
   onToggle: () => void;

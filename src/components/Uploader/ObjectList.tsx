@@ -1,45 +1,65 @@
+import { Box, Table, Tr, Th, Thead, Tbody, Button } from "@chakra-ui/react";
 import { useEffect, VFC } from "react";
-import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
-import { Fallback } from "../Elements/Fallback";
 import { getImageUrl } from "../../utils/getURL";
-import { useAsync } from "react-async-hook";
-import { gqlClient } from "../../services/client/graphqlRequest";
+import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
+import { Fallback } from "../Elements/Fallback";
+import { deleteFile, loadObject } from "../hooks/slices/FileUploaderSlice";
+import { useDispatch } from "../hooks/store";
+import {
+  useIsDisabling,
+  useLoading,
+  useObjectList,
+} from "../hooks/useUploader";
 
-interface Props {
-  pageName: string;
-  loading: boolean;
-}
-
-export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
-  const {
-    loading: loadingData,
-    result,
-    execute,
-  } = useAsync<string[]>(async () => {
-    const { getObjectList } = await gqlClient.GetObjectList({ key: pageName });
-    return getObjectList;
-  }, []);
+export const ObjectList: VFC = () => {
+  const dispatch = useDispatch();
+  const disabled = useIsDisabling();
+  const isEditorShown = useEditorIsShown();
+  const objectList = useObjectList();
+  const loading = useLoading();
   useEffect(() => {
-    if (loading && loading) execute();
-  }, [loading, loadingData, execute, pageName]);
-  if (loadingData) return <Fallback />;
-  if (!result) return null;
-
+    dispatch(loadObject());
+  }, [dispatch]);
+  if (loading) return <Fallback />;
+  if (objectList.length < 1) return null;
   return (
     <Box>
-      <UnorderedList>
-        {result.map((e) => (
-          <ListItem key={e}>
-            {e}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={getImageUrl(e)}
-              alt="my_skin"
-              style={{ maxWidth: 30, maxHeight: 30 }}
-            />
-          </ListItem>
-        ))}
-      </UnorderedList>
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th>ファイル名</Th>
+            <Th>サムネイル</Th>
+            {isEditorShown && <Th>編集</Th>}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {objectList.map((e) => (
+            <Tr key={e}>
+              <Th>{e}</Th>
+              <Th>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={getImageUrl(e)}
+                  alt="my_skin"
+                  style={{ maxWidth: 30, maxHeight: 30 }}
+                />
+              </Th>
+              {isEditorShown && (
+                <Th>
+                  <Button
+                    disabled={disabled || loading}
+                    onClick={() => {
+                      dispatch(deleteFile({ key: e }));
+                    }}
+                  >
+                    削除
+                  </Button>
+                </Th>
+              )}
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </Box>
   );
 };

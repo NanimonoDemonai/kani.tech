@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState, VFC } from "react";
 import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useState, VFC } from "react";
+
+import { gqlClient } from "../../services/client/graphqlRequest";
+import { setMDXInput } from "../hooks/slices/MDXInputSlice";
+import { useDispatch, useSelector } from "../hooks/store";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { MDEditor } from "./MDEditor";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
-
-import { MDEditor } from "./MDEditor";
-import { gqlClient } from "../../services/client/graphqlRequest";
-import { usePageMeta } from "../hooks/usePageMeta";
-import { useDispatch, useSelector } from "../hooks/store";
-import { setMDXInput } from "../hooks/slices/MDXInputSlice";
 
 export const MDXEditor: VFC = () => {
   const dispatch = useDispatch();

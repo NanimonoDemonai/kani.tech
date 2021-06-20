@@ -1,13 +1,13 @@
+import { HStack } from "@chakra-ui/react";
 import { VFC } from "react";
-import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 import {
   toggleBottomOptionFileListEditor,
   toggleBottomOptionShowHistory,
   toggleBottomOptionShowSource,
 } from "../../hooks/slices/pageOptionSlice";
-import { HStack } from "@chakra-ui/react";
 import { useDispatch } from "../../hooks/store";
 import { usePageOption } from "../../hooks/usePageOption";
+import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 
 export const BottomOptionBottomButtons: VFC = () => {
   const dispatch = useDispatch();

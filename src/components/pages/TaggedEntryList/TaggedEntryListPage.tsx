@@ -1,11 +1,11 @@
+import { Box } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { Title } from "../../Metas/Title";
+import { useRouter } from "next/router";
+import { EntrySummary } from "../../../types/EntrySummary";
+import { Fallback } from "../../Elements/Fallback";
 import { Article } from "../../Entry/Article";
 import { EntryList } from "../../Entry/EntryList";
-import { EntrySummary } from "../../../types/EntrySummary";
-import { useRouter } from "next/router";
-import { Fallback } from "../../Elements/Fallback";
-import { Box } from "@chakra-ui/react";
+import { Title } from "../../Metas/Title";
 
 export interface TaggedEntryListProps {
   entryPageList: EntrySummary[];

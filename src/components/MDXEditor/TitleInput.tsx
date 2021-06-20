@@ -1,8 +1,8 @@
-import { VFC } from "react";
 import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
-import { useTitle } from "../hooks/useMDXEditor";
-import { useDispatch } from "../hooks/store";
+import { VFC } from "react";
 import { setTitle } from "../hooks/slices/MDXInputSlice";
+import { useDispatch } from "../hooks/store";
+import { useTitle } from "../hooks/useMDXEditor";
 
 export const TitleInput: VFC = () => {
   const title = useTitle();

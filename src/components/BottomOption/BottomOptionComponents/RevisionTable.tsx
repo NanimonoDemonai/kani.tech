@@ -1,6 +1,6 @@
-import { VFC } from "react";
 import { Link, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { VFC } from "react";
 import { DateTime } from "../../Elements/DateTime";
 import { usePageName, useRevisions } from "../../hooks/usePageMeta";
 

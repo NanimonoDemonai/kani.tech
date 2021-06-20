@@ -1,11 +1,11 @@
-import { VFC } from "react";
 import { Box } from "@chakra-ui/react";
-import { BottomSource } from "./BottomSource";
-import { BottomHistory } from "./BottomHistory";
-import { BottomEditor } from "./BottomEditor";
-import { BottomImageUploader } from "./BottomImageUploader";
-import { useEditorIsShown } from "../hooks/useEditorIsShown";
+import { VFC } from "react";
 import { usePageOption } from "../../hooks/usePageOption";
+import { useEditorIsShown } from "../hooks/useEditorIsShown";
+import { BottomEditor } from "./BottomEditor";
+import { BottomHistory } from "./BottomHistory";
+import { BottomImageUploader } from "./BottomImageUploader";
+import { BottomSource } from "./BottomSource";
 
 export const BottomOptionComponents: VFC = () => {
   const editorIsShown = useEditorIsShown();

@@ -1,9 +1,9 @@
-import { VFC } from "react";
 import { HStack, Link, ListItem, UnorderedList } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { VFC } from "react";
+import { EntrySummary } from "../../types/EntrySummary";
 import { getEntryPathWithEntryName } from "../../utils/getURL";
 import { DateTime } from "../Elements/DateTime";
-import { EntrySummary } from "../../types/EntrySummary";
 
 interface Props {
   entryPageList: EntrySummary[];

@@ -4,7 +4,6 @@
     "es2021": true
   },
   "extends": [
-    "next",
     "eslint:recommended",
     "prettier"
   ],
@@ -16,7 +15,8 @@
   "overrides": [
     {
       "files": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "src/**/*.tsx"
       ],
       "extends": [
         "eslint:recommended",
@@ -24,6 +24,7 @@
         "plugin:react-hooks/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:import/recommended",
+        "next",
         "prettier"
       ],
       // typscript対応
@@ -51,6 +52,7 @@
       "rules": {
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
         "unused-imports/no-unused-imports": "error",
         "sort-imports": "off",
         "import/order": [

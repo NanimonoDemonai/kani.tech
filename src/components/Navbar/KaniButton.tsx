@@ -1,6 +1,6 @@
-import { VFC } from "react";
 import { Center, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { VFC } from "react";
 
 export const KaniButton: VFC = () => (
   <LinkBox borderWidth="1px" rounded="md">

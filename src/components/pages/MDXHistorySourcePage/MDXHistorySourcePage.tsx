@@ -1,21 +1,21 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { getEntryPathWithEntryName } from "../../../utils/getURL";
-import { BottomOptionButton } from "../../BottomOption/BottomOptionButtons/BottomOptionButton";
-import { BottomOption } from "../../BottomOption/BottomOption";
-import { PageMeta } from "../../../types/PageMeta";
-import { PageMetaComponent } from "../../Metas/PageMeta";
-import { Article } from "../../Entry/Article";
-import { SourceHighlighter } from "../../Entry/SourceHighlighter";
-import { Fallback } from "../../Elements/Fallback";
-import Link from "next/link";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { PageMeta } from "../../../types/PageMeta";
+import { getEntryPathWithEntryName } from "../../../utils/getURL";
+import { BottomOption } from "../../BottomOption/BottomOption";
+import { BottomOptionButton } from "../../BottomOption/BottomOptionButtons/BottomOptionButton";
+import { Fallback } from "../../Elements/Fallback";
+import { Article } from "../../Entry/Article";
+import { SourceHighlighter } from "../../Entry/SourceHighlighter";
+import { PageMetaComponent } from "../../Metas/PageMeta";
 
 export interface MDXHistorySourcePageProps {
   pageMeta: PageMeta;

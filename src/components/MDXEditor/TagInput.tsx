@@ -1,4 +1,4 @@
-import { useCallback, useState, VFC } from "react";
+import { CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -8,10 +8,10 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
-import { useTags } from "../hooks/useMDXEditor";
-import { useDispatch } from "../hooks/store";
+import { useCallback, useState, VFC } from "react";
 import { setTags } from "../hooks/slices/MDXInputSlice";
+import { useDispatch } from "../hooks/store";
+import { useTags } from "../hooks/useMDXEditor";
 
 export const TagInput: VFC = () => {
   const dispatch = useDispatch();

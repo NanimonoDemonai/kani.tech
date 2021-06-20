@@ -1,6 +1,6 @@
 import { VFC } from "react";
-import { DateTime } from "./DateTime";
 import { useModified } from "../hooks/usePageMeta";
+import { DateTime } from "./DateTime";
 
 export const PageModified: VFC = () => {
   const modified = useModified();

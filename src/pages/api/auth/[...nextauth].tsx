@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
+import { Prisma } from "next-auth/adapters";
 import Providers from "next-auth/providers";
 import { prisma } from "../../../services/client/PrismClient";
-import Adapters from "next-auth/adapters";
 
 export default NextAuth({
   providers: [
@@ -18,7 +18,7 @@ export default NextAuth({
       },
     }),
   ],
-  adapter: Adapters.Prisma.Adapter({ prisma }),
+  adapter: Prisma.Adapter({ prisma }),
   callbacks: {
     session: (session, userOrToken) => {
       const user = {
