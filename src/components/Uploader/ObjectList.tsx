@@ -1,6 +1,17 @@
-import { Box, Table, Tr, Th, Thead, Tbody, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Table,
+  Tr,
+  Th,
+  Thead,
+  Tbody,
+  Button,
+  Code,
+  Td,
+} from "@chakra-ui/react";
+import Image from "next/image";
 import { useEffect, VFC } from "react";
-import { getImageUrl } from "../../utils/getURL";
+import { getOptimizedImageURL } from "../../utils/getURL";
 import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
 import { Fallback } from "../Elements/Fallback";
 import { deleteFile, loadObject } from "../hooks/slices/FileUploaderSlice";
@@ -35,15 +46,22 @@ export const ObjectList: VFC = () => {
         <Tbody>
           {objectList.map((e) => (
             <Tr key={e}>
-              <Th>{e}</Th>
-              <Th>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={getImageUrl(e)}
-                  alt="my_skin"
-                  style={{ maxWidth: 30, maxHeight: 30 }}
-                />
-              </Th>
+              <Td>
+                <Code isTruncated>{e}</Code>
+              </Td>
+              <Td>
+                <Box w={30} h={30} position={"relative"}>
+                  <Image
+                    loader={({ src, width }) => {
+                      return getOptimizedImageURL(src, width);
+                    }}
+                    src={e}
+                    alt={e}
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </Box>
+              </Td>
               {isEditorShown && (
                 <Th>
                   <Button
