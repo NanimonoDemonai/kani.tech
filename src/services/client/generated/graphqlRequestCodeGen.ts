@@ -29,11 +29,17 @@ export type Id = {
 export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
+  deleteObject?: Maybe<Id>;
 };
 
 
 export type MutationPostArticleArgs = {
   input: ArticleInput;
+};
+
+
+export type MutationDeleteObjectArgs = {
+  key: Scalars['String'];
 };
 
 export type Query = {
@@ -53,6 +59,35 @@ export type QueryGetUploadUrlArgs = {
 export type QueryGetObjectListArgs = {
   key: Scalars['String'];
 };
+
+export type PostArticleMutationVariables = Exact<{
+  tags: Array<Scalars['String']> | Scalars['String'];
+  source: Scalars['String'];
+  pageTitle: Scalars['String'];
+  pageName: Scalars['String'];
+}>;
+
+
+export type PostArticleMutation = (
+  { __typename?: 'Mutation' }
+  & { postArticle?: Maybe<(
+    { __typename?: 'Id' }
+    & Pick<Id, 'id'>
+  )> }
+);
+
+export type DeleteObjectMutationVariables = Exact<{
+  key: Scalars['String'];
+}>;
+
+
+export type DeleteObjectMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteObject?: Maybe<(
+    { __typename?: 'Id' }
+    & Pick<Id, 'id'>
+  )> }
+);
 
 export type GetObjectListQueryVariables = Exact<{
   key: Scalars['String'];
@@ -75,23 +110,23 @@ export type GetUploadUrlQuery = (
   & Pick<Query, 'getUploadUrl'>
 );
 
-export type PostArticleMutationVariables = Exact<{
-  tags: Array<Scalars['String']> | Scalars['String'];
-  source: Scalars['String'];
-  pageTitle: Scalars['String'];
-  pageName: Scalars['String'];
-}>;
 
-
-export type PostArticleMutation = (
-  { __typename?: 'Mutation' }
-  & { postArticle?: Maybe<(
-    { __typename?: 'Id' }
-    & Pick<Id, 'id'>
-  )> }
-);
-
-
+export const PostArticleDocument = gql`
+    mutation PostArticle($tags: [String!]!, $source: String!, $pageTitle: String!, $pageName: String!) {
+  postArticle(
+    input: {tags: $tags, source: $source, pageTitle: $pageTitle, pageName: $pageName}
+  ) {
+    id
+  }
+}
+    `;
+export const DeleteObjectDocument = gql`
+    mutation DeleteObject($key: String!) {
+  deleteObject(key: $key) {
+    id
+  }
+}
+    `;
 export const GetObjectListDocument = gql`
     query GetObjectList($key: String!) {
   getObjectList(key: $key)
@@ -102,15 +137,6 @@ export const GetUploadUrlDocument = gql`
   getUploadUrl(contentType: $contentType, key: $key)
 }
     `;
-export const PostArticleDocument = gql`
-    mutation PostArticle($tags: [String!]!, $source: String!, $pageTitle: String!, $pageName: String!) {
-  postArticle(
-    input: {tags: $tags, source: $source, pageTitle: $pageTitle, pageName: $pageName}
-  ) {
-    id
-  }
-}
-    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
@@ -119,14 +145,17 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    PostArticle(variables: PostArticleMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PostArticleMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PostArticleMutation>(PostArticleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PostArticle');
+    },
+    DeleteObject(variables: DeleteObjectMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteObjectMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteObjectMutation>(DeleteObjectDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteObject');
+    },
     GetObjectList(variables: GetObjectListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetObjectListQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetObjectListQuery>(GetObjectListDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetObjectList');
     },
     GetUploadUrl(variables: GetUploadUrlQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUploadUrlQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUploadUrlQuery>(GetUploadUrlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUploadUrl');
-    },
-    PostArticle(variables: PostArticleMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PostArticleMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<PostArticleMutation>(PostArticleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PostArticle');
     }
   };
 }
