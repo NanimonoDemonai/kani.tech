@@ -1,30 +1,32 @@
-import { Box, Button, Center, Flex, Spacer, Text } from "@chakra-ui/react";
-import { useCallback, useState, VFC } from "react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Spacer,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
+import { uploadFile } from "../hooks/slices/FileUploaderSlice";
+import { useDispatch } from "../hooks/store";
+import { useIsDisabling } from "../hooks/useUploader";
 
-interface Props {
-  loading: boolean;
-  execute: (file: File) => Promise<void>;
-}
-
-export const ImageUploaderDropzone: VFC<Props> = ({ execute, loading }) => {
+export const ImageUploaderDropzone: VFC = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const dispatch = useDispatch();
+  const disabled = useIsDisabling();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDropAccepted: (e) => {
       setFiles(e);
     },
     accept: "image/*",
     maxFiles: 1,
+    disabled,
   });
-  const onClick = useCallback(() => {
-    execute(files[0]).then(() => {
-      /* noop */
-    });
-    setFiles([]);
-  }, [files, execute]);
-
   return (
-    <Box>
+    <Stack spacing={2}>
       <Box
         {...getRootProps()}
         h={20}
@@ -53,10 +55,16 @@ export const ImageUploaderDropzone: VFC<Props> = ({ execute, loading }) => {
           ))}
         </Box>
         <Spacer />
-        <Button disabled={files.length < 1 || loading} onClick={onClick}>
+        <Button
+          disabled={files.length < 1 || disabled}
+          onClick={() => {
+            dispatch(uploadFile({ file: files[0] }));
+            setFiles([]);
+          }}
+        >
           アップロード
         </Button>
       </Flex>
-    </Box>
+    </Stack>
   );
 };

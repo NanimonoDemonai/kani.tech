@@ -1,38 +1,27 @@
 import { Box, Table, Tr, Th, Thead, Tbody, Button } from "@chakra-ui/react";
 import { useEffect, VFC } from "react";
-import { useAsync, useAsyncCallback } from "react-async-hook";
-import { gqlClient } from "../../services/client/graphqlRequest";
 import { getImageUrl } from "../../utils/getURL";
-import { noop } from "../../utils/noop";
 import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
 import { Fallback } from "../Elements/Fallback";
+import { deleteFile, loadObject } from "../hooks/slices/FileUploaderSlice";
+import { useDispatch } from "../hooks/store";
+import {
+  useIsDisabling,
+  useLoading,
+  useObjectList,
+} from "../hooks/useUploader";
 
-interface Props {
-  pageName: string;
-  loading: boolean;
-}
-
-const useGetObjectList = (pageName: string) =>
-  useAsync<string[]>(async () => {
-    const { getObjectList } = await gqlClient.GetObjectList({ key: pageName });
-    return getObjectList;
-  }, [pageName]);
-
-const useDeleteObject = () =>
-  useAsyncCallback<void, [string]>(async (key) => {
-    await gqlClient.DeleteObject({ key });
-  });
-
-export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
-  const { loading: loadingData, result, execute } = useGetObjectList(pageName);
-  const { loading: loadingDelete, execute: deleteObject } = useDeleteObject();
+export const ObjectList: VFC = () => {
+  const dispatch = useDispatch();
+  const disabled = useIsDisabling();
   const isEditorShown = useEditorIsShown();
+  const objectList = useObjectList();
+  const loading = useLoading();
   useEffect(() => {
-    if (loading && loadingData && loadingDelete) execute().then(noop);
-  }, [loading, loadingData, execute, pageName, loadingDelete]);
-
-  if (loadingData) return <Fallback />;
-  if (!result) return null;
+    dispatch(loadObject());
+  }, [dispatch]);
+  if (loading) return <Fallback />;
+  if (objectList.length < 1) return null;
   return (
     <Box>
       <Table variant="simple">
@@ -44,7 +33,7 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {result.map((e) => (
+          {objectList.map((e) => (
             <Tr key={e}>
               <Th>{e}</Th>
               <Th>
@@ -58,9 +47,9 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
               {isEditorShown && (
                 <Th>
                   <Button
-                    disabled={loadingDelete || loading}
+                    disabled={disabled || loading}
                     onClick={() => {
-                      deleteObject(e).then(noop);
+                      dispatch(deleteFile({ key: e }));
                     }}
                   >
                     削除

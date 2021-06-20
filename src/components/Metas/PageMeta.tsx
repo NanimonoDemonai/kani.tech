@@ -11,7 +11,6 @@ interface Props {
 export const PageMetaComponent: VFC<Props> = ({ pageMeta }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(pageMeta);
     dispatch(setPageMeta(pageMeta));
   }, [pageMeta, dispatch]);
   return <Title title={pageMeta.title} />;
