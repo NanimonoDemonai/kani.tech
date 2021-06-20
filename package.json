@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "dev": "run-s dev:server:up dev:server:start",
-    "dev:backend": "run-s dev:server:up prisma:init-local dev:watch-entries",
+    "dev:backend": "run-s dev:server:up dev:watch-entries",
     "dev:server:start": "run-p nextdev dev:watch-entries",
     "dev:watch-entries": "dotenv -e .env.local -- ts-node --project tsconfig.cjs.json src/script/watchEntries.ts",
     "dev:server:up": "dotenv -e .env.local -- ts-node --project tsconfig.cjs.json src/script/upLocalServers.ts",
