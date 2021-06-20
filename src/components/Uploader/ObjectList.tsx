@@ -28,8 +28,8 @@ export const ObjectList: VFC<Props> = ({ pageName, loading }) => {
   const { loading: loadingDelete, execute: deleteObject } = useDeleteObject();
   const isEditorShown = useEditorIsShown();
   useEffect(() => {
-    if (loading && loadingData) execute().then(noop);
-  }, [loading, loadingData, execute, pageName]);
+    if (loading && loadingData && loadingDelete) execute().then(noop);
+  }, [loading, loadingData, execute, pageName, loadingDelete]);
 
   if (loadingData) return <Fallback />;
   if (!result) return null;
