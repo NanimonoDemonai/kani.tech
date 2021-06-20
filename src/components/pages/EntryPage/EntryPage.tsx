@@ -17,16 +17,18 @@ export interface EntryPageProps {
 }
 
 const ImageComponent: VFC<{ src: string } | any> = ({ src }) => (
-  <Image
-    loader={({ src, width }) => {
-      return getOptimizedImageURL(src, width);
-    }}
-    src={src}
-    alt={src}
-    layout={"fill"}
-    //width={30}
-    //height={30}
-  />
+  <Box w={300} h={300} maxW={"100%"} position={"relative"}>
+    <Image
+      loader={({ src, width }) => {
+        return getOptimizedImageURL(src, width);
+      }}
+      src={src}
+      alt={src}
+      layout="fill"
+      objectFit={"contain"}
+      objectPosition={"top center"}
+    />
+  </Box>
 );
 
 export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
