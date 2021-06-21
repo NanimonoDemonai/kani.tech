@@ -70,6 +70,8 @@ export const MDXInputSlice = createSlice({
     },
     [submitPage.fulfilled.type]: (state) => {
       state.loading = false;
+      // TODO: もっといい実装を考える
+      location && location.reload();
     },
     [submitPage.rejected.type]: (state) => {
       state.loading = true;
