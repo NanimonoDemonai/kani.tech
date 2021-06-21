@@ -1,40 +1,30 @@
-import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useState, VFC } from "react";
+import { Box, Divider, Stack } from "@chakra-ui/react";
+import { useEffect, VFC } from "react";
 
-import { gqlClient } from "../../services/client/graphqlRequest";
 import { setMDXInput } from "../hooks/slices/MDXInputSlice";
-import { useDispatch, useSelector } from "../hooks/store";
-import { usePageMeta } from "../hooks/usePageMeta";
+import { useDispatch } from "../hooks/store";
 import { MDEditor } from "./MDEditor";
+import { SubmitButton } from "./SubmitButton";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
 
-export const MDXEditor: VFC = () => {
+export interface MDXEditorProps {
+  source: string;
+  tags: string[];
+  title: string;
+  pageName: string;
+}
+
+export const MDXEditor: VFC<MDXEditorProps> = ({
+  title,
+  tags,
+  source,
+  pageName,
+}) => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const pageMeta = usePageMeta();
-  const { title, tags, source } = useSelector((state) => state.MDXInput);
-  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
-    dispatch(
-      setMDXInput({
-        source: pageMeta.source,
-        tags: pageMeta.tags,
-        title: pageMeta.title,
-      })
-    );
-  }, [dispatch, pageMeta]);
-  const execute = useCallback(async () => {
-    setDisabled(true);
-    await gqlClient.PostArticle({
-      pageName: pageMeta.pageName,
-      pageTitle: title,
-      source: source,
-      tags,
-    });
-    await router.reload();
-  }, [setDisabled, pageMeta, tags, title, source, router]);
+    dispatch(setMDXInput({ source, tags, title }));
+  }, [dispatch, title, tags, source]);
 
   return (
     <Box>
@@ -44,11 +34,7 @@ export const MDXEditor: VFC = () => {
         <TagInput />
       </Stack>
       <Divider my={2} />
-      <HStack>
-        <Button disabled={disabled} onClick={execute}>
-          投稿
-        </Button>
-      </HStack>
+      <SubmitButton pageName={pageName} />
     </Box>
   );
 };
