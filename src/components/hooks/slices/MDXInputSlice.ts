@@ -1,19 +1,55 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  Reducer,
+} from "@reduxjs/toolkit";
+import { gqlClient } from "../../../services/client/graphqlRequest";
+import { AsyncThunkConfig } from "../store";
 
 export interface MDXInputState {
   title: string;
   source: string;
   tags: string[];
+  loading: boolean;
 }
 
-const initialState: MDXInputState = { source: "", tags: [], title: "" };
+type setMDXInputPayload = Omit<MDXInputState, "loading">;
+
+const initialState: MDXInputState = {
+  source: "",
+  tags: [],
+  title: "",
+  loading: false,
+};
+
+export const submitPage = createAsyncThunk<
+  void,
+  { pageName: string },
+  AsyncThunkConfig
+>("mdxInput/submitPage", async ({ pageName }, { getState }) => {
+  const {
+    MDXInput: { title, source, tags },
+  } = getState();
+  await gqlClient.PostArticle({
+    pageName: pageName,
+    pageTitle: title,
+    source: source,
+    tags,
+  });
+});
 
 export const MDXInputSlice = createSlice({
   name: "MDXInput",
   initialState,
   reducers: {
-    setMDXInput: (state, { payload }: PayloadAction<MDXInputState>) => {
-      return payload;
+    setMDXInput: (
+      state,
+      { payload: { title, tags, source } }: PayloadAction<setMDXInputPayload>
+    ) => {
+      state.title = title;
+      state.tags = tags;
+      state.source = source;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;
@@ -28,8 +64,20 @@ export const MDXInputSlice = createSlice({
       return state;
     },
   },
+  extraReducers: {
+    [submitPage.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [submitPage.fulfilled.type]: (state) => {
+      state.loading = false;
+    },
+    [submitPage.rejected.type]: (state) => {
+      state.loading = true;
+    },
+  },
 });
 
-export const MDXInputSliceReducer = MDXInputSlice.reducer;
+export const MDXInputSliceReducer: Reducer<MDXInputState> =
+  MDXInputSlice.reducer;
 export const { setMDXInput, setTitle, setSource, setTags } =
   MDXInputSlice.actions;
