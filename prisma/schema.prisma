@@ -59,6 +59,7 @@ model ImageObject {
   width             Int
   height            Int
   size              Int
+  verified          Verified        @default(PENDING)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   objectDirectoryId Int
@@ -126,4 +127,10 @@ enum Role {
   VISITOR
   USER
   ADMIN
+}
+
+enum Verified {
+  PENDING
+  VERIFIED
+  ERROR
 }
