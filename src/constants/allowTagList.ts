@@ -1,6 +1,6 @@
 import { defaultSchema } from "hast-util-sanitize";
 
-export const allowTagList = defaultSchema.tagNames;
+export const allowTagList = defaultSchema.tagNames || [];
 export const allowAttributesList: {
   "*": string[];
   [name: string]: string[] | undefined;
