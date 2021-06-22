@@ -27,6 +27,7 @@ type ImageObject {
   contentType: String!
   width: Int!
   height: Int!
+  modified: String!
   size: Int!
   verified: Verified!
 }

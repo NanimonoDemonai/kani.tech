@@ -32,6 +32,7 @@ export type ImageObject = {
   contentType: Scalars['String'];
   width: Scalars['Int'];
   height: Scalars['Int'];
+  modified: Scalars['String'];
   size: Scalars['Int'];
   verified: Verified;
 };
@@ -200,6 +201,7 @@ export type ImageObjectResolvers<ContextType = SessionContextType, ParentType ex
   contentType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  modified?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   verified?: Resolver<ResolversTypes['Verified'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

@@ -32,6 +32,7 @@ export type ImageObject = {
   contentType: Scalars['String'];
   width: Scalars['Int'];
   height: Scalars['Int'];
+  modified: Scalars['String'];
   size: Scalars['Int'];
   verified: Verified;
 };
@@ -122,7 +123,7 @@ export type GetObjectListQuery = (
   { __typename?: 'Query' }
   & { getObjectList: Array<(
     { __typename?: 'ImageObject' }
-    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'key' | 'size'>
+    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size'>
   )> }
 );
 
@@ -159,6 +160,7 @@ export const GetObjectListDocument = gql`
     width
     height
     contentType
+    modified
     key
     size
   }

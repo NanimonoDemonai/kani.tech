@@ -3,6 +3,7 @@ query GetObjectList($keyPrefix: String!) {
     width
     height
     contentType
+    modified
     key
     size
   }
