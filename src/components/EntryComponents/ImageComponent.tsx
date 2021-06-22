@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { VFC } from "react";
 import { z } from "zod";
-import { ImageObject } from "../types/PageMeta";
-import { getOptimizedImageURL } from "../utils/getURL";
+import { ImageObject } from "../../types/PageMeta";
+import { getOptimizedImageURL } from "../../utils/getURL";
 
 const scheme = z.object({
   src: z.string(),
