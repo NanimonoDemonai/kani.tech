@@ -1,8 +1,9 @@
 import type { Node } from "unist";
 import { TestFunction } from "unist-util-is";
-import visit from "unist-util-visit";
+import { SKIP, Visitor } from "unist-util-visit";
 import { z } from "zod";
-type VisitorParameters = Parameters<visit.Visitor<never>>;
+
+type VisitorParameters = Parameters<Visitor<never>>;
 
 const schema = z.object({
   type: z.string(),
@@ -22,8 +23,9 @@ export const isNodeMdxJsx: TestFunction<Node> = (node): node is Node => {
 export const stripNode = (props: {
   index: VisitorParameters[1];
   parent: VisitorParameters[2];
-}): [typeof visit.SKIP, number] => {
-  const { parent, index } = props;
+}): [typeof SKIP, number] => {
+  const parent = props.parent;
+  const index = props.index as number;
   if (parent) parent.children.splice(index, 1);
-  return [visit.SKIP, index];
+  return [SKIP, index];
 };
