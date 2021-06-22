@@ -45,9 +45,9 @@ export const ObjectList: VFC = () => {
         </Thead>
         <Tbody>
           {objectList.map((e) => (
-            <Tr key={e}>
+            <Tr key={e.key}>
               <Td>
-                <Code isTruncated>{e}</Code>
+                <Code isTruncated>{e.key}</Code>
               </Td>
               <Td>
                 <Box w={30} h={30} position={"relative"}>
@@ -55,8 +55,8 @@ export const ObjectList: VFC = () => {
                     loader={({ src, width }) => {
                       return getOptimizedImageURL(src, width);
                     }}
-                    src={e}
-                    alt={e}
+                    src={e.key}
+                    alt={e.key}
                     layout="fill"
                     objectFit="contain"
                   />
@@ -67,7 +67,7 @@ export const ObjectList: VFC = () => {
                   <Button
                     disabled={disabled || loading}
                     onClick={() => {
-                      dispatch(deleteFile({ key: e }));
+                      dispatch(deleteFile({ key: e.key }));
                     }}
                   >
                     削除
