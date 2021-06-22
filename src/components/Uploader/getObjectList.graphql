@@ -1,3 +1,11 @@
-query GetObjectList($key: String!) {
-  getObjectList(key: $key)
+query GetObjectList($keyPrefix: String!) {
+  getObjectList(keyPrefix: $keyPrefix) {
+    width
+    height
+    contentType
+    modified
+    key
+    size
+    verified
+  }
 }

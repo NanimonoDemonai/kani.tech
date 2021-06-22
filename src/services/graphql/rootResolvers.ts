@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { Bucket } from "../../constants/s3Bucket";
 import { Resolvers } from "../../types/generated/graphqlCodeGen";
+import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { createOrUpsertEntry } from "../createOrUpsertEntry";
 import { SessionContextType } from "./context";
@@ -32,25 +33,59 @@ export const rootResolvers: Resolvers = {
     healthCheck: () => "hello",
     getUploadUrl: async (
       parent,
-      { contentType: ContentType, key: Key },
+      { input: { keyPrefix, contentType, size, width, height, keySuffix } },
       context
     ) => {
       isUser(context);
 
-      return await s3.getSignedUrlPromise("putObject", {
+      const key = `${keyPrefix}/${keySuffix}`;
+      const res = await s3.getSignedUrlPromise("putObject", {
         Bucket,
-        Key,
-        ContentType,
+        Key: key,
+        ContentType: contentType,
         Expires: 30,
       });
+      if (!res) throw new AuthenticationError("permission denied");
+
+      const imageObjects = {
+        create: {
+          key,
+          contentType,
+          width,
+          height,
+          size,
+        },
+      };
+      await prisma.objectDirectory.upsert({
+        where: {
+          keyPrefix,
+        },
+        create: {
+          keyPrefix,
+          imageObjects,
+        },
+        update: {
+          imageObjects,
+        },
+      });
+      return res;
     },
-    getObjectList: async (parent, { key }, context) => {
+
+    getObjectList: async (parent, { keyPrefix }, context) => {
       isUser(context);
-      const { Contents } = await s3
-        .listObjectsV2({ Bucket, Prefix: key })
-        .promise();
-      if (!Contents) return [];
-      return Contents.map((e) => e.Key || "");
+
+      const objects = await prisma.objectDirectory.findUnique({
+        where: { keyPrefix },
+        include: {
+          imageObjects: true,
+        },
+      });
+      if (!objects) throw new AuthenticationError("permission denied");
+
+      return objects.imageObjects.map((e) => ({
+        ...e,
+        modified: e.updatedAt.toJSON(),
+      }));
     },
   },
 };

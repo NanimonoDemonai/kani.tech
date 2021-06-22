@@ -14,8 +14,28 @@ type Mutation {
   deleteObject(key: String!): Id
 }
 
+input UploadInput {
+  keyPrefix: String!
+  keySuffix: String!
+  contentType: String!
+  width: Int!
+  height: Int!
+  size: Int!
+}
+
+type ImageObject {
+  key: String!
+  contentType: String!
+  width: Int!
+  height: Int!
+  modified: String!
+  size: Int!
+  verified: String!
+}
+
+
 type Query {
-  getUploadUrl(key: String!, contentType: String!): String
-  getObjectList(key: String!): [String!]!
+  getUploadUrl(input: UploadInput!): String
+  getObjectList(keyPrefix: String!): [ImageObject!]!
   healthCheck: String
 }

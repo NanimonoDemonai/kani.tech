@@ -9,6 +9,8 @@ const initialState: PageMeta = {
   source: "",
   tags: [],
   title: "",
+  images: [],
+  imageObjects: [],
 };
 export const pageMetaSlice = createSlice({
   name: "pageMeta",

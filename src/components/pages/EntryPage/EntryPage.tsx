@@ -10,6 +10,7 @@ import { BottomOption } from "../../BottomOption/BottomOption";
 import { Fallback } from "../../Elements/Fallback";
 import { Article } from "../../Entry/Article";
 import { PageMetaComponent } from "../../Metas/PageMeta";
+
 export interface EntryPageProps {
   code: string;
   pageMeta: PageMeta;
@@ -27,11 +28,7 @@ export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
 
       <Article>
         <Box sx={entryDefaultSX}>
-          <Component
-            components={{
-              img: ImageComponent,
-            }}
-          />
+          <Component components={{ img: ImageComponent(pageMeta.images) }} />
         </Box>
       </Article>
       <BottomOption />

@@ -26,6 +26,17 @@ export type Id = {
   id: Scalars['ID'];
 };
 
+export type ImageObject = {
+  __typename?: 'ImageObject';
+  key: Scalars['String'];
+  contentType: Scalars['String'];
+  width: Scalars['Int'];
+  height: Scalars['Int'];
+  modified: Scalars['String'];
+  size: Scalars['Int'];
+  verified: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
@@ -45,19 +56,27 @@ export type MutationDeleteObjectArgs = {
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
-  getObjectList: Array<Scalars['String']>;
+  getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryGetUploadUrlArgs = {
-  key: Scalars['String'];
-  contentType: Scalars['String'];
+  input: UploadInput;
 };
 
 
 export type QueryGetObjectListArgs = {
-  key: Scalars['String'];
+  keyPrefix: Scalars['String'];
+};
+
+export type UploadInput = {
+  keyPrefix: Scalars['String'];
+  keySuffix: Scalars['String'];
+  contentType: Scalars['String'];
+  width: Scalars['Int'];
+  height: Scalars['Int'];
+  size: Scalars['Int'];
 };
 
 export type PostArticleMutationVariables = Exact<{
@@ -90,18 +109,20 @@ export type DeleteObjectMutation = (
 );
 
 export type GetObjectListQueryVariables = Exact<{
-  key: Scalars['String'];
+  keyPrefix: Scalars['String'];
 }>;
 
 
 export type GetObjectListQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'getObjectList'>
+  & { getObjectList: Array<(
+    { __typename?: 'ImageObject' }
+    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size' | 'verified'>
+  )> }
 );
 
 export type GetUploadUrlQueryVariables = Exact<{
-  key: Scalars['String'];
-  contentType: Scalars['String'];
+  input: UploadInput;
 }>;
 
 
@@ -128,13 +149,21 @@ export const DeleteObjectDocument = gql`
 }
     `;
 export const GetObjectListDocument = gql`
-    query GetObjectList($key: String!) {
-  getObjectList(key: $key)
+    query GetObjectList($keyPrefix: String!) {
+  getObjectList(keyPrefix: $keyPrefix) {
+    width
+    height
+    contentType
+    modified
+    key
+    size
+    verified
+  }
 }
     `;
 export const GetUploadUrlDocument = gql`
-    query GetUploadUrl($key: String!, $contentType: String!) {
-  getUploadUrl(contentType: $contentType, key: $key)
+    query GetUploadUrl($input: UploadInput!) {
+  getUploadUrl(input: $input)
 }
     `;
 

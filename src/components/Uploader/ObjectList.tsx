@@ -9,6 +9,7 @@ import {
   Code,
   Td,
 } from "@chakra-ui/react";
+import fileSize from "filesize";
 import Image from "next/image";
 import { useEffect, VFC } from "react";
 import { getOptimizedImageURL } from "../../utils/getURL";
@@ -40,14 +41,15 @@ export const ObjectList: VFC = () => {
           <Tr>
             <Th>ファイル名</Th>
             <Th>サムネイル</Th>
+            <Th>サイズ</Th>
             {isEditorShown && <Th>編集</Th>}
           </Tr>
         </Thead>
         <Tbody>
           {objectList.map((e) => (
-            <Tr key={e}>
+            <Tr key={e.key}>
               <Td>
-                <Code isTruncated>{e}</Code>
+                <Code isTruncated>{e.key}</Code>
               </Td>
               <Td>
                 <Box w={30} h={30} position={"relative"}>
@@ -55,19 +57,20 @@ export const ObjectList: VFC = () => {
                     loader={({ src, width }) => {
                       return getOptimizedImageURL(src, width);
                     }}
-                    src={e}
-                    alt={e}
+                    src={e.key}
+                    alt={e.key}
                     layout="fill"
                     objectFit="contain"
                   />
                 </Box>
               </Td>
+              <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
                 <Th>
                   <Button
                     disabled={disabled || loading}
                     onClick={() => {
-                      dispatch(deleteFile({ key: e }));
+                      dispatch(deleteFile({ key: e.key }));
                     }}
                   >
                     削除

@@ -1,4 +1,4 @@
-import parser from "gray-matter";
+import parser, { stringify } from "gray-matter";
 import { FrontMatter } from "../../types/FrontMatter";
 import { unknownObjectToFrontMatter } from "../validators/unknownObjectToFrontMatter";
 
@@ -11,4 +11,15 @@ export const frontMatterParser = (source: string): Res => {
   const { data, content } = parser(source);
   const frontMatter = unknownObjectToFrontMatter(data);
   return { frontMatter, content };
+};
+
+export const frontMatterStringify = (
+  source: string,
+  frontMatter: FrontMatter
+): string | null => {
+  try {
+    return stringify(source, frontMatter);
+  } catch (e) {
+    return null;
+  }
 };

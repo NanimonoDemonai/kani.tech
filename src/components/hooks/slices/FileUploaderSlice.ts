@@ -5,6 +5,8 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import { gqlClient } from "../../../services/client/graphqlRequest";
+import { uploadImage } from "../../../services/uploadImage";
+import { ImageObject } from "../../../types/PageMeta";
 import { AsyncThunkConfig } from "../store";
 
 interface uploadFileProps {
@@ -19,7 +21,7 @@ interface State {
   loading: boolean;
   deleting: boolean;
   uploading: boolean;
-  objectList: string[];
+  objectList: ImageObject[];
 }
 
 const initialState: State = {
@@ -29,16 +31,19 @@ const initialState: State = {
   objectList: [],
 };
 
-export const loadObject = createAsyncThunk<string[], void, AsyncThunkConfig>(
-  "loadObject",
-  async (_, { getState }) => {
-    const {
-      pageMeta: { pageName },
-    } = getState();
-    const { getObjectList } = await gqlClient.GetObjectList({ key: pageName });
-    return getObjectList;
-  }
-);
+export const loadObject = createAsyncThunk<
+  ImageObject[],
+  void,
+  AsyncThunkConfig
+>("loadObject", async (_, { getState }) => {
+  const {
+    pageMeta: { pageName },
+  } = getState();
+  const { getObjectList } = await gqlClient.GetObjectList({
+    keyPrefix: pageName,
+  });
+  return getObjectList;
+});
 
 export const uploadFile = createAsyncThunk<
   void,
@@ -48,18 +53,7 @@ export const uploadFile = createAsyncThunk<
   const {
     pageMeta: { pageName },
   } = getState();
-
-  const { getUploadUrl: url } = await gqlClient.GetUploadUrl({
-    contentType: file.type,
-    key: `${pageName}/${file.name}`,
-  });
-  if (!url) return;
-  await fetch(url, {
-    method: "put",
-    body: file,
-    headers: { "Content-Type": file.type },
-  });
-
+  await uploadImage(file, pageName);
   dispatch(loadObject());
 });
 

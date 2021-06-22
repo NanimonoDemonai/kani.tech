@@ -1,5 +1,6 @@
-import { PageMeta } from "../types/PageMeta";
+import { ImageObject, PageMeta } from "../types/PageMeta";
 import { sourceParser } from "../utils/parsers/sourceParser";
+import { serializeImageObject } from "../utils/serializeImageObject";
 import { prisma } from "./client/PrismClient";
 
 interface Res {
@@ -24,10 +25,26 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
       tags: { select: { tagName: true } },
     },
   });
-
+  const object = await prisma.objectDirectory.findUnique({
+    where: { keyPrefix: pid },
+    include: {
+      imageObjects: true,
+    },
+  });
   if (data) {
     const { source } = data;
-    const { code } = await sourceParser(source);
+    const { code, images } = await sourceParser(source);
+
+    let imageObject: ImageObject[] = [];
+    if (object) {
+      imageObject = serializeImageObject(object.imageObjects);
+    }
+
+    const usedImages = serializeImageObject(
+      await prisma.imageObject.findMany({
+        where: { key: { in: images } },
+      })
+    );
     return {
       code,
       pageMeta: {
@@ -41,6 +58,8 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
           revision: e.revision,
           createdAt: e.createdAt.toJSON(),
         })),
+        images: usedImages,
+        imageObjects: imageObject,
       },
     };
   }

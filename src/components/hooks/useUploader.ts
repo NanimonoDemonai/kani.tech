@@ -1,3 +1,4 @@
+import { ImageObject } from "../../types/PageMeta";
 import { useSelector } from "./store";
 
 export const useLoading = (): boolean =>
@@ -11,5 +12,5 @@ export const useIsDisabling = (): boolean =>
       state.Uploader.loading
   );
 
-export const useObjectList = (): string[] =>
+export const useObjectList = (): ImageObject[] =>
   useSelector((state) => state.Uploader.objectList);

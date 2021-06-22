@@ -26,6 +26,17 @@ export type Id = {
   id: Scalars['ID'];
 };
 
+export type ImageObject = {
+  __typename?: 'ImageObject';
+  key: Scalars['String'];
+  contentType: Scalars['String'];
+  width: Scalars['Int'];
+  height: Scalars['Int'];
+  modified: Scalars['String'];
+  size: Scalars['Int'];
+  verified: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
@@ -45,19 +56,27 @@ export type MutationDeleteObjectArgs = {
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
-  getObjectList: Array<Scalars['String']>;
+  getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryGetUploadUrlArgs = {
-  key: Scalars['String'];
-  contentType: Scalars['String'];
+  input: UploadInput;
 };
 
 
 export type QueryGetObjectListArgs = {
-  key: Scalars['String'];
+  keyPrefix: Scalars['String'];
+};
+
+export type UploadInput = {
+  keyPrefix: Scalars['String'];
+  keySuffix: Scalars['String'];
+  contentType: Scalars['String'];
+  width: Scalars['Int'];
+  height: Scalars['Int'];
+  size: Scalars['Int'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -143,8 +162,11 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   Id: ResolverTypeWrapper<Id>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  ImageObject: ResolverTypeWrapper<ImageObject>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  UploadInput: UploadInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -154,13 +176,27 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   Id: Id;
   ID: Scalars['ID'];
+  ImageObject: ImageObject;
+  Int: Scalars['Int'];
   Mutation: {};
   Query: {};
+  UploadInput: UploadInput;
   Boolean: Scalars['Boolean'];
 }>;
 
 export type IdResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Id'] = ResolversParentTypes['Id']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ImageObjectResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['ImageObject'] = ResolversParentTypes['ImageObject']> = ResolversObject<{
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  contentType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  modified?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  verified?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -170,13 +206,14 @@ export type MutationResolvers<ContextType = SessionContextType, ParentType exten
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'key' | 'contentType'>>;
-  getObjectList?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetObjectListArgs, 'key'>>;
+  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>;
+  getObjectList?: Resolver<Array<ResolversTypes['ImageObject']>, ParentType, ContextType, RequireFields<QueryGetObjectListArgs, 'keyPrefix'>>;
   healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = SessionContextType> = ResolversObject<{
   Id?: IdResolvers<ContextType>;
+  ImageObject?: ImageObjectResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

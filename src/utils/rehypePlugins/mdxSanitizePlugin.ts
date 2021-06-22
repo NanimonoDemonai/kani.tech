@@ -1,6 +1,6 @@
 import type { Plugin } from "unified";
 import type { Node } from "unist";
-import visit from "unist-util-visit";
+import { visit } from "unist-util-visit";
 import { allowTagList } from "../../constants/allowTagList";
 import { Attribute } from "./types";
 import { isAttributeInvalid } from "./utils/isAttributeInvalid";

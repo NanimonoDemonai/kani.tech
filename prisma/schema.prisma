@@ -20,6 +20,8 @@ model Entry {
   tags      Tag[]
   revision  Int
   history   History[]
+
+  @@index([pageName], name: "pageName")
 }
 
 model History {
@@ -37,6 +39,32 @@ model Tag {
   id      Int     @id @default(autoincrement())
   tagName String  @unique
   entries Entry[]
+
+  @@index([tagName], name: "tagName")
+}
+
+model ObjectDirectory {
+  id           Int           @id @default(autoincrement())
+  keyPrefix    String        @unique
+  imageObjects ImageObject[]
+
+  @@index([keyPrefix], name: "keyPrefix")
+}
+
+model ImageObject {
+  id                Int             @id @default(autoincrement())
+  key               String          @unique
+  directory         ObjectDirectory @relation(fields: [objectDirectoryId], references: [id])
+  contentType       String
+  width             Int
+  height            Int
+  size              Int
+  verified          Verified        @default(PENDING)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  objectDirectoryId Int
+
+  @@index([key], name: "key")
 }
 
 // ref https://next-auth.js.org/adapters/prisma
@@ -77,7 +105,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime? @map(name: "email_verified")
   image         String?
-  role          Role @default(VISITOR)
+  role          Role      @default(VISITOR)
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
@@ -99,4 +127,10 @@ enum Role {
   VISITOR
   USER
   ADMIN
+}
+
+enum Verified {
+  PENDING
+  VERIFIED
+  ERROR
 }
