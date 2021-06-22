@@ -5,7 +5,10 @@ export const serializeImageObject = (
   imageObjects: serverImageObject[]
 ): ImageObject[] =>
   imageObjects.map((e) => ({
-    ...e,
+    height: e.height,
+    key: e.key,
+    size: e.size,
+    width: e.width,
     modified: e.updatedAt.toJSON(),
     verified: `${e.verified}`,
   }));
