@@ -6,9 +6,18 @@ export interface PageMeta {
   tags: string[];
   revision: number;
   revisions: Revision[];
+  imageObjects: ImageObject[];
+  images: ImageObject[];
 }
 
 export interface Revision {
   revision: number;
   createdAt: string;
+}
+
+export interface ImageObject {
+  width: number;
+  height: number;
+  size: number;
+  fileKey: string;
 }

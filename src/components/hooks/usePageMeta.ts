@@ -1,4 +1,4 @@
-import { PageMeta, Revision } from "../../types/PageMeta";
+import { ImageObject, PageMeta, Revision } from "../../types/PageMeta";
 import { useSelector } from "./store";
 
 export const usePageMeta = (): PageMeta =>
@@ -21,5 +21,9 @@ export const useSource = (): string =>
 
 export const useTags = (): string[] =>
   useSelector((state) => state.pageMeta.tags);
+
 export const useRevisions = (): Revision[] | undefined =>
   useSelector((state) => state.pageMeta.revisions);
+
+export const useImageObjects = (): ImageObject[] =>
+  useSelector((state) => state.pageMeta.imageObjects);
