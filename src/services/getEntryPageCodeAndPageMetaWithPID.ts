@@ -36,11 +36,13 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
 
     let imageObject: ImageObject[] = [];
     if (object) {
-      imageObject = object.imageObjects.map<ImageObject>((e) => ({
-        fileKey: e.key,
+      imageObject = object.imageObjects.map((e) => ({
+        width: e.width,
         height: e.height,
         size: e.size,
-        width: e.width,
+        key: e.key,
+        modified: e.modifiedAt.toJSON(),
+        verified: `${e.verified}`,
       }));
     }
 
