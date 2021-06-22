@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { Bucket } from "../../constants/s3Bucket";
-import { Resolvers, Verified } from "../../types/generated/graphqlCodeGen";
+import { Resolvers } from "../../types/generated/graphqlCodeGen";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { createOrUpsertEntry } from "../createOrUpsertEntry";
@@ -84,7 +84,7 @@ export const rootResolvers: Resolvers = {
 
       return objects.imageObjects.map((e) => ({
         ...e,
-        verified: e.verified as Verified,
+        modified: e.updatedAt.toJSON(),
       }));
     },
   },
