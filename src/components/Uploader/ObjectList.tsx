@@ -9,6 +9,7 @@ import {
   Code,
   Td,
 } from "@chakra-ui/react";
+import fileSize from "filesize";
 import Image from "next/image";
 import { useEffect, VFC } from "react";
 import { getOptimizedImageURL } from "../../utils/getURL";
@@ -40,6 +41,7 @@ export const ObjectList: VFC = () => {
           <Tr>
             <Th>ファイル名</Th>
             <Th>サムネイル</Th>
+            <Th>サイズ</Th>
             {isEditorShown && <Th>編集</Th>}
           </Tr>
         </Thead>
@@ -62,6 +64,7 @@ export const ObjectList: VFC = () => {
                   />
                 </Box>
               </Td>
+              <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
                 <Th>
                   <Button
