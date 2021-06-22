@@ -1,36 +1,23 @@
-import {
-  Box,
-  Table,
-  Tr,
-  Th,
-  Thead,
-  Tbody,
-  Button,
-  Code,
-  Td,
-} from "@chakra-ui/react";
+import { Box, Table, Tr, Th, Thead, Tbody, Code, Td } from "@chakra-ui/react";
 import fileSize from "filesize";
 import { useEffect, VFC } from "react";
 import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
 import { Fallback } from "../Elements/Fallback";
-import { deleteFile, loadObject } from "../hooks/slices/FileUploaderSlice";
+import { loadObject } from "../hooks/slices/FileUploaderSlice";
 import { useDispatch } from "../hooks/store";
-import {
-  useIsDisabling,
-  useLoading,
-  useObjectList,
-} from "../hooks/useUploader";
+import { useLoading, useObjectList } from "../hooks/useUploader";
+import { DeleteButton } from "./DeleteButton";
 import { ThumbnailImage } from "./ThumbnailImage";
 
 export const ObjectList: VFC = () => {
   const dispatch = useDispatch();
-  const disabled = useIsDisabling();
   const isEditorShown = useEditorIsShown();
   const objectList = useObjectList();
   const loading = useLoading();
   useEffect(() => {
     dispatch(loadObject());
   }, [dispatch]);
+
   if (loading) return <Fallback />;
   if (objectList.length < 1) return null;
   return (
@@ -56,14 +43,7 @@ export const ObjectList: VFC = () => {
               <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
                 <Th>
-                  <Button
-                    disabled={disabled || loading}
-                    onClick={() => {
-                      dispatch(deleteFile({ key: e.key }));
-                    }}
-                  >
-                    削除
-                  </Button>
+                  <DeleteButton key={e.key} />
                 </Th>
               )}
             </Tr>
