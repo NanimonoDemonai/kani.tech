@@ -41,7 +41,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
         height: e.height,
         size: e.size,
         key: e.key,
-        modified: e.modifiedAt.toJSON(),
+        modified: e.updatedAt.toJSON(),
         verified: `${e.verified}`,
       }));
     }
