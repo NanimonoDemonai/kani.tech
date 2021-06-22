@@ -1,10 +1,10 @@
 import { Box, Table, Tr, Th, Thead, Tbody, Code, Td } from "@chakra-ui/react";
 import fileSize from "filesize";
 import { useEffect, VFC } from "react";
-import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
 import { Fallback } from "../Elements/Fallback";
 import { loadObject } from "../hooks/slices/FileUploaderSlice";
 import { useDispatch } from "../hooks/store";
+import { useEditorIsShown } from "../hooks/useEditorIsShown";
 import { useLoading, useObjectList } from "../hooks/useUploader";
 import { DeleteButton } from "./DeleteButton";
 import { ThumbnailImage } from "./ThumbnailImage";
