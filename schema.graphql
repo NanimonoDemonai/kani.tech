@@ -22,6 +22,7 @@ input UploadInput {
   height: Int!
   size: Int!
 }
+
 type ImageObject {
   key: String!
   contentType: String!
@@ -29,14 +30,9 @@ type ImageObject {
   height: Int!
   modified: String!
   size: Int!
-  verified: Verified!
+  verified: String!
 }
 
-enum Verified {
-  PENDING
-  VERIFIED
-  ERROR
-}
 
 type Query {
   getUploadUrl(input: UploadInput!): String

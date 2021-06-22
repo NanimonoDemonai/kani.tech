@@ -6,5 +6,6 @@ query GetObjectList($keyPrefix: String!) {
     modified
     key
     size
+    verified
   }
 }

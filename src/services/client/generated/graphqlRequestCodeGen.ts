@@ -34,7 +34,7 @@ export type ImageObject = {
   height: Scalars['Int'];
   modified: Scalars['String'];
   size: Scalars['Int'];
-  verified: Verified;
+  verified: Scalars['String'];
 };
 
 export type Mutation = {
@@ -79,12 +79,6 @@ export type UploadInput = {
   size: Scalars['Int'];
 };
 
-export enum Verified {
-  Pending = 'PENDING',
-  Verified = 'VERIFIED',
-  Error = 'ERROR'
-}
-
 export type PostArticleMutationVariables = Exact<{
   tags: Array<Scalars['String']> | Scalars['String'];
   source: Scalars['String'];
@@ -123,7 +117,7 @@ export type GetObjectListQuery = (
   { __typename?: 'Query' }
   & { getObjectList: Array<(
     { __typename?: 'ImageObject' }
-    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size'>
+    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size' | 'verified'>
   )> }
 );
 
@@ -163,6 +157,7 @@ export const GetObjectListDocument = gql`
     modified
     key
     size
+    verified
   }
 }
     `;

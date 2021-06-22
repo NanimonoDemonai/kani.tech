@@ -34,7 +34,7 @@ export type ImageObject = {
   height: Scalars['Int'];
   modified: Scalars['String'];
   size: Scalars['Int'];
-  verified: Verified;
+  verified: Scalars['String'];
 };
 
 export type Mutation = {
@@ -78,12 +78,6 @@ export type UploadInput = {
   height: Scalars['Int'];
   size: Scalars['Int'];
 };
-
-export enum Verified {
-  Pending = 'PENDING',
-  Verified = 'VERIFIED',
-  Error = 'ERROR'
-}
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -173,7 +167,6 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   UploadInput: UploadInput;
-  Verified: Verified;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -203,7 +196,7 @@ export type ImageObjectResolvers<ContextType = SessionContextType, ParentType ex
   height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   modified?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  verified?: Resolver<ResolversTypes['Verified'], ParentType, ContextType>;
+  verified?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
