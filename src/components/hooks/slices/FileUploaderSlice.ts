@@ -5,6 +5,7 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import { gqlClient } from "../../../services/client/graphqlRequest";
+import { uploadImage } from "../../../services/uploadImage";
 import { AsyncThunkConfig } from "../store";
 
 interface uploadFileProps {
@@ -48,18 +49,7 @@ export const uploadFile = createAsyncThunk<
   const {
     pageMeta: { pageName },
   } = getState();
-
-  const { getUploadUrl: url } = await gqlClient.GetUploadUrl({
-    contentType: file.type,
-    key: `${pageName}/${file.name}`,
-  });
-  if (!url) return;
-  await fetch(url, {
-    method: "put",
-    body: file,
-    headers: { "Content-Type": file.type },
-  });
-
+  await uploadImage(file, pageName);
   dispatch(loadObject());
 });
 
