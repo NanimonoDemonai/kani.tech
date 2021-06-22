@@ -21,6 +21,8 @@ services:
       DB_USER: local
       DB_PASSWORD: local
       DB_port: 5432
+      POOL_MODE: "transaction"
+      MAX_CLIENT_CONN: "1000"
     links:
       - appdb:appdb
     ports:
