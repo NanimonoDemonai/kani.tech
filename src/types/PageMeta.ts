@@ -19,5 +19,7 @@ export interface ImageObject {
   width: number;
   height: number;
   size: number;
-  fileKey: string;
+  key: string;
+  modified: string;
+  verified: string;
 }
