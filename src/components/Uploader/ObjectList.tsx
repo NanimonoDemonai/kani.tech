@@ -10,9 +10,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 import fileSize from "filesize";
-import Image from "next/image";
 import { useEffect, VFC } from "react";
-import { getOptimizedImageURL } from "../../utils/getURL";
 import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
 import { Fallback } from "../Elements/Fallback";
 import { deleteFile, loadObject } from "../hooks/slices/FileUploaderSlice";
@@ -22,6 +20,7 @@ import {
   useLoading,
   useObjectList,
 } from "../hooks/useUploader";
+import { ThumbnailImage } from "./ThumbnailImage";
 
 export const ObjectList: VFC = () => {
   const dispatch = useDispatch();
@@ -52,17 +51,7 @@ export const ObjectList: VFC = () => {
                 <Code isTruncated>{e.key}</Code>
               </Td>
               <Td>
-                <Box w={30} h={30} position={"relative"}>
-                  <Image
-                    loader={({ src, width }) => {
-                      return getOptimizedImageURL(src, width);
-                    }}
-                    src={e.key}
-                    alt={e.key}
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </Box>
+                <ThumbnailImage src={e.key} />
               </Td>
               <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
