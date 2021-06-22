@@ -25,15 +25,22 @@ const getImageSize = async (
 
 export const uploadImage = async (
   file: File,
-  pageName: string
+  keyPrefix: string
 ): Promise<string | void> => {
-  const key = `${pageName}/${file.name}`;
-  const { getUploadUrl: url } = await gqlClient.GetUploadUrl({
-    contentType: file.type,
-    key,
-  });
+  const { name: keySuffix, size, type: contentType } = file;
   const { width, height } = await getImageSize(file);
+  const { getUploadUrl: url } = await gqlClient.GetUploadUrl({
+    input: {
+      contentType,
+      keySuffix,
+      keyPrefix,
+      width,
+      height,
+      size,
+    },
+  });
   if (!url) return;
+
   await fetch(url, {
     method: "put",
     body: file,
@@ -43,5 +50,5 @@ export const uploadImage = async (
       "x-amz-meta-height": `${height}`,
     },
   });
-  return key;
+  return `${keyPrefix}/${keySuffix}`;
 };
