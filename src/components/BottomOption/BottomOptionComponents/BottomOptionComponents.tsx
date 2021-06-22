@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { VFC } from "react";
+import { useEditorIsShown } from "../../hooks/useEditorIsShown";
 import { usePageOption } from "../../hooks/usePageOption";
-import { useEditorIsShown } from "../hooks/useEditorIsShown";
 import { BottomEditor } from "./BottomEditor";
 import { BottomHistory } from "./BottomHistory";
 import { BottomImageUploader } from "./BottomImageUploader";

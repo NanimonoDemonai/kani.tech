@@ -4,8 +4,8 @@ import {
   toggleBottomOptionShowEditor,
 } from "../../hooks/slices/pageOptionSlice";
 import { useDispatch } from "../../hooks/store";
+import { useEditorIsShown } from "../../hooks/useEditorIsShown";
 import { usePageOption } from "../../hooks/usePageOption";
-import { useEditorIsShown } from "../hooks/useEditorIsShown";
 import { BottomOptionToggleButton } from "./BottomOptionToggleButton";
 
 export const BottomOptionUpperButtons: VFC = () => {

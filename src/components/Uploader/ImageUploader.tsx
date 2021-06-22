@@ -1,6 +1,6 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { VFC } from "react";
-import { useEditorIsShown } from "../BottomOption/hooks/useEditorIsShown";
+import { useEditorIsShown } from "../hooks/useEditorIsShown";
 import { ImageUploaderDropzone } from "./ImageUploaderDropzone";
 import { ObjectList } from "./ObjectList";
 
