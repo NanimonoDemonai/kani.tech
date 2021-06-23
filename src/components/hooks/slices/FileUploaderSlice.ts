@@ -4,6 +4,7 @@ import {
   createSlice,
   Reducer,
 } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
 import { gqlClient } from "../../../services/client/graphqlRequest";
 import { uploadImage } from "../../../services/uploadImage";
 import { ImageObject } from "../../../types/PageMeta";
@@ -42,6 +43,15 @@ export const loadObject = createAsyncThunk<
   const { getObjectList } = await gqlClient.GetObjectList({
     keyPrefix: pageName,
   });
+  getObjectList
+    .filter(
+      (e) =>
+        e.verified === "PENDING" &&
+        dayjs().diff(dayjs(e.modified), "minute") > 10
+    )
+    .forEach((e) => {
+      gqlClient.UpdateObjectStatus({ key: e.key, isError: true });
+    });
   return getObjectList;
 });
 
