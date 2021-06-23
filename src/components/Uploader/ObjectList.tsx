@@ -43,7 +43,7 @@ export const ObjectList: VFC = () => {
               <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
                 <Th>
-                  <DeleteButton key={e.key} />
+                  <DeleteButton objectKey={e.key} />
                 </Th>
               )}
             </Tr>
