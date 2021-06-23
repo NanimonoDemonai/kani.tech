@@ -47,6 +47,7 @@ export const loadObject = createAsyncThunk<
     .filter(
       (e) =>
         e.verified === "PENDING" &&
+          //TODO マジックナンバーを止める
         dayjs().diff(dayjs(e.modified), "minute") > 10
     )
     .forEach((e) => {
