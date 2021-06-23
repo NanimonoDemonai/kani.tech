@@ -55,7 +55,12 @@ export const uploadFile = createAsyncThunk<
   } = getState();
   const key = `${pageName}/${file.name}`;
   if (imageObjects.some((e) => e.key === key)) return;
-  await uploadImage(file, pageName);
+  try {
+    const res = await uploadImage(file, pageName);
+    if (res) await gqlClient.UpdateObjectStatus({ key });
+  } catch (e) {
+    await gqlClient.UpdateObjectStatus({ key, isError: true });
+  }
   dispatch(loadObject());
 });
 
