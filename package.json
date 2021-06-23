@@ -88,6 +88,7 @@
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",
     "graphql-tag": "^2.12.4",
+    "graphql-tools": "^7.0.5",
     "gray-matter": "^4.0.3",
     "hast-util-sanitize": "^4.0.0",
     "mdx-bundler": "^4.0.1",
