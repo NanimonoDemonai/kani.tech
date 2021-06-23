@@ -51,8 +51,10 @@ export const uploadFile = createAsyncThunk<
   AsyncThunkConfig
 >("uploadFile", async ({ file }, { getState, dispatch }) => {
   const {
-    pageMeta: { pageName },
+    pageMeta: { pageName, imageObjects },
   } = getState();
+  const key = `${pageName}/${file.name}`;
+  if (imageObjects.some((e) => e.key === key)) return;
   await uploadImage(file, pageName);
   dispatch(loadObject());
 });
