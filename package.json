@@ -78,7 +78,6 @@
     "@reduxjs/toolkit": "^1.6.0",
     "@types/react-redux": "^7.1.16",
     "@uiw/react-md-editor": "^3.3.6",
-    "apollo-server-micro": "^2.25.1",
     "aws-sdk": "^2.927.0",
     "bytemd": "^1.9.2",
     "chokidar": "^3.5.1",
