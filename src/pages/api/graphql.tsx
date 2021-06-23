@@ -1,12 +1,9 @@
 import { Benzene, makeHandler } from "@benzene/http";
-import { makeExecutableSchema } from "apollo-server-micro";
-import fetch from "cross-fetch";
+import { makeExecutableSchema } from "graphql-tools";
 import { NextApiHandler } from "next";
 import typeDefs from "../../../schema.graphql";
 import { getContext } from "../../services/graphql/context";
 import { rootResolvers } from "../../services/graphql/rootResolvers";
-
-globalThis.fetch = fetch;
 
 const schema = makeExecutableSchema({
   typeDefs,
