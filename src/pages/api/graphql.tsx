@@ -1,4 +1,5 @@
 import { Benzene, makeHandler } from "@benzene/http";
+import { makeCompileQuery } from "@benzene/jit";
 import { makeExecutableSchema } from "graphql-tools";
 import { NextApiHandler, NextApiRequest } from "next";
 import typeDefs from "../../../schema.graphql";
@@ -24,6 +25,7 @@ const GQL = new Benzene<SessionContextType, { req: NextApiRequest }>({
     }
     return new Error("internal error");
   },
+  compileQuery: makeCompileQuery(),
 });
 
 const graphqlHTTP = makeHandler(GQL);
