@@ -643,6 +643,20 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@benzene/core@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@benzene/core/-/core-0.8.0.tgz#a7804ad2d125b664f6868fa5f9657a05a2716306"
+  integrity sha512-LEORbjTcfacRdkG6OFKt2Zq6i8sun6F+iPImVV/k2jfjD9UxHVA13TcZMdS+uTsNKhc+dph3jg0lv9pI7oeUdg==
+  dependencies:
+    tiny-lru "^7.0.6"
+
+"@benzene/http@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@benzene/http/-/http-0.4.0.tgz#b98c1f31f5b84ea7bfba42df937db552dafbeeec"
+  integrity sha512-dIb46LQWMudiAuERp6BOuaxxW0McA60nOlDeBKD40KrHXH6Beqimr9dS5uHfeezPacjgc4WJJj68F/g5Af8ZQA==
+  dependencies:
+    "@benzene/core" "^0.8.0"
+
 "@bytemd/react@^1.9.2":
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/@bytemd/react/-/react-1.9.2.tgz#7ccf0bfdee3d9bd3635df89358da873a5047f85d"
@@ -10073,6 +10087,11 @@ tiny-invariant@^1.0.6:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
+
+tiny-lru@^7.0.6:
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/tiny-lru/-/tiny-lru-7.0.6.tgz#b0c3cdede1e5882aa2d1ae21cb2ceccf2a331f24"
+  integrity sha512-zNYO0Kvgn5rXzWpL0y3RS09sMK67eGaQj9805jlK9G6pSadfriTczzLHFXa/xcW4mIRfmlB9HyQ/+SgL0V1uow==
 
 tinycolor2@1.4.2:
   version "1.4.2"

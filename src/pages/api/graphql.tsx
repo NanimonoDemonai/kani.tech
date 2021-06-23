@@ -1,20 +1,44 @@
-import { ApolloServer } from "apollo-server-micro";
+import { Benzene, makeHandler } from "@benzene/http";
+import { makeExecutableSchema } from "apollo-server-micro";
+import fetch from "cross-fetch";
+import { NextApiHandler } from "next";
 import typeDefs from "../../../schema.graphql";
 import { getContext } from "../../services/graphql/context";
 import { rootResolvers } from "../../services/graphql/rootResolvers";
 
-const server = new ApolloServer({
+globalThis.fetch = fetch;
+
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers: rootResolvers,
-  context: getContext,
 });
 
-export default server.createHandler({
-  path: "/api/graphql",
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
+const GQL = new Benzene({
+  schema,
+  contextFn: async ({ extra }) => {
+    return await getContext(extra);
   },
+});
+
+const graphqlHTTP = makeHandler(GQL);
+
+const handler: NextApiHandler = (req, res) => {
+  return graphqlHTTP(
+    {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      method: req.method,
+      headers: req.headers,
+      body: req.body,
+    },
+    req
+  ).then((result) => {
+    for (const [key, value] of Object.entries(result.headers)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      res.setHeader(key, value);
+    }
+    res.status(result.status).send(result.payload);
+  });
 };
+export default handler;
