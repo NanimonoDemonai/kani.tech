@@ -31,10 +31,15 @@ export const rootResolvers: Resolvers = {
       await createOrUpsertEntry({ tags, source: data, pageName, pageTitle });
       return { id: "1" };
     },
-    deleteObject: async (parent, { key: Key }, context) => {
+    deleteObject: async (parent, { key }, context) => {
       isUser(context);
-      await s3.deleteObject({ Bucket, Key }).promise();
-      return { id: "1" };
+      await s3.deleteObject({ Bucket, Key: key }).promise();
+      await prisma.imageObject.delete({
+        where: {
+          key,
+        },
+      });
+      return { id: key };
     },
   },
   Query: {
