@@ -33,7 +33,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
   });
   if (data) {
     const { source } = data;
-    const { code, images } = await sourceParser(source);
+    const { code, images, content } = await sourceParser(source);
 
     let imageObject: ImageObject[] = [];
     if (object) {
@@ -51,7 +51,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
         tags: data.tags.map((e) => e.tagName),
         pageName: pid,
         title: data.pageTitle,
-        source: code,
+        source: content,
         modified: data.updatedAt.toJSON(),
         revision: data.revision,
         revisions: data.history.map((e) => ({

@@ -31,7 +31,7 @@ const handler: NextApiHandler = (req, res) => {
       headers: req.headers,
       body: req.body,
     },
-    req
+    { req }
   ).then((result) => {
     for (const [key, value] of Object.entries(result.headers)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
