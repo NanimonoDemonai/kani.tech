@@ -1,4 +1,4 @@
-import { MicroRequest } from "apollo-server-micro/dist/types";
+import { NextApiRequest } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/client";
 
@@ -9,7 +9,7 @@ export interface SessionContextType {
 export const getContext = async ({
   req,
 }: {
-  req: MicroRequest;
+  req: NextApiRequest;
 }): Promise<SessionContextType> => ({
   session: await getSession({ req }),
 });
