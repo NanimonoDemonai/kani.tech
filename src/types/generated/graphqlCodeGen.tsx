@@ -41,6 +41,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
   deleteObject?: Maybe<Id>;
+  updateObjectStatus?: Maybe<Id>;
 };
 
 
@@ -51,6 +52,12 @@ export type MutationPostArticleArgs = {
 
 export type MutationDeleteObjectArgs = {
   key: Scalars['String'];
+};
+
+
+export type MutationUpdateObjectStatusArgs = {
+  key: Scalars['String'];
+  isError?: Maybe<Scalars['Boolean']>;
 };
 
 export type Query = {
@@ -165,9 +172,9 @@ export type ResolversTypes = ResolversObject<{
   ImageObject: ResolverTypeWrapper<ImageObject>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   UploadInput: UploadInput;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -179,9 +186,9 @@ export type ResolversParentTypes = ResolversObject<{
   ImageObject: ImageObject;
   Int: Scalars['Int'];
   Mutation: {};
+  Boolean: Scalars['Boolean'];
   Query: {};
   UploadInput: UploadInput;
-  Boolean: Scalars['Boolean'];
 }>;
 
 export type IdResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Id'] = ResolversParentTypes['Id']> = ResolversObject<{
@@ -203,6 +210,7 @@ export type ImageObjectResolvers<ContextType = SessionContextType, ParentType ex
 export type MutationResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   postArticle?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationPostArticleArgs, 'input'>>;
   deleteObject?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationDeleteObjectArgs, 'key'>>;
+  updateObjectStatus?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationUpdateObjectStatusArgs, 'key'>>;
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{

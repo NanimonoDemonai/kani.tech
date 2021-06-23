@@ -41,6 +41,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   postArticle?: Maybe<Id>;
   deleteObject?: Maybe<Id>;
+  updateObjectStatus?: Maybe<Id>;
 };
 
 
@@ -51,6 +52,12 @@ export type MutationPostArticleArgs = {
 
 export type MutationDeleteObjectArgs = {
   key: Scalars['String'];
+};
+
+
+export type MutationUpdateObjectStatusArgs = {
+  key: Scalars['String'];
+  isError?: Maybe<Scalars['Boolean']>;
 };
 
 export type Query = {

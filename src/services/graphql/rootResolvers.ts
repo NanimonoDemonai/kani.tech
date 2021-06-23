@@ -41,6 +41,29 @@ export const rootResolvers: Resolvers = {
       });
       return { id: key };
     },
+    updateObjectStatus: async (parent, { key, isError }, context) => {
+      isUser(context);
+      if (isError) {
+        await prisma.imageObject.update({
+          where: { key },
+          data: {
+            verified: "ERROR",
+          },
+        });
+        return { id: key };
+      }
+      const head = await s3.headObject({ Bucket, Key: key }).promise();
+      if (head)
+        await prisma.imageObject.update({
+          where: {
+            key,
+          },
+          data: {
+            verified: head ? "VERIFIED" : "ERROR",
+          },
+        });
+      return { id: key };
+    },
   },
   Query: {
     healthCheck: () => "hello",
