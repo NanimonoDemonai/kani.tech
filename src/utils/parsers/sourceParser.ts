@@ -8,6 +8,7 @@ import { frontMatterParser } from "./FrontMatterParser";
 
 interface Res {
   frontMatter: FrontMatter;
+  content: string;
   code: string;
   images: string[];
 }
@@ -30,9 +31,5 @@ export const sourceParser = async (src: string): Promise<Res> => {
       return options;
     },
   });
-  return {
-    frontMatter,
-    code,
-    images,
-  };
+  return { content, frontMatter, code, images };
 };

@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-micro";
 import { Bucket } from "../../constants/s3Bucket";
 import { Resolvers } from "../../types/generated/graphqlCodeGen";
+import { frontMatterStringify } from "../../utils/parsers/FrontMatterParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { createOrUpsertEntry } from "../createOrUpsertEntry";
@@ -20,7 +21,13 @@ export const rootResolvers: Resolvers = {
       context
     ) => {
       isUser(context);
-      await createOrUpsertEntry({ tags, source, pageName, pageTitle });
+      const data =
+        frontMatterStringify(source, {
+          title: pageTitle,
+          tags,
+          disableSanitize: false,
+        }) || "";
+      await createOrUpsertEntry({ tags, source: data, pageName, pageTitle });
       return { id: "1" };
     },
     deleteObject: async (parent, { key: Key }, context) => {
