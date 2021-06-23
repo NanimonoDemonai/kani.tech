@@ -5,10 +5,7 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import { gqlClient } from "../../../services/client/graphqlRequest";
-import {
-  frontMatterParser,
-  frontMatterStringify,
-} from "../../../utils/parsers/FrontMatterParser";
+
 import { AsyncThunkConfig } from "../store";
 
 export interface MDXInputState {
@@ -35,11 +32,7 @@ export const submitPage = createAsyncThunk<
   const {
     MDXInput: { title, source, tags },
   } = getState();
-  const res = frontMatterStringify(source, {
-    title,
-    tags,
-    disableSanitize: false,
-  });
+  const res = source;
   if (!res) return;
   await gqlClient.PostArticle({
     pageName: pageName,
@@ -59,7 +52,7 @@ export const MDXInputSlice = createSlice({
     ) => {
       state.title = title;
       state.tags = tags;
-      state.source = frontMatterParser(source).content.trim();
+      state.source = source;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;

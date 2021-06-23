@@ -51,7 +51,7 @@ export const getEntryPageCodeAndPageMetaWithPID = async (
         tags: data.tags.map((e) => e.tagName),
         pageName: pid,
         title: data.pageTitle,
-        source,
+        source: code,
         modified: data.updatedAt.toJSON(),
         revision: data.revision,
         revisions: data.history.map((e) => ({

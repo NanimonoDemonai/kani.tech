@@ -22,7 +22,7 @@
     "nextdev": "dotenv -e .env.local -e .env -- next dev",
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build",
-    "start": "next start",
+    "start": "dotenv -e .env.local -e .env -- next start",
     "test": "jest",
     "tscheck": "tsc --noEmit",
     "lint": "eslint src",
