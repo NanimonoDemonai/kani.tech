@@ -1,4 +1,17 @@
-import { Box, Table, Tr, Th, Thead, Tbody, Code, Td } from "@chakra-ui/react";
+import {
+  Box,
+  Table,
+  Tr,
+  Th,
+  Thead,
+  Tbody,
+  Code,
+  Td,
+  Button,
+  Alert,
+  AlertIcon,
+  HStack,
+} from "@chakra-ui/react";
 import fileSize from "filesize";
 import { useEffect, VFC } from "react";
 import { Fallback } from "../Elements/Fallback";
@@ -43,7 +56,27 @@ export const ObjectList: VFC = () => {
               <Td>{`${e.width}×${e.height} (${fileSize(e.size)})`}</Td>
               {isEditorShown && (
                 <Th>
-                  <DeleteButton objectKey={e.key} />
+                  {e.verified === "PENDING" ? (
+                    <HStack>
+                      <Alert status="warning">
+                        <AlertIcon />
+                        アップロード保留中
+                      </Alert>
+                      <Button disabled={true}>削除</Button>
+                    </HStack>
+                  ) : (
+                    <>
+                      <HStack>
+                        {e.verified !== "VERIFIED" && (
+                          <Alert status="error">
+                            <AlertIcon />
+                            アップロードに不備があります Code:{e.verified}
+                          </Alert>
+                        )}
+                        <DeleteButton objectKey={e.key} />
+                      </HStack>
+                    </>
+                  )}
                 </Th>
               )}
             </Tr>
