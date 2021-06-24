@@ -1,0 +1,5 @@
+mutation UpdateObjectStatus($key: String!, $isError: Boolean) {
+  updateObjectStatus(key: $key, isError: $isError) {
+    id
+  }
+}

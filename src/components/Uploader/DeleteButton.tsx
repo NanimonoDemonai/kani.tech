@@ -4,7 +4,7 @@ import { deleteFile } from "../hooks/slices/FileUploaderSlice";
 import { useDispatch } from "../hooks/store";
 import { useIsDisabling, useLoading } from "../hooks/useUploader";
 
-export const DeleteButton: VFC<{ key: string }> = ({ key }) => {
+export const DeleteButton: VFC<{ objectKey: string }> = ({ objectKey }) => {
   const dispatch = useDispatch();
   const disabled = useIsDisabling();
   const loading = useLoading();
@@ -13,7 +13,7 @@ export const DeleteButton: VFC<{ key: string }> = ({ key }) => {
     <Button
       disabled={disabled || loading}
       onClick={() => {
-        dispatch(deleteFile({ key }));
+        dispatch(deleteFile({ key: objectKey }));
       }}
     >
       削除

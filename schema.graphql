@@ -12,6 +12,7 @@ type Id {
 type Mutation {
   postArticle(input: ArticleInput!): Id
   deleteObject(key: String!): Id
+  updateObjectStatus(key: String!, isError: Boolean): Id
 }
 
 input UploadInput {
@@ -32,7 +33,6 @@ type ImageObject {
   size: Int!
   verified: String!
 }
-
 
 type Query {
   getUploadUrl(input: UploadInput!): String
