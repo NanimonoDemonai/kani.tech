@@ -70,7 +70,7 @@ export const ObjectList: VFC = () => {
                         {e.verified !== "VERIFIED" && (
                           <Alert status="error">
                             <AlertIcon />
-                            アップロードに不備があります Code:{e.verified}
+                            アップロードに不備がありました Code:{e.verified}
                           </Alert>
                         )}
                         <DeleteButton objectKey={e.key} />
