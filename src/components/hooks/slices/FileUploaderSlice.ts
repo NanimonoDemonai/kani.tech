@@ -5,6 +5,7 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+import { uploaderTimeout } from "../../../constants/timeout";
 import { uploadImage } from "../../../services/backend/uploadImage";
 import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 import { ImageObject } from "../../../types/PageMeta";
@@ -41,8 +42,7 @@ export const loadObject = createAsyncThunk<
     .filter(
       (e) =>
         e.verified === "PENDING" &&
-        //TODO マジックナンバーを止める
-        dayjs().diff(dayjs(e.modified), "minute") > 10
+        dayjs().diff(dayjs(e.modified), "minute") > uploaderTimeout
     )
     .forEach((e) => {
       gqlClient.UpdateObjectStatus({ key: e.key, isError: true });

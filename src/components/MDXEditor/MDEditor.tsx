@@ -1,3 +1,5 @@
+import breaks from "@bytemd/plugin-breaks";
+import gfm from "@bytemd/plugin-gfm";
 import { Editor } from "@bytemd/react";
 import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect, VFC } from "react";
@@ -46,6 +48,7 @@ export const MDEditor: VFC = () => {
       {initialized ? (
         <Editor
           value={source}
+          plugins={[breaks(), gfm()]}
           onChange={(e) => dispatch(setSource(`${e}`))}
           uploadImages={uploadImages}
         />

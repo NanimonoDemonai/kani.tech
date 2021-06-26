@@ -1,7 +1,9 @@
 import dynamic from "next/dynamic";
+import { VFC } from "react";
 import { Fallback } from "../../Elements/Fallback";
+import { useSource } from "../../hooks/usePageMeta";
 
-export const DynamicSourceHighlighter = dynamic<{ source: string }>(
+const SourceHighlighter = dynamic<{ source: string }>(
   () =>
     import("../../Entry/SourceHighlighter").then(
       (mod) => mod.SourceHighlighter
@@ -11,3 +13,8 @@ export const DynamicSourceHighlighter = dynamic<{ source: string }>(
     loading: Fallback,
   }
 );
+
+export const DynamicSourceHighlighter: VFC = () => {
+  const source = useSource();
+  return <SourceHighlighter source={source} />;
+};

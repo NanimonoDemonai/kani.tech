@@ -1,5 +1,5 @@
 mutation DeleteObject($key: String!) {
-    deleteObject(key: $key){
-        id
-    }
+  deleteObject(key: $key) {
+    id
+  }
 }

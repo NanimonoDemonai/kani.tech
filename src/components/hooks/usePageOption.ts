@@ -12,3 +12,6 @@ export const useIsBottomOptionShowHistory = (): boolean =>
 
 export const useIsBottomOptionShowSource = (): boolean =>
   useSelector((state) => state.pageOption.isBottomOptionShowSource);
+
+export const useIsBottomOptionShowEditor = (): boolean =>
+  useSelector((state) => state.pageOption.isBottomOptionShowEditor);

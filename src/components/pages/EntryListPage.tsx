@@ -1,3 +1,4 @@
+import { HStack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { EntrySummary } from "../../types/EntrySummary";
 import { Tags } from "../Elements/Tags";
@@ -19,6 +20,8 @@ export const EntryListPage: NextPage<EntryListProps> = ({
       <Title title="エントリー一覧" />
       <EntryList entryPageList={entryPageList} />
     </Article>
-    <Tags tags={tags} />
+    <HStack spacing={2}>
+      <Tags tags={tags} />
+    </HStack>
   </>
 );

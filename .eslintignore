@@ -1,2 +1,2 @@
-src/services/client/generated/*
+src/services/frontend/client/generated/*
 src/types/generated/*

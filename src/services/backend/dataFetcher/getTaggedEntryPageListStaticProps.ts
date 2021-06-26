@@ -1,11 +1,11 @@
 import { GetStaticProps } from "next";
 import { TaggedEntryListProps } from "../../../components/pages/TaggedEntryListPage";
+import { revalidate } from "../../../constants/revalidate";
+import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
 import {
   NotFoundResponse,
   NotFoundResponseWithRevalidate,
-} from "../../../constants/NotFoundResponse";
-import { revalidate } from "../../../constants/revalidate";
-import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
+} from "../NotFoundResponse";
 import { getEntriesByTag } from "../getEntriesByTag";
 
 export const getTaggedEntryPageListStaticProps: GetStaticProps<TaggedEntryListProps> =

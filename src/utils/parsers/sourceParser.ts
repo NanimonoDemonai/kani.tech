@@ -1,5 +1,6 @@
 import rehypePrism from "@mapbox/rehype-prism";
 import { bundleMDX } from "mdx-bundler";
+import breaks from "remark-breaks";
 import gfm from "remark-gfm";
 import { FrontMatter } from "../../types/FrontMatter";
 import { imageFindPlugin } from "../rehypePlugins/imageFindPlugin";
@@ -19,7 +20,7 @@ export const sourceParser = async (src: string): Promise<Res> => {
   const images: string[] = [];
   const { code } = await bundleMDX(content, {
     xdmOptions: (options) => {
-      options.remarkPlugins = [gfm];
+      options.remarkPlugins = [gfm, breaks];
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypePrism,
