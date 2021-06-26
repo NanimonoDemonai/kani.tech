@@ -1,6 +1,6 @@
 import { GetStaticPaths } from "next";
 import { EntryPage } from "../../../components/pages/EntryPage";
-import { getEntryPageStaticProps } from "../../../services/dataFetcher/getEntryPageStaticProps";
+import { getEntryPageStaticProps } from "../../../services/backend/dataFetcher/getEntryPageStaticProps";
 
 export default EntryPage;
 export const getStaticProps = getEntryPageStaticProps;

@@ -2,8 +2,8 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { FSWatcher, watch } from "chokidar";
 import { IDockerComposeOptions, stop } from "docker-compose";
-import { createOrUpsertEntry } from "../services/createOrUpsertEntry";
-import { deleteEntry } from "../services/deleteEntry";
+import { createOrUpsertEntry } from "../services/backend/createOrUpsertEntry";
+import { deleteEntry } from "../services/backend/deleteEntry";
 import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
 import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
 

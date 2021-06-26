@@ -1,6 +1,6 @@
-import { ImageObject, PageMeta } from "../types/PageMeta";
-import { sourceParser } from "../utils/parsers/sourceParser";
-import { serializeImageObject } from "../utils/serializeImageObject";
+import { ImageObject, PageMeta } from "../../types/PageMeta";
+import { sourceParser } from "../../utils/parsers/sourceParser";
+import { serializeImageObject } from "../../utils/serializeImageObject";
 import { prisma } from "./client/PrismClient";
 
 interface Res {

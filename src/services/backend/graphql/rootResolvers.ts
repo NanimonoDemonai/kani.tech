@@ -1,6 +1,6 @@
-import { Bucket } from "../../constants/s3Bucket";
-import { Resolvers } from "../../types/generated/graphqlCodeGen";
-import { frontMatterStringify } from "../../utils/parsers/FrontMatterParser";
+import { Bucket } from "../../../constants/s3Bucket";
+import { Resolvers } from "../../../types/generated/graphqlCodeGen";
+import { frontMatterStringify } from "../../../utils/parsers/FrontMatterParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { createOrUpsertEntry } from "../createOrUpsertEntry";
