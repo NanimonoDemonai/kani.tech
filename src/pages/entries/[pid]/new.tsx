@@ -10,9 +10,7 @@ interface NewPageProps {
   pageMeta: PageMeta;
 }
 
-const NewPage: NextPage<NewPageProps> = ({ pageMeta }) => (
-  <MDXEditor {...pageMeta} />
-);
+const NewPage: NextPage<NewPageProps> = () => <MDXEditor />;
 
 export default NewPage;
 

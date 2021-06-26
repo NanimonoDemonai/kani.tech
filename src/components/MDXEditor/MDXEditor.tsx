@@ -6,29 +6,19 @@ import {
   setMDXInput,
 } from "../hooks/slices/MDXInputSlice";
 import { useDispatch, useInjectReducer } from "../hooks/store";
+import { usePageMeta } from "../hooks/usePageMeta";
 import { MDEditor } from "./MDEditor";
 import { SubmitButton } from "./SubmitButton";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
 
-export interface MDXEditorProps {
-  source: string;
-  tags: string[];
-  title: string;
-  pageName: string;
-}
-
-export const MDXEditor: VFC<MDXEditorProps> = ({
-  title,
-  tags,
-  source,
-  pageName,
-}) => {
+export const MDXEditor: VFC = () => {
   const dispatch = useDispatch();
+  const pageMeta = usePageMeta();
   useInjectReducer({ MDXInput: MDXInputSliceReducer });
   useEffect(() => {
-    dispatch(setMDXInput({ source, tags, title }));
-  }, [dispatch, title, tags, source]);
+    dispatch(setMDXInput(pageMeta));
+  }, [dispatch, pageMeta]);
 
   return (
     <Box>
@@ -38,7 +28,7 @@ export const MDXEditor: VFC<MDXEditorProps> = ({
         <TagInput />
       </Stack>
       <Divider my={2} />
-      <SubmitButton pageName={pageName} />
+      <SubmitButton pageName={pageMeta.pageName} />
     </Box>
   );
 };
