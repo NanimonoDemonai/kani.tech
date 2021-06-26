@@ -1,37 +1,12 @@
-import { GetServerSideProps, NextPage } from "next";
-import { useEffect } from "react";
-import { MDXEditor } from "../../../components/MDXEditor/MDXEditor";
+import { GetServerSideProps } from "next";
 import {
-  MDXInputSliceReducer,
-  setMDXInput,
-} from "../../../components/hooks/slices/MDXInputSlice";
-import {
-  useDispatch,
-  useInjectReducer,
-  useSelector,
-} from "../../../components/hooks/store";
+  NewPage,
+  NewPageProps,
+} from "../../../components/pages/NewPage/NewPage";
 import { NotFoundResponse } from "../../../constants/NotFoundResponse";
 import { getExistEntry } from "../../../services/getExistEntry";
-import { PageMeta } from "../../../types/PageMeta";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";
 import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
-
-interface NewPageProps {
-  pageMeta: PageMeta;
-}
-
-const NewPage: NextPage<NewPageProps> = ({ pageMeta }) => {
-  const dispatch = useDispatch();
-  const initialized = useSelector((state) => state.MDXInput?.initialized);
-
-  useInjectReducer({ MDXInput: MDXInputSliceReducer });
-  useEffect(() => {
-    if (!initialized) {
-      dispatch(setMDXInput(pageMeta));
-    }
-  }, [dispatch, initialized, pageMeta]);
-  return <MDXEditor />;
-};
 
 export default NewPage;
 
