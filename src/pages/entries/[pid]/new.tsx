@@ -1,5 +1,15 @@
 import { GetServerSideProps, NextPage } from "next";
+import { useEffect } from "react";
 import { MDXEditor } from "../../../components/MDXEditor/MDXEditor";
+import {
+  MDXInputSliceReducer,
+  setMDXInput,
+} from "../../../components/hooks/slices/MDXInputSlice";
+import {
+  useDispatch,
+  useInjectReducer,
+  useSelector,
+} from "../../../components/hooks/store";
 import { NotFoundResponse } from "../../../constants/NotFoundResponse";
 import { getExistEntry } from "../../../services/getExistEntry";
 import { PageMeta } from "../../../types/PageMeta";
@@ -10,7 +20,18 @@ interface NewPageProps {
   pageMeta: PageMeta;
 }
 
-const NewPage: NextPage<NewPageProps> = () => <MDXEditor />;
+const NewPage: NextPage<NewPageProps> = ({ pageMeta }) => {
+  const dispatch = useDispatch();
+  const initialized = useSelector((state) => state.MDXInput?.initialized);
+
+  useInjectReducer({ MDXInput: MDXInputSliceReducer });
+  useEffect(() => {
+    if (!initialized) {
+      dispatch(setMDXInput(pageMeta));
+    }
+  }, [dispatch, initialized, pageMeta]);
+  return <MDXEditor />;
+};
 
 export default NewPage;
 
