@@ -3,11 +3,14 @@ import { makeCompileQuery } from "@benzene/jit";
 import { makeExecutableSchema } from "graphql-tools";
 import { NextApiHandler, NextApiRequest } from "next";
 import typeDefs from "../../../schema.graphql";
-import { getContext, SessionContextType } from "../../services/graphql/context";
+import {
+  getContext,
+  SessionContextType,
+} from "../../services/backend/graphql/context";
 import {
   AuthenticationError,
   rootResolvers,
-} from "../../services/graphql/rootResolvers";
+} from "../../services/backend/graphql/rootResolvers";
 
 const schema = makeExecutableSchema({
   typeDefs,

@@ -5,8 +5,8 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
-import { gqlClient } from "../../../services/client/graphqlRequest";
-import { uploadImage } from "../../../services/uploadImage";
+import { uploadImage } from "../../../services/backend/uploadImage";
+import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 import { ImageObject } from "../../../types/PageMeta";
 import { AsyncThunkConfig } from "../store";
 import { UploaderState } from "../types";

@@ -1,11 +1,11 @@
 import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { FSWatcher, watch } from "chokidar";
-import { IDockerComposeOptions, stop } from "docker-compose";
-import { createOrUpsertEntry } from "../services/createOrUpsertEntry";
-import { deleteEntry } from "../services/deleteEntry";
-import { frontMatterParser } from "../utils/parsers/FrontMatterParser";
-import { readFileWithModifiedTime } from "../utils/readFileWithModifiedTime";
+import { IDockerComposeOptions, stop as stopDocker } from "docker-compose";
+import { createOrUpsertEntry } from "../src/services/backend/createOrUpsertEntry";
+import { deleteEntry } from "../src/services/backend/deleteEntry";
+import { frontMatterParser } from "../src/utils/parsers/FrontMatterParser";
+import { readFileWithModifiedTime } from "../src/utils/readFileWithModifiedTime";
 
 const dockerOption: IDockerComposeOptions = {
   log: true,
@@ -44,7 +44,7 @@ const fileRemove = async (filePath: string) => {
 process.on("SIGINT", function () {
   console.log("terminating");
 
-  stop(dockerOption).then(() => {
+  stopDocker(dockerOption).then(() => {
     console.log("terminated docker");
     watcher.close().then(() => {
       console.log("terminated watcher");
@@ -58,7 +58,7 @@ async function main() {
   await prisma.history.deleteMany();
   await prisma.entry.deleteMany();
   console.log("DB initialized");
-  watcher = watch("./src/entries/*.mdx");
+  watcher = watch("./entries/*.mdx");
   watcher.on("add", fileAdd);
   watcher.on("change", fileAdd);
   watcher.on("unlink", fileRemove);
@@ -69,7 +69,7 @@ main()
   .catch(async (e) => {
     console.log(e);
     await watcher?.close();
-    await stop(dockerOption);
+    await stopDocker(dockerOption);
   })
   .finally(async () => {
     /* noop */

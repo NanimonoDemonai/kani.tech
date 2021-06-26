@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next";
+import { MDXHistorySourcePageProps } from "../../../components/pages/MDXHistorySourcePage";
 import { NotFoundResponseWithRevalidate } from "../../../constants/NotFoundResponse";
 import { revalidate } from "../../../constants/revalidate";
-import { getMDXHistorySourcePageCodeAndPageMetaWithPIDRev } from "../../../services/getMDXHistorySourcePageCodeAndPageMetaWithPIDRev";
 import { unknownParamsToPIDRevParams } from "../../../utils/validators/unknownParamsToPIDRevParams";
-import { MDXHistorySourcePageProps } from "./MDXHistorySourcePage";
+import { getMDXHistorySourcePageCodeAndPageMetaWithPIDRev } from "../getMDXHistorySourcePageCodeAndPageMetaWithPIDRev";
 
 export const getMDXHistorySourcePageStaticProps: GetStaticProps<MDXHistorySourcePageProps> =
   async ({ params }) => {

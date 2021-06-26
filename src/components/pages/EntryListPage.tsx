@@ -1,9 +1,9 @@
 import { NextPage } from "next";
-import { EntrySummary } from "../../../types/EntrySummary";
-import { Tags } from "../../Elements/Tags";
-import { Article } from "../../Entry/Article";
-import { EntryList } from "../../Entry/EntryList";
-import { Title } from "../../Metas/Title";
+import { EntrySummary } from "../../types/EntrySummary";
+import { Tags } from "../Elements/Tags";
+import { Article } from "../Entry/Article";
+import { EntryList } from "../Entry/EntryList";
+import { Title } from "../Metas/Title";
 
 export interface EntryListProps {
   entryPageList: EntrySummary[];

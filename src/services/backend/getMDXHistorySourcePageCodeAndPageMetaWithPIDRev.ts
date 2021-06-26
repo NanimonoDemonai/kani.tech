@@ -1,4 +1,4 @@
-import { PageMeta } from "../types/PageMeta";
+import { PageMeta } from "../../types/PageMeta";
 import { prisma } from "./client/PrismClient";
 
 interface Res {

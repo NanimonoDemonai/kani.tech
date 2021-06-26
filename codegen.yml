@@ -7,9 +7,9 @@ generates:
       - "typescript"
       - "typescript-resolvers"
     config:
-      contextType: ../../services/graphql/context#SessionContextType
+      contextType: ../../services/backend/graphql/context#SessionContextType
       useIndexSignature: true
-  src/services/client/generated/graphqlRequestCodeGen.ts:
+  src/services/frontend/client/generated/graphqlRequestCodeGen.ts:
     plugins:
       - "typescript"
       - typescript-operations

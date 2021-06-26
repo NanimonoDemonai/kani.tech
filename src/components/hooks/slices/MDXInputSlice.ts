@@ -4,7 +4,7 @@ import {
   PayloadAction,
   Reducer,
 } from "@reduxjs/toolkit";
-import { gqlClient } from "../../../services/client/graphqlRequest";
+import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 
 import { AsyncThunkConfig } from "../store";
 import { MDXInputState } from "../types";

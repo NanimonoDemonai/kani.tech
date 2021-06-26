@@ -2,7 +2,7 @@ import { ImageObject } from "../../types/PageMeta";
 import { useSelector } from "./store";
 
 export const useLoading = (): boolean =>
-  useSelector((state) => state.Uploader?.loading || true);
+  useSelector((state) => state.Uploader?.loading ?? true);
 
 export const useIsDisabling = (): boolean =>
   useSelector((state) =>
@@ -14,4 +14,4 @@ export const useIsDisabling = (): boolean =>
   );
 
 export const useObjectList = (): ImageObject[] =>
-  useSelector((state) => state.Uploader?.objectList || []);
+  useSelector((state) => state.Uploader?.objectList ?? []);
