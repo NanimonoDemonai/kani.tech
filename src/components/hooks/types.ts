@@ -2,6 +2,7 @@ import { Reducer } from "@reduxjs/toolkit";
 import { ImageObject, PageMeta } from "../../types/PageMeta";
 
 export type PageMetaState = PageMeta;
+
 export interface PageOptionState {
   isBottomOptionShow: boolean;
   isBottomOptionShowSource: boolean;
@@ -9,12 +10,14 @@ export interface PageOptionState {
   isBottomOptionShowEditor: boolean;
   isBottomOptionFileListEditor: boolean;
 }
+
 export interface MDXInputState {
   title: string;
   source: string;
   tags: string[];
   loading: boolean;
 }
+
 export interface UploaderState {
   loading: boolean;
   deleting: boolean;
@@ -22,14 +25,18 @@ export interface UploaderState {
   objectList: ImageObject[];
 }
 
-export interface RootState extends Partial<AsyncState> {
+export type RootState = StaticState & Partial<AsyncState>;
+
+export interface StaticState {
   pageMeta: PageMetaState;
   pageOption: PageOptionState;
-  Uploader: UploaderState;
 }
 
 export interface AsyncState {
   MDXInput: MDXInputState;
+  Uploader: UploaderState;
 }
-
+export type StaticReducer = {
+  [P in keyof StaticState]: Reducer<StaticState[P]>;
+};
 export type AsyncReducer = { [P in keyof AsyncState]: Reducer<AsyncState[P]> };

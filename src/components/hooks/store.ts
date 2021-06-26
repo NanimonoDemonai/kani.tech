@@ -8,16 +8,15 @@ import {
   useSelector as defaultSelector,
   useStore,
 } from "react-redux";
-import { uploaderReducer } from "./slices/FileUploaderSlice";
 import { pageMetaReducer } from "./slices/pageMetaSlice";
 import { pageOptionReducer } from "./slices/pageOptionSlice";
-import { AsyncReducer, RootState } from "./types";
+import { AsyncReducer, RootState, StaticReducer } from "./types";
 
-const staticReducer = {
+const staticReducer: StaticReducer = {
   pageMeta: pageMetaReducer,
   pageOption: pageOptionReducer,
-  Uploader: uploaderReducer,
 };
+
 const asyncReducer: Partial<AsyncReducer> = {};
 
 export const store = configureReduxToolkitStore({
