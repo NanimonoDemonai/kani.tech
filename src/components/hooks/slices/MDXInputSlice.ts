@@ -23,9 +23,9 @@ export const submitPage = createAsyncThunk<
   { pageName: string },
   AsyncThunkConfig
 >("mdxInput/submitPage", async ({ pageName }, { getState }) => {
-  const {
-    MDXInput: { title, source, tags },
-  } = getState();
+  const { MDXInput } = getState();
+  if (!MDXInput) return;
+  const { title, source, tags } = MDXInput;
   const res = source;
   if (!res) return;
   await gqlClient.PostArticle({

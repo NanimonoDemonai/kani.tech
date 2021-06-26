@@ -23,6 +23,6 @@ export interface UploaderState {
 export interface RootState {
   pageMeta: PageMetaState;
   pageOption: PageOptionState;
-  MDXInput: MDXInputState;
+  MDXInput?: MDXInputState;
   Uploader: UploaderState;
 }
