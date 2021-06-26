@@ -1,17 +1,22 @@
 import { Editor } from "@bytemd/react";
 import { Box } from "@chakra-ui/react";
-import { useCallback, VFC } from "react";
+import { useCallback, useEffect, VFC } from "react";
+import { Fallback } from "../Elements/Fallback";
 import { uploadFile } from "../hooks/slices/FileUploaderSlice";
-import { setSource } from "../hooks/slices/MDXInputSlice";
-import { useDispatch } from "../hooks/store";
+import { setMDXInput, setSource } from "../hooks/slices/MDXInputSlice";
+import { useDispatch, useSelector } from "../hooks/store";
 import { useSource } from "../hooks/useMDXEditor";
 import "bytemd/dist/index.min.css";
-import { usePageName } from "../hooks/usePageMeta";
+import { usePageMeta, usePageName } from "../hooks/usePageMeta";
+import { usePageOption } from "../hooks/usePageOption";
 
 export const MDEditor: VFC = () => {
+  const pageMeta = usePageMeta();
   const source = useSource();
   const pageName = usePageName();
   const dispatch = useDispatch();
+  const pageOption = usePageOption();
+  const initialized = useSelector((state) => state.MDXInput?.initialized);
   const uploadImages = useCallback<
     (files: File[]) => Promise<[{ url: string }] | []>
   >(
@@ -30,13 +35,23 @@ export const MDEditor: VFC = () => {
     },
     [dispatch, pageName]
   );
+  useEffect(() => {
+    if (pageOption.isBottomOptionShowEditor && !initialized) {
+      dispatch(setMDXInput(pageMeta));
+    }
+  }, [dispatch, pageMeta, pageOption, initialized]);
+
   return (
     <Box className="container" h={"lg"} sx={{ ".bytemd": { height: "lg" } }}>
-      <Editor
-        value={source}
-        onChange={(e) => dispatch(setSource(`${e}`))}
-        uploadImages={uploadImages}
-      />
+      {initialized ? (
+        <Editor
+          value={source}
+          onChange={(e) => dispatch(setSource(`${e}`))}
+          uploadImages={uploadImages}
+        />
+      ) : (
+        <Fallback />
+      )}
     </Box>
   );
 };
