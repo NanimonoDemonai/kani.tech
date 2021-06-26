@@ -8,6 +8,7 @@ import { uploaderReducer } from "./slices/FileUploaderSlice";
 import { MDXInputSliceReducer } from "./slices/MDXInputSlice";
 import { pageMetaReducer } from "./slices/pageMetaSlice";
 import { pageOptionReducer } from "./slices/pageOptionSlice";
+import { RootState } from "./types";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,6 @@ export const store = configureStore({
     Uploader: uploaderReducer,
   },
 });
-export type RootState = ReturnType<typeof store.getState>;
 export type Dispatch = typeof store.dispatch;
 
 export const useDispatch = (): Dispatch => defaultDispatch<Dispatch>();

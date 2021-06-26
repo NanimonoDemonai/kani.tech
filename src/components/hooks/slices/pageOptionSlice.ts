@@ -1,14 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PageOptionState } from "../types";
 
-export interface PageOption {
-  isBottomOptionShow: boolean;
-  isBottomOptionShowSource: boolean;
-  isBottomOptionShowHistory: boolean;
-  isBottomOptionShowEditor: boolean;
-  isBottomOptionFileListEditor: boolean;
-}
-
-const initialState: PageOption = {
+const initialState: PageOptionState = {
   isBottomOptionShow: false,
   isBottomOptionFileListEditor: false,
   isBottomOptionShowEditor: false,

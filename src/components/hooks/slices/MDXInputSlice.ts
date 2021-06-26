@@ -7,13 +7,7 @@ import {
 import { gqlClient } from "../../../services/client/graphqlRequest";
 
 import { AsyncThunkConfig } from "../store";
-
-export interface MDXInputState {
-  title: string;
-  source: string;
-  tags: string[];
-  loading: boolean;
-}
+import { MDXInputState } from "../types";
 
 type setMDXInputPayload = Omit<MDXInputState, "loading">;
 

@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PageMeta } from "../../../types/PageMeta";
+import { PageMetaState } from "../types";
 
-const initialState: PageMeta = {
+const initialState: PageMetaState = {
   modified: "",
   pageName: "",
   revision: 0,
