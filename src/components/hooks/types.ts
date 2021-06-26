@@ -1,3 +1,4 @@
+import { Reducer } from "@reduxjs/toolkit";
 import { ImageObject, PageMeta } from "../../types/PageMeta";
 
 export type PageMetaState = PageMeta;
@@ -20,9 +21,16 @@ export interface UploaderState {
   uploading: boolean;
   objectList: ImageObject[];
 }
-export interface RootState {
+
+export interface RootState extends Partial<AsyncState> {
   pageMeta: PageMetaState;
   pageOption: PageOptionState;
-  MDXInput?: MDXInputState;
-  Uploader: UploaderState;
+}
+
+export interface AsyncState {
+  MDXInput: MDXInputState;
+}
+
+export interface AsyncReducer {
+  MDXInput: Reducer<MDXInputState>;
 }

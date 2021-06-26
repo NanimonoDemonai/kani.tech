@@ -1,8 +1,11 @@
 import { Box, Divider, Stack } from "@chakra-ui/react";
 import { useEffect, VFC } from "react";
 
-import { setMDXInput } from "../hooks/slices/MDXInputSlice";
-import { useDispatch } from "../hooks/store";
+import {
+  MDXInputSliceReducer,
+  setMDXInput,
+} from "../hooks/slices/MDXInputSlice";
+import { useDispatch, useInjectReducer } from "../hooks/store";
 import { MDEditor } from "./MDEditor";
 import { SubmitButton } from "./SubmitButton";
 import { TagInput } from "./TagInput";
@@ -22,6 +25,7 @@ export const MDXEditor: VFC<MDXEditorProps> = ({
   pageName,
 }) => {
   const dispatch = useDispatch();
+  useInjectReducer({ MDXInput: MDXInputSliceReducer });
   useEffect(() => {
     dispatch(setMDXInput({ source, tags, title }));
   }, [dispatch, title, tags, source]);
