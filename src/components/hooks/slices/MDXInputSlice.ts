@@ -7,21 +7,16 @@ import {
 import { gqlClient } from "../../../services/client/graphqlRequest";
 
 import { AsyncThunkConfig } from "../store";
+import { MDXInputState } from "../types";
 
-export interface MDXInputState {
-  title: string;
-  source: string;
-  tags: string[];
-  loading: boolean;
-}
-
-type setMDXInputPayload = Omit<MDXInputState, "loading">;
+type setMDXInputPayload = Omit<MDXInputState, "loading" | "initialized">;
 
 const initialState: MDXInputState = {
   source: "",
   tags: [],
   title: "",
   loading: false,
+  initialized: false,
 };
 
 export const submitPage = createAsyncThunk<
@@ -29,9 +24,9 @@ export const submitPage = createAsyncThunk<
   { pageName: string },
   AsyncThunkConfig
 >("mdxInput/submitPage", async ({ pageName }, { getState }) => {
-  const {
-    MDXInput: { title, source, tags },
-  } = getState();
+  const { MDXInput } = getState();
+  if (!MDXInput) return;
+  const { title, source, tags } = MDXInput;
   const res = source;
   if (!res) return;
   await gqlClient.PostArticle({
@@ -53,6 +48,7 @@ export const MDXInputSlice = createSlice({
       state.title = title;
       state.tags = tags;
       state.source = source;
+      state.initialized = true;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;

@@ -1,7 +1,7 @@
-import { PageOption } from "./slices/pageOptionSlice";
 import { useSelector } from "./store";
+import { PageOptionState } from "./types";
 
-export const usePageOption = (): PageOption =>
+export const usePageOption = (): PageOptionState =>
   useSelector((state) => state.pageOption);
 
 export const useIsBottomOptionFileListEditor = (): boolean =>

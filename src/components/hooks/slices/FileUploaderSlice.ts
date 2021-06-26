@@ -9,6 +9,7 @@ import { gqlClient } from "../../../services/client/graphqlRequest";
 import { uploadImage } from "../../../services/uploadImage";
 import { ImageObject } from "../../../types/PageMeta";
 import { AsyncThunkConfig } from "../store";
+import { UploaderState } from "../types";
 
 interface uploadFileProps {
   file: File;
@@ -18,14 +19,7 @@ interface deleteFileProps {
   key: string;
 }
 
-interface State {
-  loading: boolean;
-  deleting: boolean;
-  uploading: boolean;
-  objectList: ImageObject[];
-}
-
-const initialState: State = {
+const initialState: UploaderState = {
   loading: false,
   deleting: false,
   uploading: false,
@@ -47,7 +41,7 @@ export const loadObject = createAsyncThunk<
     .filter(
       (e) =>
         e.verified === "PENDING" &&
-          //TODO マジックナンバーを止める
+        //TODO マジックナンバーを止める
         dayjs().diff(dayjs(e.modified), "minute") > 10
     )
     .forEach((e) => {
@@ -91,7 +85,7 @@ const uploaderSlice = createSlice({
   extraReducers: (builder) => {
     function asyncCase<T>(
       thunk: AsyncThunk<void, T, AsyncThunkConfig>,
-      target: keyof Omit<State, "objectList">
+      target: keyof Omit<UploaderState, "objectList">
     ) {
       builder
         .addCase(thunk.pending, (state) => {
@@ -122,4 +116,4 @@ const uploaderSlice = createSlice({
       });
   },
 });
-export const uploaderReducer: Reducer<State> = uploaderSlice.reducer;
+export const uploaderReducer: Reducer<UploaderState> = uploaderSlice.reducer;
