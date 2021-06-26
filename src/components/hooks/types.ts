@@ -16,6 +16,7 @@ export interface MDXInputState {
   source: string;
   tags: string[];
   loading: boolean;
+  initialized: boolean;
 }
 
 export interface UploaderState {

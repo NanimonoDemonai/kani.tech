@@ -9,13 +9,14 @@ import { gqlClient } from "../../../services/client/graphqlRequest";
 import { AsyncThunkConfig } from "../store";
 import { MDXInputState } from "../types";
 
-type setMDXInputPayload = Omit<MDXInputState, "loading">;
+type setMDXInputPayload = Omit<MDXInputState, "loading" | "initialized">;
 
 const initialState: MDXInputState = {
   source: "",
   tags: [],
   title: "",
   loading: false,
+  initialized: false,
 };
 
 export const submitPage = createAsyncThunk<
@@ -47,6 +48,7 @@ export const MDXInputSlice = createSlice({
       state.title = title;
       state.tags = tags;
       state.source = source;
+      state.initialized = true;
     },
     setTitle: (state, { payload }: PayloadAction<string>) => {
       state.title = payload;
