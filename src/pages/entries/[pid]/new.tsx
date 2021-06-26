@@ -1,8 +1,5 @@
 import { GetServerSideProps } from "next";
-import {
-  NewPage,
-  NewPageProps,
-} from "../../../components/pages/NewPage/NewPage";
+import { NewPage, NewPageProps } from "../../../components/pages/NewPage";
 import { NotFoundResponse } from "../../../constants/NotFoundResponse";
 import { getExistEntry } from "../../../services/getExistEntry";
 import { getEntryPathWithEntryName } from "../../../utils/getURL";

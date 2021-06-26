@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { EntryPageProps } from "../../components/pages/EntryPage/EntryPage";
+import { EntryPageProps } from "../../components/pages/EntryPage";
 import {
   NotFoundResponse,
   NotFoundResponseWithRevalidate,

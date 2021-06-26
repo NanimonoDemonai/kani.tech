@@ -1,6 +1,6 @@
 import { GetStaticPaths } from "next";
-import { MDXHistorySourcePage } from "../../../../components/pages/MDXHistorySourcePage/MDXHistorySourcePage";
-import { getMDXHistorySourcePageStaticProps } from "../../../../components/pages/MDXHistorySourcePage/dataFetching";
+import { MDXHistorySourcePage } from "../../../../components/pages/MDXHistorySourcePage";
+import { getMDXHistorySourcePageStaticProps } from "../../../../services/dataFetcher/getMDXHistorySourcePageStaticProps";
 
 export default MDXHistorySourcePage;
 

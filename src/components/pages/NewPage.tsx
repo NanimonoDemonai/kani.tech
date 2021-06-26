@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 import { useEffect } from "react";
-import { PageMeta } from "../../../types/PageMeta";
-import { MDXEditor } from "../../MDXEditor/MDXEditor";
+import { PageMeta } from "../../types/PageMeta";
+import { MDXEditor } from "../MDXEditor/MDXEditor";
 import {
   MDXInputSliceReducer,
   setMDXInput,
-} from "../../hooks/slices/MDXInputSlice";
-import { useDispatch, useInjectReducer, useSelector } from "../../hooks/store";
+} from "../hooks/slices/MDXInputSlice";
+import { useDispatch, useInjectReducer, useSelector } from "../hooks/store";
 export interface NewPageProps {
   pageMeta: PageMeta;
 }

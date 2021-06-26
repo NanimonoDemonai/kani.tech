@@ -1,5 +1,5 @@
 import { GetStaticPaths } from "next";
-import { EntryPage } from "../../../components/pages/EntryPage/EntryPage";
+import { EntryPage } from "../../../components/pages/EntryPage";
 import { getEntryPageStaticProps } from "../../../services/dataFetcher/getEntryPageStaticProps";
 
 export default EntryPage;

@@ -1,6 +1,6 @@
 import { GetStaticPaths } from "next";
-import { TaggedEntryListPage } from "../../components/pages/TaggedEntryList/TaggedEntryListPage";
-import { getTaggedEntryPageListStaticProps } from "../../components/pages/TaggedEntryList/dataFetching";
+import { TaggedEntryListPage } from "../../components/pages/TaggedEntryListPage";
+import { getTaggedEntryPageListStaticProps } from "../../services/dataFetcher/getTaggedEntryPageListStaticProps";
 
 export default TaggedEntryListPage;
 export const getStaticProps = getTaggedEntryPageListStaticProps;

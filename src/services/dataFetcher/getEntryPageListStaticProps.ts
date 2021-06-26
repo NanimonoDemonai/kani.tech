@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { EntryListProps } from "../../components/pages/EntryList/EntryListPage";
+import { EntryListProps } from "../../components/pages/EntryListPage";
 import { getEntryPageList } from "../getEntryPageList";
 import { getTagList } from "../getTagList";
 
