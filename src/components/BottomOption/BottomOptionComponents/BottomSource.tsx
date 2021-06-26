@@ -1,26 +1,15 @@
-import { Collapse } from "@chakra-ui/react";
-import { useEffect, useState, VFC } from "react";
-import { Fallback } from "../../Elements/Fallback";
-import { useSource } from "../../hooks/usePageMeta";
+import { VFC } from "react";
 import { useIsBottomOptionShowSource } from "../../hooks/usePageOption";
+import { DynamicCollapse } from "./DynamicCollapse";
 import { DynamicSourceHighlighter } from "./DynamicSourceHighlighter";
 
 export const BottomSource: VFC = () => {
   const isBottomOptionShowSource = useIsBottomOptionShowSource();
-  const source = useSource();
-
-  const [initialized, setInitialized] = useState(false);
-  useEffect(() => {
-    if (isBottomOptionShowSource) setInitialized(true);
-  }, [isBottomOptionShowSource]);
 
   return (
-    <Collapse in={isBottomOptionShowSource} animateOpacity>
-      {initialized ? (
-        <DynamicSourceHighlighter source={source} />
-      ) : (
-        <Fallback />
-      )}
-    </Collapse>
+    <DynamicCollapse
+      isOpen={isBottomOptionShowSource}
+      Render={DynamicSourceHighlighter}
+    />
   );
 };
