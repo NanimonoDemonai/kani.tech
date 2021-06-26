@@ -6,7 +6,10 @@ import { materialDarkTheme } from "../../styles/materialDarkTheme";
 
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 
-export const SourceHighlighter: VFC<{ source: string }> = ({ source }) => (
+export interface SourceHighlighterProps {
+  source: string;
+}
+export const SourceHighlighter: VFC<SourceHighlighterProps> = ({ source }) => (
   <Box sx={materialDarkTheme}>
     <SyntaxHighlighter language="markdown">{`${source}`}</SyntaxHighlighter>
   </Box>
