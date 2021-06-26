@@ -25,12 +25,11 @@ export interface UploaderState {
 export interface RootState extends Partial<AsyncState> {
   pageMeta: PageMetaState;
   pageOption: PageOptionState;
+  Uploader: UploaderState;
 }
 
 export interface AsyncState {
   MDXInput: MDXInputState;
 }
 
-export interface AsyncReducer {
-  MDXInput: Reducer<MDXInputState>;
-}
+export type AsyncReducer = { [P in keyof AsyncState]: Reducer<AsyncState[P]> };
