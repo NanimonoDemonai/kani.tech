@@ -1,9 +1,9 @@
 import breaks from "@bytemd/plugin-breaks";
 import gfm from "@bytemd/plugin-gfm";
+import { Editor } from "@bytemd/react";
 import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect, VFC } from "react";
 import { Fallback } from "../Elements/Fallback";
-import { LazyLoadEditor } from "../LazyComponent/LazyLoadEditor";
 import { uploadFile } from "../hooks/slices/FileUploaderSlice";
 import { setMDXInput, setSource } from "../hooks/slices/MDXInputSlice";
 import { useDispatch, useSelector } from "../hooks/store";
@@ -46,7 +46,7 @@ export const MDEditor: VFC = () => {
   return (
     <Box className="container" h={"lg"} sx={{ ".bytemd": { height: "lg" } }}>
       {initialized ? (
-        <LazyLoadEditor
+        <Editor
           value={source}
           plugins={[breaks(), gfm()]}
           onChange={(e) => dispatch(setSource(`${e}`))}
