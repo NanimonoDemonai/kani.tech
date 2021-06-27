@@ -1,23 +1,27 @@
 import { Button } from "@chakra-ui/react";
-import { VFC } from "react";
-import { submitPage } from "../hooks/slices/MDXInputSlice";
-import { useDispatch } from "../hooks/store";
-import { useDisabled } from "../hooks/useMDXEditor";
-import { usePageName } from "../hooks/usePageMeta";
+import dynamic from "next/dynamic";
+import { useState, VFC } from "react";
+import { useSource } from "../hooks/useMDXEditor";
+const DynamicPreviewRender = dynamic<{ source: string }>(
+  () => import("./PreviewRender").then((mod) => mod.PreviewRender),
+  { ssr: false }
+);
 
 export const PreviewButton: VFC = () => {
-  const dispatch = useDispatch();
-  const disabled = useDisabled();
-  const pageName = usePageName();
-
+  const [initialized, setInitialized] = useState(false);
+  const [targetSource, setTargetSource] = useState("");
+  const source = useSource();
   return (
-    <Button
-      disabled={disabled}
-      onClick={() => {
-        dispatch(submitPage({ pageName }));
-      }}
-    >
-      プレビュー
-    </Button>
+    <>
+      <Button
+        onClick={() => {
+          setInitialized(true);
+          setTargetSource(source);
+        }}
+      >
+        プレビュー
+      </Button>
+      {initialized && <DynamicPreviewRender source={targetSource} />}
+    </>
   );
 };
