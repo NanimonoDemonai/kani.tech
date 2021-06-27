@@ -4,6 +4,7 @@ import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { SessionContextType } from "./context";
+import { getUploadUrlResolver } from "./getUploadUrlResolver";
 import { postArticleResolver } from "./postArticleResolver";
 
 export class AuthenticationError extends Error {}
@@ -53,46 +54,7 @@ export const rootResolvers: Resolvers = {
   },
   Query: {
     healthCheck: () => "hello",
-    getUploadUrl: async (
-      parent,
-      { input: { keyPrefix, contentType, size, width, height, keySuffix } },
-      context
-    ) => {
-      isUser(context);
-
-      const key = `${keyPrefix}/${keySuffix}`;
-      const res = await s3.getSignedUrlPromise("putObject", {
-        Bucket,
-        Key: key,
-        ContentType: contentType,
-        Expires: 30,
-      });
-      if (!res) throw new AuthenticationError("permission denied");
-
-      const imageObjects = {
-        create: {
-          key,
-          contentType,
-          width,
-          height,
-          size,
-        },
-      };
-      await prisma.objectDirectory.upsert({
-        where: {
-          keyPrefix,
-        },
-        create: {
-          keyPrefix,
-          imageObjects,
-        },
-        update: {
-          imageObjects,
-        },
-      });
-      return res;
-    },
-
+    getUploadUrl: getUploadUrlResolver,
     getObjectList: async (parent, { keyPrefix }, context) => {
       isUser(context);
 
