@@ -7,6 +7,7 @@ import { EntryViewer } from "../Elements/EntryViewer";
 import { Fallback } from "../Elements/Fallback";
 import { Article } from "../Entry/Article";
 import { PageMetaComponent } from "../Metas/PageMeta";
+import { useIsLoading, usePreview } from "../hooks/usePreview";
 
 export interface EntryPageProps {
   code: string;
@@ -15,14 +16,21 @@ export interface EntryPageProps {
 
 export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
   const router = useRouter();
-  if (router.isFallback) {
+  const isLoading = useIsLoading();
+  const preview = usePreview();
+  if (router.isFallback || isLoading) {
     return <Fallback />;
   }
+
   return (
     <Box>
       <PageMetaComponent pageMeta={pageMeta} />
       <Article>
-        <EntryViewer images={pageMeta.images} code={code} />
+        {preview ? (
+          <EntryViewer images={preview.images} code={preview.code} />
+        ) : (
+          <EntryViewer images={pageMeta.images} code={code} />
+        )}
       </Article>
       <BottomOption />
     </Box>
