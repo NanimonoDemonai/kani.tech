@@ -26,6 +26,12 @@ export interface UploaderState {
   objectList: ImageObject[];
 }
 
+export interface EntryPreviewState {
+  loading: boolean;
+  code: string;
+  images: ImageObject[];
+}
+
 export type RootState = StaticState & Partial<AsyncState>;
 
 export interface StaticState {
@@ -36,7 +42,9 @@ export interface StaticState {
 export interface AsyncState {
   MDXInput: MDXInputState;
   Uploader: UploaderState;
+  Preview: EntryPreviewState;
 }
+
 export type StaticReducer = {
   [P in keyof StaticState]: Reducer<StaticState[P]>;
 };

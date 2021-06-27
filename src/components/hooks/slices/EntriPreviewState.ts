@@ -1,0 +1,47 @@
+import { createAsyncThunk, createSlice, Reducer } from "@reduxjs/toolkit";
+
+import { sourceParser } from "../../../utils/parsers/sourceParser";
+import { AsyncThunkConfig } from "../store";
+import { EntryPreviewState } from "../types";
+
+type getPreviewPayload = Omit<EntryPreviewState, "loading">;
+
+const initialState: EntryPreviewState = {
+  loading: false,
+  code: "",
+  images: [],
+};
+
+export const getPreview = createAsyncThunk<
+  getPreviewPayload,
+  { src: string },
+  AsyncThunkConfig
+>("EntryPreview/getPreview", async ({ src }) => {
+  const { code } = await sourceParser(src);
+
+  // TODO 画像の縦横比を取得する
+  return { code, images: [] };
+});
+
+export const EntryPreviewSlice = createSlice({
+  name: "EntryPreview",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPreview.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getPreview.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.code = payload.code;
+        state.images = payload.images;
+      })
+      .addCase(getPreview.rejected, (state) => {
+        state.loading = false;
+      });
+  },
+});
+
+export const MDXInputSliceReducer: Reducer<EntryPreviewState> =
+  EntryPreviewSlice.reducer;
