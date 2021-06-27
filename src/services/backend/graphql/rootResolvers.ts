@@ -1,15 +1,14 @@
 import { Bucket } from "../../../constants/s3Bucket";
 import { Resolvers } from "../../../types/generated/graphqlCodeGen";
-import { frontMatterStringify } from "../../../utils/parsers/FrontMatterParser";
 import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
-import { createOrUpsertEntry } from "../createOrUpsertEntry";
 import { SessionContextType } from "./context";
+import { postArticleResolver } from "./postArticleResolver";
 
 export class AuthenticationError extends Error {}
 
-const isUser = (context: SessionContextType): void => {
+export const isUser = (context: SessionContextType): void => {
   if (context.session?.role !== "USER") {
     throw new AuthenticationError("permission denied");
   }
@@ -17,21 +16,7 @@ const isUser = (context: SessionContextType): void => {
 
 export const rootResolvers: Resolvers = {
   Mutation: {
-    postArticle: async (
-      parent,
-      { input: { tags, source, pageName, pageTitle } },
-      context
-    ) => {
-      isUser(context);
-      const data =
-        frontMatterStringify(source, {
-          title: pageTitle,
-          tags,
-          disableSanitize: false,
-        }) || "";
-      await createOrUpsertEntry({ tags, source: data, pageName, pageTitle });
-      return { id: "1" };
-    },
+    postArticle: postArticleResolver,
     deleteObject: async (parent, { key }, context) => {
       isUser(context);
       await s3.deleteObject({ Bucket, Key: key }).promise();
