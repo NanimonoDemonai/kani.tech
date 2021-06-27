@@ -23,7 +23,17 @@ export const TagInput: VFC = () => {
     dispatch(setTags([...new Set([...tags, tagInput])]));
     setTagInput("");
   }, [setTagInput, tagInput, tags, dispatch]);
-
+  const onKeyPress = useCallback(
+    (e) => {
+      if (e.key == "Enter") {
+        e.preventDefault();
+        if (tagInput.length <= 0) return;
+        dispatch(setTags([...new Set([...tags, tagInput])]));
+        setTagInput("");
+      }
+    },
+    [dispatch, tagInput, setTagInput, tags]
+  );
   return (
     <Box>
       <HStack spacing={2}>
@@ -48,14 +58,7 @@ export const TagInput: VFC = () => {
           value={tagInput}
           onChange={(e) => setTagInput(e.target.value)}
           placeholder="タグ入力"
-          onKeyPress={(e) => {
-            if (e.key == "Enter") {
-              e.preventDefault();
-              if (tagInput.length <= 0) return;
-              dispatch(setTags([...new Set([...tags, tagInput])]));
-              setTagInput("");
-            }
-          }}
+          onKeyPress={onKeyPress}
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" mr={1} px={3} onClick={onRemoveTag}>
