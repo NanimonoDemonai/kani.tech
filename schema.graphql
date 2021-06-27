@@ -34,8 +34,14 @@ type ImageObject {
   verified: String!
 }
 
+type Preview {
+  code: String!
+  images: [ImageObject!]!
+}
+
 type Query {
   getUploadUrl(input: UploadInput!): String
   getObjectList(keyPrefix: String!): [ImageObject!]!
   healthCheck: String
+  getPreview(source: String!): Preview
 }

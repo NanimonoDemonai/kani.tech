@@ -1,0 +1,13 @@
+query GetPreview($source: String!) {
+  getPreview(source: $source) {
+    images {
+      height
+      key
+      size
+      width
+      modified
+      verified
+    }
+    code
+  }
+}

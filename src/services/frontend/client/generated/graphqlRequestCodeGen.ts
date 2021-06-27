@@ -60,11 +60,18 @@ export type MutationUpdateObjectStatusArgs = {
   isError?: Maybe<Scalars['Boolean']>;
 };
 
+export type Preview = {
+  __typename?: 'Preview';
+  code: Scalars['String'];
+  images: Array<ImageObject>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
   getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
+  getPreview?: Maybe<Preview>;
 };
 
 
@@ -75,6 +82,11 @@ export type QueryGetUploadUrlArgs = {
 
 export type QueryGetObjectListArgs = {
   keyPrefix: Scalars['String'];
+};
+
+
+export type QueryGetPreviewArgs = {
+  source: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -109,6 +121,23 @@ export type GetObjectListQuery = (
   & { getObjectList: Array<(
     { __typename?: 'ImageObject' }
     & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size' | 'verified'>
+  )> }
+);
+
+export type GetPreviewQueryVariables = Exact<{
+  source: Scalars['String'];
+}>;
+
+
+export type GetPreviewQuery = (
+  { __typename?: 'Query' }
+  & { getPreview?: Maybe<(
+    { __typename?: 'Preview' }
+    & Pick<Preview, 'code'>
+    & { images: Array<(
+      { __typename?: 'ImageObject' }
+      & Pick<ImageObject, 'height' | 'key' | 'size' | 'width' | 'modified' | 'verified'>
+    )> }
   )> }
 );
 
@@ -173,6 +202,21 @@ export const GetObjectListDocument = gql`
   }
 }
     `;
+export const GetPreviewDocument = gql`
+    query GetPreview($source: String!) {
+  getPreview(source: $source) {
+    images {
+      height
+      key
+      size
+      width
+      modified
+      verified
+    }
+    code
+  }
+}
+    `;
 export const GetUploadUrlDocument = gql`
     query GetUploadUrl($input: UploadInput!) {
   getUploadUrl(input: $input)
@@ -207,6 +251,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetObjectList(variables: GetObjectListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetObjectListQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetObjectListQuery>(GetObjectListDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetObjectList');
+    },
+    GetPreview(variables: GetPreviewQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetPreviewQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPreviewQuery>(GetPreviewDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPreview');
     },
     GetUploadUrl(variables: GetUploadUrlQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUploadUrlQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUploadUrlQuery>(GetUploadUrlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUploadUrl');
