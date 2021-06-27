@@ -1,6 +1,7 @@
 import {
   configureStore as configureReduxToolkitStore,
   combineReducers,
+  Store,
 } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
@@ -24,6 +25,12 @@ export const store = configureReduxToolkitStore({
 });
 export const useInjectReducer = (state: Partial<AsyncReducer>): void => {
   const store = useStore();
+  injectReducer(store, state);
+};
+export const injectReducer = (
+  store: Store,
+  state: Partial<AsyncReducer>
+): void => {
   Object.entries(state).forEach(([key, value]) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

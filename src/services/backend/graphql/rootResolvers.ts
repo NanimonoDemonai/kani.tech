@@ -1,6 +1,7 @@
 import { Bucket } from "../../../constants/s3Bucket";
 import { Resolvers } from "../../../types/generated/graphqlCodeGen";
 import { frontMatterStringify } from "../../../utils/parsers/FrontMatterParser";
+import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { createOrUpsertEntry } from "../createOrUpsertEntry";
@@ -122,6 +123,21 @@ export const rootResolvers: Resolvers = {
         ...e,
         modified: e.updatedAt.toJSON(),
       }));
+    },
+    getPreview: async (parent, { source }, context) => {
+      isUser(context);
+      const { images, code } = await sourceParser(source);
+      const usedImages = await prisma.imageObject.findMany({
+        where: { key: { in: images } },
+      });
+
+      return {
+        code,
+        images: usedImages.map((e) => ({
+          ...e,
+          modified: e.updatedAt.toJSON(),
+        })),
+      };
     },
   },
 };

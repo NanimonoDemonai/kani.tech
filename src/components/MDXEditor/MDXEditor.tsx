@@ -1,9 +1,10 @@
-import { Box, Divider, Stack } from "@chakra-ui/react";
+import { Box, Divider, HStack, Stack } from "@chakra-ui/react";
 import { VFC } from "react";
 
 import { MDXInputSliceReducer } from "../hooks/slices/MDXInputSlice";
 import { useInjectReducer } from "../hooks/store";
 import { MDEditor } from "./MDEditor";
+import { PreviewButton } from "./PreviewButton";
 import { SubmitButton } from "./SubmitButton";
 import { TagInput } from "./TagInput";
 import { TitleInput } from "./TitleInput";
@@ -19,7 +20,10 @@ export const MDXEditor: VFC = () => {
         <TagInput />
       </Stack>
       <Divider my={2} />
-      <SubmitButton />
+      <HStack spacing={2}>
+        <SubmitButton />
+        <PreviewButton />
+      </HStack>
     </Box>
   );
 };

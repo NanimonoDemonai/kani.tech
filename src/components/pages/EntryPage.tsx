@@ -1,15 +1,14 @@
 import { Box } from "@chakra-ui/react";
-import { getMDXComponent } from "mdx-bundler/client";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
-import { entryDefaultSX } from "../../styles/entryDefaultSX";
 import { PageMeta } from "../../types/PageMeta";
 import { BottomOption } from "../BottomOption/BottomOption";
+import { EntryViewer } from "../Elements/EntryViewer";
 import { Fallback } from "../Elements/Fallback";
 import { Article } from "../Entry/Article";
-import { ImageComponent } from "../EntryComponents/ImageComponent";
+import { PreviewAlert } from "../Entry/PreviewAlert";
 import { PageMetaComponent } from "../Metas/PageMeta";
+import { useIsLoading, usePreview } from "../hooks/usePreview";
 
 export interface EntryPageProps {
   code: string;
@@ -18,18 +17,24 @@ export interface EntryPageProps {
 
 export const EntryPage: NextPage<EntryPageProps> = ({ code, pageMeta }) => {
   const router = useRouter();
-  const Component = useMemo(() => getMDXComponent(code), [code]);
-  if (router.isFallback) {
+  const isLoading = useIsLoading();
+  const preview = usePreview();
+  if (router.isFallback || isLoading) {
     return <Fallback />;
   }
+
   return (
     <Box>
       <PageMetaComponent pageMeta={pageMeta} />
-
       <Article>
-        <Box sx={entryDefaultSX}>
-          <Component components={{ img: ImageComponent(pageMeta.images) }} />
-        </Box>
+        {preview ? (
+          <>
+            <PreviewAlert />
+            <EntryViewer images={preview.images} code={preview.code} />
+          </>
+        ) : (
+          <EntryViewer images={pageMeta.images} code={code} />
+        )}
       </Article>
       <BottomOption />
     </Box>

@@ -60,11 +60,18 @@ export type MutationUpdateObjectStatusArgs = {
   isError?: Maybe<Scalars['Boolean']>;
 };
 
+export type Preview = {
+  __typename?: 'Preview';
+  code: Scalars['String'];
+  images: Array<ImageObject>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getUploadUrl?: Maybe<Scalars['String']>;
   getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
+  getPreview?: Maybe<Preview>;
 };
 
 
@@ -75,6 +82,11 @@ export type QueryGetUploadUrlArgs = {
 
 export type QueryGetObjectListArgs = {
   keyPrefix: Scalars['String'];
+};
+
+
+export type QueryGetPreviewArgs = {
+  source: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -173,6 +185,7 @@ export type ResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Preview: ResolverTypeWrapper<Preview>;
   Query: ResolverTypeWrapper<{}>;
   UploadInput: UploadInput;
 }>;
@@ -187,6 +200,7 @@ export type ResolversParentTypes = ResolversObject<{
   Int: Scalars['Int'];
   Mutation: {};
   Boolean: Scalars['Boolean'];
+  Preview: Preview;
   Query: {};
   UploadInput: UploadInput;
 }>;
@@ -213,16 +227,24 @@ export type MutationResolvers<ContextType = SessionContextType, ParentType exten
   updateObjectStatus?: Resolver<Maybe<ResolversTypes['Id']>, ParentType, ContextType, RequireFields<MutationUpdateObjectStatusArgs, 'key'>>;
 }>;
 
+export type PreviewResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Preview'] = ResolversParentTypes['Preview']> = ResolversObject<{
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  images?: Resolver<Array<ResolversTypes['ImageObject']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>;
   getObjectList?: Resolver<Array<ResolversTypes['ImageObject']>, ParentType, ContextType, RequireFields<QueryGetObjectListArgs, 'keyPrefix'>>;
   healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  getPreview?: Resolver<Maybe<ResolversTypes['Preview']>, ParentType, ContextType, RequireFields<QueryGetPreviewArgs, 'source'>>;
 }>;
 
 export type Resolvers<ContextType = SessionContextType> = ResolversObject<{
   Id?: IdResolvers<ContextType>;
   ImageObject?: ImageObjectResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Preview?: PreviewResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;
 
