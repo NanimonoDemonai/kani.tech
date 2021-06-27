@@ -8,3 +8,5 @@ export const useTags = (): string[] =>
   useSelector((state) => state.MDXInput?.tags ?? []);
 export const useDisabled = (): boolean =>
   useSelector((state) => state.MDXInput?.loading ?? true);
+export const useIsInitialized = (): boolean =>
+  useSelector((state) => state.MDXInput?.initialized ?? false);
