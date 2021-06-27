@@ -8,32 +8,17 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { useCallback, useState, VFC } from "react";
+import { VFC } from "react";
 import { setTags } from "../hooks/slices/MDXInputSlice";
 import { useDispatch } from "../hooks/store";
 import { useTags } from "../hooks/useMDXEditor";
+import { useTagInput } from "./hooks/useTagInput";
 
 export const TagInput: VFC = () => {
   const dispatch = useDispatch();
-
   const tags = useTags();
-  const [tagInput, setTagInput] = useState("");
-  const onRemoveTag = useCallback(() => {
-    if (tagInput.length <= 0) return;
-    dispatch(setTags([...new Set([...tags, tagInput])]));
-    setTagInput("");
-  }, [setTagInput, tagInput, tags, dispatch]);
-  const onKeyPress = useCallback(
-    (e) => {
-      if (e.key == "Enter") {
-        e.preventDefault();
-        if (tagInput.length <= 0) return;
-        dispatch(setTags([...new Set([...tags, tagInput])]));
-        setTagInput("");
-      }
-    },
-    [dispatch, tagInput, setTagInput, tags]
-  );
+  const { onRemoveTag, onKeyPress, value, onChange } = useTagInput();
+
   return (
     <Box>
       <HStack spacing={2}>
@@ -55,8 +40,8 @@ export const TagInput: VFC = () => {
       </HStack>
       <InputGroup size="md">
         <Input
-          value={tagInput}
-          onChange={(e) => setTagInput(e.target.value)}
+          value={value}
+          onChange={onChange}
           placeholder="タグ入力"
           onKeyPress={onKeyPress}
         />
