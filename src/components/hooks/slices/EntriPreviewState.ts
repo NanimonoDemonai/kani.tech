@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, Reducer } from "@reduxjs/toolkit";
 
-import { sourceParser } from "../../../utils/parsers/sourceParser";
+import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 import { AsyncThunkConfig } from "../store";
 import { EntryPreviewState } from "../types";
 
@@ -14,13 +14,13 @@ const initialState: EntryPreviewState = {
 
 export const getPreview = createAsyncThunk<
   getPreviewPayload,
-  { src: string },
+  { source: string },
   AsyncThunkConfig
->("EntryPreview/getPreview", async ({ src }) => {
-  const { code } = await sourceParser(src);
-
-  // TODO 画像の縦横比を取得する
-  return { code, images: [] };
+>("EntryPreview/getPreview", async ({ source }) => {
+  const { getPreview } = await gqlClient.GetPreview({ source });
+  if (!getPreview) throw new Error("parsing error");
+  const { code, images } = getPreview;
+  return { code, images };
 });
 
 export const EntryPreviewSlice = createSlice({
@@ -43,5 +43,5 @@ export const EntryPreviewSlice = createSlice({
   },
 });
 
-export const MDXInputSliceReducer: Reducer<EntryPreviewState> =
+export const EntryPreviewReducer: Reducer<EntryPreviewState> =
   EntryPreviewSlice.reducer;
