@@ -3,6 +3,7 @@ query GetPreview($source: String!) {
     images {
       height
       key
+      url
       size
       width
       modified

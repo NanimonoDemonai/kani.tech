@@ -26,7 +26,7 @@ input UploadInput {
 
 type ImageObject {
   key: String!
-  url:String!
+  url: String!
   contentType: String!
   width: Int!
   height: Int!
@@ -40,9 +40,10 @@ type Preview {
   images: [ImageObject!]!
 }
 
-type URLReturn{
-  uploadURL:String!
-  url:String!
+type URLReturn {
+  uploadURL: String!
+  url: String!
+  key: String!
 }
 
 type Query {

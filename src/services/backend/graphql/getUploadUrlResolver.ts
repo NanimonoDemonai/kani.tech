@@ -44,12 +44,14 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
         directory: {
           upsert: {
             update: {
+              urlPrefix: `${keyPrefix}`,
               keyPrefix: `${keyPrefix}/${entry.id}`,
               imageObjects: {
                 create: [imageObject],
               },
             },
             create: {
+              urlPrefix: `${keyPrefix}`,
               keyPrefix: `${keyPrefix}/${entry.id}`,
               imageObjects: {
                 create: [imageObject],
@@ -63,6 +65,7 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
 
   return {
     uploadURL,
+    key,
     url,
   };
 };

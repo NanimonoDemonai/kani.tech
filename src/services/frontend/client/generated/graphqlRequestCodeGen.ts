@@ -94,6 +94,7 @@ export type UrlReturn = {
   __typename?: 'URLReturn';
   uploadURL: Scalars['String'];
   url: Scalars['String'];
+  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -127,7 +128,7 @@ export type GetObjectListQuery = (
   { __typename?: 'Query' }
   & { getObjectList: Array<(
     { __typename?: 'ImageObject' }
-    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size' | 'verified'>
+    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'url' | 'size' | 'verified'>
   )> }
 );
 
@@ -143,7 +144,7 @@ export type GetPreviewQuery = (
     & Pick<Preview, 'code'>
     & { images: Array<(
       { __typename?: 'ImageObject' }
-      & Pick<ImageObject, 'height' | 'key' | 'size' | 'width' | 'modified' | 'verified'>
+      & Pick<ImageObject, 'height' | 'key' | 'url' | 'size' | 'width' | 'modified' | 'verified'>
     )> }
   )> }
 );
@@ -157,7 +158,7 @@ export type GetUploadUrlQuery = (
   { __typename?: 'Query' }
   & { getUploadUrl?: Maybe<(
     { __typename?: 'URLReturn' }
-    & Pick<UrlReturn, 'url' | 'uploadURL'>
+    & Pick<UrlReturn, 'url' | 'uploadURL' | 'key'>
   )> }
 );
 
@@ -207,6 +208,7 @@ export const GetObjectListDocument = gql`
     contentType
     modified
     key
+    url
     size
     verified
   }
@@ -218,6 +220,7 @@ export const GetPreviewDocument = gql`
     images {
       height
       key
+      url
       size
       width
       modified
@@ -232,6 +235,7 @@ export const GetUploadUrlDocument = gql`
   getUploadUrl(input: $input) {
     url
     uploadURL
+    key
   }
 }
     `;

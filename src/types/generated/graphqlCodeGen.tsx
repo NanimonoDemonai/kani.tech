@@ -94,6 +94,7 @@ export type UrlReturn = {
   __typename?: 'URLReturn';
   uploadURL: Scalars['String'];
   url: Scalars['String'];
+  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -253,6 +254,7 @@ export type QueryResolvers<ContextType = SessionContextType, ParentType extends 
 export type UrlReturnResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['URLReturn'] = ResolversParentTypes['URLReturn']> = ResolversObject<{
   uploadURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

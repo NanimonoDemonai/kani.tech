@@ -2,5 +2,6 @@ query GetUploadUrl($input: UploadInput!) {
   getUploadUrl(input: $input){
     url
     uploadURL
+    key
   }
 }
