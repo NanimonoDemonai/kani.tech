@@ -40,8 +40,8 @@ export const uploadImage = async (
     },
   });
   if (!getUploadUrl) return;
-  const { key, url } = getUploadUrl;
-  await fetch(url, {
+  const { key, url, uploadURL } = getUploadUrl;
+  await fetch(uploadURL, {
     method: "put",
     body: file,
     headers: {
@@ -51,5 +51,5 @@ export const uploadImage = async (
     },
   });
   await gqlClient.UpdateObjectStatus({ key });
-  return key;
+  return url;
 };
