@@ -47,7 +47,7 @@ model Tag {
 model ObjectDirectory {
   id           Int           @id @default(autoincrement())
   entry        Entry?        @relation(fields: [entryId], references: [id])
-  entryId      Int
+  entryId      Int?
   keyPrefix    String        @unique
   imageObjects ImageObject[]
 
