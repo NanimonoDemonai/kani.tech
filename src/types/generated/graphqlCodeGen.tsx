@@ -68,7 +68,7 @@ export type Preview = {
 
 export type Query = {
   __typename?: 'Query';
-  getUploadUrl?: Maybe<Scalars['String']>;
+  getUploadUrl?: Maybe<UrlReturn>;
   getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
   getPreview?: Maybe<Preview>;
@@ -87,6 +87,12 @@ export type QueryGetObjectListArgs = {
 
 export type QueryGetPreviewArgs = {
   source: Scalars['String'];
+};
+
+export type UrlReturn = {
+  __typename?: 'URLReturn';
+  url: Scalars['String'];
+  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -187,6 +193,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Preview: ResolverTypeWrapper<Preview>;
   Query: ResolverTypeWrapper<{}>;
+  URLReturn: ResolverTypeWrapper<UrlReturn>;
   UploadInput: UploadInput;
 }>;
 
@@ -202,6 +209,7 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Preview: Preview;
   Query: {};
+  URLReturn: UrlReturn;
   UploadInput: UploadInput;
 }>;
 
@@ -234,10 +242,16 @@ export type PreviewResolvers<ContextType = SessionContextType, ParentType extend
 }>;
 
 export type QueryResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getUploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>;
+  getUploadUrl?: Resolver<Maybe<ResolversTypes['URLReturn']>, ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>;
   getObjectList?: Resolver<Array<ResolversTypes['ImageObject']>, ParentType, ContextType, RequireFields<QueryGetObjectListArgs, 'keyPrefix'>>;
   healthCheck?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   getPreview?: Resolver<Maybe<ResolversTypes['Preview']>, ParentType, ContextType, RequireFields<QueryGetPreviewArgs, 'source'>>;
+}>;
+
+export type UrlReturnResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['URLReturn'] = ResolversParentTypes['URLReturn']> = ResolversObject<{
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = SessionContextType> = ResolversObject<{
@@ -246,6 +260,7 @@ export type Resolvers<ContextType = SessionContextType> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Preview?: PreviewResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  URLReturn?: UrlReturnResolvers<ContextType>;
 }>;
 
 

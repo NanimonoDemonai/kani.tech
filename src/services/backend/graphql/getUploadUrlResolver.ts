@@ -10,8 +10,13 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
   context
 ) => {
   isUser(context);
-
-  const key = `${keyPrefix}/${keySuffix}`;
+  const entry = await prisma.entry.findUnique({
+    where: {
+      pageName: keyPrefix,
+    },
+  });
+  if (!entry) throw new AuthenticationError("permission denied");
+  const key = `${keyPrefix}/${entry.id}/${keySuffix}`;
   const res = await s3.getSignedUrlPromise("putObject", {
     Bucket,
     Key: key,
@@ -20,26 +25,41 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
   });
   if (!res) throw new AuthenticationError("permission denied");
 
-  const imageObjects = {
-    create: {
-      key,
-      contentType,
-      width,
-      height,
-      size,
-    },
+  const imageObject = {
+    key,
+    contentType,
+    width,
+    height,
+    size,
   };
-  await prisma.objectDirectory.upsert({
-    where: {
-      keyPrefix,
-    },
-    create: {
-      keyPrefix,
-      imageObjects,
-    },
-    update: {
-      imageObjects,
-    },
-  });
-  return res;
+  console.log(
+    await prisma.entry.update({
+      where: {
+        id: entry.id,
+      },
+      data: {
+        directory: {
+          upsert: {
+            update: {
+              keyPrefix: `${keyPrefix}/${entry.id}`,
+              imageObjects: {
+                create: [imageObject],
+              },
+            },
+            create: {
+              keyPrefix: `${keyPrefix}/${entry.id}`,
+              imageObjects: {
+                create: [imageObject],
+              },
+            },
+          },
+        },
+      },
+    })
+  );
+
+  return {
+    url: res,
+    key,
+  };
 };

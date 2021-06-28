@@ -68,7 +68,7 @@ export type Preview = {
 
 export type Query = {
   __typename?: 'Query';
-  getUploadUrl?: Maybe<Scalars['String']>;
+  getUploadUrl?: Maybe<UrlReturn>;
   getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
   getPreview?: Maybe<Preview>;
@@ -87,6 +87,12 @@ export type QueryGetObjectListArgs = {
 
 export type QueryGetPreviewArgs = {
   source: Scalars['String'];
+};
+
+export type UrlReturn = {
+  __typename?: 'URLReturn';
+  url: Scalars['String'];
+  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -148,7 +154,10 @@ export type GetUploadUrlQueryVariables = Exact<{
 
 export type GetUploadUrlQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'getUploadUrl'>
+  & { getUploadUrl?: Maybe<(
+    { __typename?: 'URLReturn' }
+    & Pick<UrlReturn, 'url' | 'key'>
+  )> }
 );
 
 export type PostArticleMutationVariables = Exact<{
@@ -219,7 +228,10 @@ export const GetPreviewDocument = gql`
     `;
 export const GetUploadUrlDocument = gql`
     query GetUploadUrl($input: UploadInput!) {
-  getUploadUrl(input: $input)
+  getUploadUrl(input: $input) {
+    url
+    key
+  }
 }
     `;
 export const PostArticleDocument = gql`
