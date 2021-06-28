@@ -29,6 +29,7 @@ export type Id = {
 export type ImageObject = {
   __typename?: 'ImageObject';
   key: Scalars['String'];
+  url: Scalars['String'];
   contentType: Scalars['String'];
   width: Scalars['Int'];
   height: Scalars['Int'];
@@ -91,8 +92,8 @@ export type QueryGetPreviewArgs = {
 
 export type UrlReturn = {
   __typename?: 'URLReturn';
+  uploadURL: Scalars['String'];
   url: Scalars['String'];
-  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -156,7 +157,7 @@ export type GetUploadUrlQuery = (
   { __typename?: 'Query' }
   & { getUploadUrl?: Maybe<(
     { __typename?: 'URLReturn' }
-    & Pick<UrlReturn, 'url' | 'key'>
+    & Pick<UrlReturn, 'url' | 'uploadURL'>
   )> }
 );
 
@@ -230,7 +231,7 @@ export const GetUploadUrlDocument = gql`
     query GetUploadUrl($input: UploadInput!) {
   getUploadUrl(input: $input) {
     url
-    key
+    uploadURL
   }
 }
     `;

@@ -29,6 +29,7 @@ export type Id = {
 export type ImageObject = {
   __typename?: 'ImageObject';
   key: Scalars['String'];
+  url: Scalars['String'];
   contentType: Scalars['String'];
   width: Scalars['Int'];
   height: Scalars['Int'];
@@ -91,8 +92,8 @@ export type QueryGetPreviewArgs = {
 
 export type UrlReturn = {
   __typename?: 'URLReturn';
+  uploadURL: Scalars['String'];
   url: Scalars['String'];
-  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -220,6 +221,7 @@ export type IdResolvers<ContextType = SessionContextType, ParentType extends Res
 
 export type ImageObjectResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['ImageObject'] = ResolversParentTypes['ImageObject']> = ResolversObject<{
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   contentType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -249,8 +251,8 @@ export type QueryResolvers<ContextType = SessionContextType, ParentType extends 
 }>;
 
 export type UrlReturnResolvers<ContextType = SessionContextType, ParentType extends ResolversParentTypes['URLReturn'] = ResolversParentTypes['URLReturn']> = ResolversObject<{
+  uploadURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
