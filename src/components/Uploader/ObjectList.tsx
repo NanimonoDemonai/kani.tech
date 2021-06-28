@@ -48,7 +48,7 @@ export const ObjectList: VFC = () => {
           {objectList.map((e) => (
             <Tr key={e.key}>
               <Td>
-                <Code isTruncated>{e.key}</Code>
+                <Code isTruncated>{e.url}</Code>
               </Td>
               <Td>
                 <ThumbnailImage src={e.key} />
