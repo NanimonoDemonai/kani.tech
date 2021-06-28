@@ -51,7 +51,7 @@ export const loadObject = createAsyncThunk<
 });
 
 export const uploadFile = createAsyncThunk<
-  void,
+  string,
   uploadFileProps,
   AsyncThunkConfig
 >("uploadFile", async ({ file }, { getState, dispatch }) => {
@@ -59,14 +59,11 @@ export const uploadFile = createAsyncThunk<
     pageMeta: { pageName, imageObjects },
   } = getState();
   const key = `${pageName}/${file.name}`;
-  if (imageObjects.some((e) => e.key === key)) return;
-  try {
-    const res = await uploadImage(file, pageName);
-    if (res) await gqlClient.UpdateObjectStatus({ key });
-  } catch (e) {
-    await gqlClient.UpdateObjectStatus({ key, isError: true });
-  }
+  if (imageObjects.some((e) => e.key === key)) throw new Error("already exist");
+
+  const res = await uploadImage(file, pageName);
   dispatch(loadObject());
+  return res ?? "";
 });
 
 export const deleteFile = createAsyncThunk<
@@ -83,8 +80,8 @@ const uploaderSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    function asyncCase<T>(
-      thunk: AsyncThunk<void, T, AsyncThunkConfig>,
+    function asyncCase<T, K>(
+      thunk: AsyncThunk<T, K, AsyncThunkConfig>,
       target: keyof Omit<UploaderState, "objectList">
     ) {
       builder
