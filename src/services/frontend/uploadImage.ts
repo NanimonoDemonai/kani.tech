@@ -1,4 +1,4 @@
-import { gqlClient } from "../frontend/client/graphqlRequest";
+import { gqlClient } from "./client/graphqlRequest";
 
 const getImageSize = async (
   file: File
