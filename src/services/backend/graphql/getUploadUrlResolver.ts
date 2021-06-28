@@ -17,16 +17,19 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
   });
   if (!entry) throw new AuthenticationError("permission denied");
   const key = `${keyPrefix}/${entry.id}/${keySuffix}`;
-  const res = await s3.getSignedUrlPromise("putObject", {
+  const url = `${keyPrefix}/${keySuffix}`;
+
+  const uploadURL = await s3.getSignedUrlPromise("putObject", {
     Bucket,
     Key: key,
     ContentType: contentType,
     Expires: 30,
   });
-  if (!res) throw new AuthenticationError("permission denied");
+  if (!uploadURL) throw new AuthenticationError("permission denied");
 
   const imageObject = {
     key,
+    url,
     contentType,
     width,
     height,
@@ -59,7 +62,7 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
   );
 
   return {
-    url: res,
-    key,
+    uploadURL,
+    url,
   };
 };
