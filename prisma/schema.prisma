@@ -11,15 +11,16 @@ generator client {
 }
 
 model Entry {
-  id        Int       @id @default(autoincrement())
-  pageName  String    @unique
-  pageTitle String    @default("")
+  id        Int              @id @default(autoincrement())
+  pageName  String           @unique
+  pageTitle String           @default("")
   source    String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
   tags      Tag[]
   revision  Int
   history   History[]
+  directory ObjectDirectory?
 
   @@index([pageName], name: "pageName")
 }
@@ -45,7 +46,10 @@ model Tag {
 
 model ObjectDirectory {
   id           Int           @id @default(autoincrement())
+  entry        Entry?        @relation(fields: [entryId], references: [id])
+  entryId      Int?
   keyPrefix    String        @unique
+  urlPrefix    String        @unique
   imageObjects ImageObject[]
 
   @@index([keyPrefix], name: "keyPrefix")
@@ -54,6 +58,7 @@ model ObjectDirectory {
 model ImageObject {
   id                Int             @id @default(autoincrement())
   key               String          @unique
+  url               String          @unique
   directory         ObjectDirectory @relation(fields: [objectDirectoryId], references: [id])
   contentType       String
   width             Int

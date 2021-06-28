@@ -1,3 +1,7 @@
 query GetUploadUrl($input: UploadInput!) {
-  getUploadUrl(input: $input)
+  getUploadUrl(input: $input){
+    url
+    uploadURL
+    key
+  }
 }

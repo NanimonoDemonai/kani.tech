@@ -5,6 +5,7 @@ query GetObjectList($keyPrefix: String!) {
     contentType
     modified
     key
+    url
     size
     verified
   }

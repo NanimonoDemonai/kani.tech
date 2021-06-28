@@ -20,6 +20,7 @@ export interface ImageObject {
   height: number;
   size: number;
   key: string;
+  url: string;
   modified: string;
   verified: string;
 }

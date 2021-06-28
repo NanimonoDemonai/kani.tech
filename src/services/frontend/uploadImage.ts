@@ -1,4 +1,4 @@
-import { gqlClient } from "../frontend/client/graphqlRequest";
+import { gqlClient } from "./client/graphqlRequest";
 
 const getImageSize = async (
   file: File
@@ -29,7 +29,7 @@ export const uploadImage = async (
 ): Promise<string | void> => {
   const { name: keySuffix, size, type: contentType } = file;
   const { width, height } = await getImageSize(file);
-  const { getUploadUrl: url } = await gqlClient.GetUploadUrl({
+  const { getUploadUrl } = await gqlClient.GetUploadUrl({
     input: {
       contentType,
       keySuffix,
@@ -39,9 +39,9 @@ export const uploadImage = async (
       size,
     },
   });
-  if (!url) return;
-
-  await fetch(url, {
+  if (!getUploadUrl) return;
+  const { key, url, uploadURL } = getUploadUrl;
+  await fetch(uploadURL, {
     method: "put",
     body: file,
     headers: {
@@ -50,5 +50,6 @@ export const uploadImage = async (
       "x-amz-meta-height": `${height}`,
     },
   });
-  return `${keyPrefix}/${keySuffix}`;
+  await gqlClient.UpdateObjectStatus({ key });
+  return url;
 };

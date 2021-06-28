@@ -29,6 +29,7 @@ export type Id = {
 export type ImageObject = {
   __typename?: 'ImageObject';
   key: Scalars['String'];
+  url: Scalars['String'];
   contentType: Scalars['String'];
   width: Scalars['Int'];
   height: Scalars['Int'];
@@ -68,7 +69,7 @@ export type Preview = {
 
 export type Query = {
   __typename?: 'Query';
-  getUploadUrl?: Maybe<Scalars['String']>;
+  getUploadUrl?: Maybe<UrlReturn>;
   getObjectList: Array<ImageObject>;
   healthCheck?: Maybe<Scalars['String']>;
   getPreview?: Maybe<Preview>;
@@ -87,6 +88,13 @@ export type QueryGetObjectListArgs = {
 
 export type QueryGetPreviewArgs = {
   source: Scalars['String'];
+};
+
+export type UrlReturn = {
+  __typename?: 'URLReturn';
+  uploadURL: Scalars['String'];
+  url: Scalars['String'];
+  key: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -120,7 +128,7 @@ export type GetObjectListQuery = (
   { __typename?: 'Query' }
   & { getObjectList: Array<(
     { __typename?: 'ImageObject' }
-    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'size' | 'verified'>
+    & Pick<ImageObject, 'width' | 'height' | 'contentType' | 'modified' | 'key' | 'url' | 'size' | 'verified'>
   )> }
 );
 
@@ -136,7 +144,7 @@ export type GetPreviewQuery = (
     & Pick<Preview, 'code'>
     & { images: Array<(
       { __typename?: 'ImageObject' }
-      & Pick<ImageObject, 'height' | 'key' | 'size' | 'width' | 'modified' | 'verified'>
+      & Pick<ImageObject, 'height' | 'key' | 'url' | 'size' | 'width' | 'modified' | 'verified'>
     )> }
   )> }
 );
@@ -148,7 +156,10 @@ export type GetUploadUrlQueryVariables = Exact<{
 
 export type GetUploadUrlQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'getUploadUrl'>
+  & { getUploadUrl?: Maybe<(
+    { __typename?: 'URLReturn' }
+    & Pick<UrlReturn, 'url' | 'uploadURL' | 'key'>
+  )> }
 );
 
 export type PostArticleMutationVariables = Exact<{
@@ -197,6 +208,7 @@ export const GetObjectListDocument = gql`
     contentType
     modified
     key
+    url
     size
     verified
   }
@@ -208,6 +220,7 @@ export const GetPreviewDocument = gql`
     images {
       height
       key
+      url
       size
       width
       modified
@@ -219,7 +232,11 @@ export const GetPreviewDocument = gql`
     `;
 export const GetUploadUrlDocument = gql`
     query GetUploadUrl($input: UploadInput!) {
-  getUploadUrl(input: $input)
+  getUploadUrl(input: $input) {
+    url
+    uploadURL
+    key
+  }
 }
     `;
 export const PostArticleDocument = gql`
