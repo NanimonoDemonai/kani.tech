@@ -7,6 +7,7 @@ export const serializeImageObject = (
   imageObjects.map((e) => ({
     height: e.height,
     key: e.key,
+    url: e.url,
     size: e.size,
     width: e.width,
     modified: e.updatedAt.toJSON(),
