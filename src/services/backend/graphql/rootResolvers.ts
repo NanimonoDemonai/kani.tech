@@ -58,18 +58,24 @@ export const rootResolvers: Resolvers = {
     getObjectList: async (parent, { keyPrefix }, context) => {
       isUser(context);
 
-      const objects = await prisma.objectDirectory.findUnique({
-        where: { keyPrefix },
+      const objects = await prisma.entry.findUnique({
+        where: { pageName: keyPrefix },
         include: {
-          imageObjects: true,
+          directory: {
+            include: {
+              imageObjects: true,
+            },
+          },
         },
       });
       if (!objects) throw new AuthenticationError("permission denied");
 
-      return objects.imageObjects.map((e) => ({
-        ...e,
-        modified: e.updatedAt.toJSON(),
-      }));
+      return (
+        objects.directory?.imageObjects.map((e) => ({
+          ...e,
+          modified: e.updatedAt.toJSON(),
+        })) ?? []
+      );
     },
     getPreview: async (parent, { source }, context) => {
       isUser(context);
