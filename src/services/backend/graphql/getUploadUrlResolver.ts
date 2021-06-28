@@ -35,33 +35,31 @@ export const getUploadUrlResolver: QueryResolvers["getUploadUrl"] = async (
     height,
     size,
   };
-  console.log(
-    await prisma.entry.update({
-      where: {
-        id: entry.id,
-      },
-      data: {
-        directory: {
-          upsert: {
-            update: {
-              urlPrefix: `${keyPrefix}`,
-              keyPrefix: `${keyPrefix}/${entry.id}`,
-              imageObjects: {
-                create: [imageObject],
-              },
+  await prisma.entry.update({
+    where: {
+      id: entry.id,
+    },
+    data: {
+      directory: {
+        upsert: {
+          update: {
+            urlPrefix: `${keyPrefix}`,
+            keyPrefix: `${keyPrefix}/${entry.id}`,
+            imageObjects: {
+              create: [imageObject],
             },
-            create: {
-              urlPrefix: `${keyPrefix}`,
-              keyPrefix: `${keyPrefix}/${entry.id}`,
-              imageObjects: {
-                create: [imageObject],
-              },
+          },
+          create: {
+            urlPrefix: `${keyPrefix}`,
+            keyPrefix: `${keyPrefix}/${entry.id}`,
+            imageObjects: {
+              create: [imageObject],
             },
           },
         },
       },
-    })
-  );
+    },
+  });
 
   return {
     uploadURL,
