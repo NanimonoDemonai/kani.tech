@@ -9,6 +9,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
+    "vercel:dev": "vercel dev",
     "dev": "run-s dev:server:up dev:server:start",
     "dev:backend": "run-s dev:server:up dev:watch-entries",
     "dev:server:start": "run-p nextdev dev:watch-entries",
