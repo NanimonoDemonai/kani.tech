@@ -1,4 +1,5 @@
-export const SITE_NAME = "kani.tech";
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "kani.tech";
 export const CODE_REPOSITORY = new URL(
-  "https://github.com/NanimonoDemonai/kani.tech"
+  process.env.NEXT_PUBLIC_CODE_REPOSITORY ||
+    "https://github.com/NanimonoDemonai/kani.tech"
 );
