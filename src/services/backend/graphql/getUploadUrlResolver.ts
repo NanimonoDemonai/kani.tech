@@ -1,4 +1,4 @@
-import { Bucket } from "../../../constants/s3Bucket";
+import { Bucket } from "../../../constants/NextPublicEnvs";
 import { QueryResolvers } from "../../../types/generated/graphqlCodeGen";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";

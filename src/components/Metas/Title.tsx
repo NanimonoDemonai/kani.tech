@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, VFC } from "react";
-import { SITE_NAME } from "../../constants/envNames";
+import { SITE_NAME } from "../../constants/NextPublicEnvs";
 import { setTitle } from "../hooks/slices/pageMetaSlice";
 import { useDispatch } from "../hooks/store";
 

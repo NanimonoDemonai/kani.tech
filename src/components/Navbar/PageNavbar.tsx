@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Heading, HStack, Link, Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { VFC } from "react";
-import { CODE_REPOSITORY, SITE_NAME } from "../../constants/envNames";
+import { CODE_REPOSITORY, SITE_NAME } from "../../constants/NextPublicEnvs";
 import { useTitle } from "../hooks/usePageMeta";
 import { KaniButton } from "./KaniButton";
 import { LoginButton } from "./LoginButton";

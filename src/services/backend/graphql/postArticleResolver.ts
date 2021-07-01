@@ -1,4 +1,4 @@
-import { DocumentBucket } from "../../../constants/s3Bucket";
+import { DocumentBucket } from "../../../constants/NextSecretEnv";
 import { MutationResolvers } from "../../../types/generated/graphqlCodeGen";
 import { frontMatterStringify } from "../../../utils/parsers/FrontMatterParser";
 import { s3 } from "../client/S3";

@@ -5,7 +5,7 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
-import { uploaderTimeout } from "../../../constants/timeout";
+import { uploaderTimeout } from "../../../constants/NextSecretEnv";
 import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 import { uploadImage } from "../../../services/frontend/uploadImage";
 import { ImageObject } from "../../../types/PageMeta";
