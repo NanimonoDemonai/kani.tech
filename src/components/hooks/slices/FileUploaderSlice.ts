@@ -38,6 +38,7 @@ export const loadObject = createAsyncThunk<
   const { getObjectList } = await gqlClient.GetObjectList({
     keyPrefix: pageName,
   });
+  // TODO: backendに押し込む
   getObjectList
     .filter(
       (e) =>
