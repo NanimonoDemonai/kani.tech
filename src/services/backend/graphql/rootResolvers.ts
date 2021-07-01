@@ -1,11 +1,13 @@
-import { Bucket } from "../../../constants/s3Bucket";
+import { Bucket } from "../../../constants/NextPublicEnvs";
 import { Resolvers } from "../../../types/generated/graphqlCodeGen";
 import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { SessionContextType } from "./context";
+import { getObjectListResolver } from "./getObjectListResolver";
 import { getUploadUrlResolver } from "./getUploadUrlResolver";
 import { postArticleResolver } from "./postArticleResolver";
+import { updateObjectStatusResolver } from "./updateObjectStatusResolver";
 
 export class AuthenticationError extends Error {}
 
@@ -28,55 +30,12 @@ export const rootResolvers: Resolvers = {
       });
       return { id: key };
     },
-    updateObjectStatus: async (parent, { key, isError }, context) => {
-      isUser(context);
-      if (isError) {
-        await prisma.imageObject.update({
-          where: { key },
-          data: {
-            verified: "ERROR",
-          },
-        });
-        return { id: key };
-      }
-      const head = await s3.headObject({ Bucket, Key: key }).promise();
-      if (head)
-        await prisma.imageObject.update({
-          where: {
-            key,
-          },
-          data: {
-            verified: head ? "VERIFIED" : "ERROR",
-          },
-        });
-      return { id: key };
-    },
+    updateObjectStatus: updateObjectStatusResolver,
   },
   Query: {
     healthCheck: () => "hello",
     getUploadUrl: getUploadUrlResolver,
-    getObjectList: async (parent, { keyPrefix }, context) => {
-      isUser(context);
-
-      const objects = await prisma.entry.findUnique({
-        where: { pageName: keyPrefix },
-        include: {
-          directory: {
-            include: {
-              imageObjects: true,
-            },
-          },
-        },
-      });
-      if (!objects) throw new AuthenticationError("permission denied");
-
-      return (
-        objects.directory?.imageObjects.map((e) => ({
-          ...e,
-          modified: e.updatedAt.toJSON(),
-        })) ?? []
-      );
-    },
+    getObjectList: getObjectListResolver,
     getPreview: async (parent, { source }, context) => {
       isUser(context);
       const { images, code } = await sourceParser(source);

@@ -1,5 +1,5 @@
 import { GetStaticPropsResult } from "next";
-import { revalidate } from "../../constants/revalidate";
+import { revalidate } from "../../constants/NextSecretEnv";
 
 export const NotFoundResponse: GetStaticPropsResult<any> = { notFound: true };
 export const NotFoundResponseWithRevalidate: GetStaticPropsResult<any> = {

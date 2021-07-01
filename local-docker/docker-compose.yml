@@ -3,8 +3,6 @@ services:
   appdb:
     image: postgres:13
     container_name: "prismadb"
-    env_file:
-      - ../.env.local
     environment:
       - POSTGRES_USER=local
       - POSTGRES_PASSWORD=local
@@ -29,8 +27,6 @@ services:
       - 6432:6432
   minio:
     image: minio/minio
-    env_file:
-      - ../.env.local
     environment:
       - MINIO_ACCESS_KEY=locallocal
       - MINIO_SECRET_KEY=locallocal
@@ -42,8 +38,6 @@ services:
   imgproxy:
     image: darthsim/imgproxy
     restart: always
-    env_file:
-      - ../.env.local
     environment:
       - IMGPROXY_USE_S3=true
       - AWS_ACCESS_KEY_ID=locallocal

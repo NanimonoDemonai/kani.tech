@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { MDXHistorySourcePageProps } from "../../../components/pages/MDXHistorySourcePage";
-import { revalidate } from "../../../constants/revalidate";
+import { revalidate } from "../../../constants/NextSecretEnv";
 import { unknownParamsToPIDRevParams } from "../../../utils/validators/unknownParamsToPIDRevParams";
 import { NotFoundResponseWithRevalidate } from "../NotFoundResponse";
 import { getMDXHistorySourcePageCodeAndPageMetaWithPIDRev } from "../getMDXHistorySourcePageCodeAndPageMetaWithPIDRev";

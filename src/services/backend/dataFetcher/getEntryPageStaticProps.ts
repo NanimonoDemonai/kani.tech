@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { EntryPageProps } from "../../../components/pages/EntryPage";
-import { revalidate } from "../../../constants/revalidate";
+import { revalidate } from "../../../constants/NextSecretEnv";
 import { unknownParamsToPIDParams } from "../../../utils/validators/unknownParamsToPIDParams";
 import {
   NotFoundResponse,

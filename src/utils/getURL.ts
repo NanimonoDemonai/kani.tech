@@ -1,4 +1,4 @@
-import { Bucket } from "../constants/s3Bucket";
+import { Bucket } from "../constants/NextPublicEnvs";
 
 export const getEntryPathWithEntryName = (entryName: string): string =>
   `/entries/${entryName}`;
