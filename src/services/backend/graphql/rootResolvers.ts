@@ -6,6 +6,7 @@ import { s3 } from "../client/S3";
 import { SessionContextType } from "./context";
 import { getUploadUrlResolver } from "./getUploadUrlResolver";
 import { postArticleResolver } from "./postArticleResolver";
+import { updateObjectStatus } from "./updateObjectStatus";
 
 export class AuthenticationError extends Error {}
 
@@ -28,29 +29,7 @@ export const rootResolvers: Resolvers = {
       });
       return { id: key };
     },
-    updateObjectStatus: async (parent, { key, isError }, context) => {
-      isUser(context);
-      if (isError) {
-        await prisma.imageObject.update({
-          where: { key },
-          data: {
-            verified: "ERROR",
-          },
-        });
-        return { id: key };
-      }
-      const head = await s3.headObject({ Bucket, Key: key }).promise();
-      if (head)
-        await prisma.imageObject.update({
-          where: {
-            key,
-          },
-          data: {
-            verified: head ? "VERIFIED" : "ERROR",
-          },
-        });
-      return { id: key };
-    },
+    updateObjectStatus,
   },
   Query: {
     healthCheck: () => "hello",
