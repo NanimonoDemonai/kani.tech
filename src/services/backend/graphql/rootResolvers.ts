@@ -4,6 +4,7 @@ import { sourceParser } from "../../../utils/parsers/sourceParser";
 import { prisma } from "../client/PrismClient";
 import { s3 } from "../client/S3";
 import { SessionContextType } from "./context";
+import { getObjectListResolver } from "./getObjectListResolver";
 import { getUploadUrlResolver } from "./getUploadUrlResolver";
 import { postArticleResolver } from "./postArticleResolver";
 import { updateObjectStatusResolver } from "./updateObjectStatusResolver";
@@ -34,28 +35,7 @@ export const rootResolvers: Resolvers = {
   Query: {
     healthCheck: () => "hello",
     getUploadUrl: getUploadUrlResolver,
-    getObjectList: async (parent, { keyPrefix }, context) => {
-      isUser(context);
-
-      const objects = await prisma.entry.findUnique({
-        where: { pageName: keyPrefix },
-        include: {
-          directory: {
-            include: {
-              imageObjects: true,
-            },
-          },
-        },
-      });
-      if (!objects) throw new AuthenticationError("permission denied");
-
-      return (
-        objects.directory?.imageObjects.map((e) => ({
-          ...e,
-          modified: e.updatedAt.toJSON(),
-        })) ?? []
-      );
-    },
+    getObjectList: getObjectListResolver,
     getPreview: async (parent, { source }, context) => {
       isUser(context);
       const { images, code } = await sourceParser(source);

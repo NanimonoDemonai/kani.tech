@@ -5,6 +5,7 @@ export const updateObjectsStatus = async (
   keys: string[],
   verified: Verified
 ): Promise<void> => {
+  if (keys.length < 1) return;
   await prisma.imageObject.updateMany({
     where: {
       key: { in: keys },
