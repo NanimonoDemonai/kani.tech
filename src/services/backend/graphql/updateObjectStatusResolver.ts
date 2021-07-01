@@ -4,7 +4,7 @@ import { s3 } from "../client/S3";
 import { updateObjectsStatus } from "../updateObjectsStatus";
 import { isUser } from "./rootResolvers";
 
-export const updateObjectStatus: MutationResolvers["updateObjectStatus"] =
+export const updateObjectStatusResolver: MutationResolvers["updateObjectStatus"] =
   async (parent, { key, isError }, context) => {
     isUser(context);
     if (isError) {

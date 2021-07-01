@@ -6,7 +6,7 @@ import { s3 } from "../client/S3";
 import { SessionContextType } from "./context";
 import { getUploadUrlResolver } from "./getUploadUrlResolver";
 import { postArticleResolver } from "./postArticleResolver";
-import { updateObjectStatus } from "./updateObjectStatus";
+import { updateObjectStatusResolver } from "./updateObjectStatusResolver";
 
 export class AuthenticationError extends Error {}
 
@@ -29,7 +29,7 @@ export const rootResolvers: Resolvers = {
       });
       return { id: key };
     },
-    updateObjectStatus,
+    updateObjectStatus: updateObjectStatusResolver,
   },
   Query: {
     healthCheck: () => "hello",
