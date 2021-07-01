@@ -4,8 +4,6 @@ import {
   createSlice,
   Reducer,
 } from "@reduxjs/toolkit";
-import dayjs from "dayjs";
-import { uploaderTimeout } from "../../../constants/NextSecretEnv";
 import { gqlClient } from "../../../services/frontend/client/graphqlRequest";
 import { uploadImage } from "../../../services/frontend/uploadImage";
 import { ImageObject } from "../../../types/PageMeta";
@@ -38,16 +36,7 @@ export const loadObject = createAsyncThunk<
   const { getObjectList } = await gqlClient.GetObjectList({
     keyPrefix: pageName,
   });
-  // TODO: backendに押し込む
-  getObjectList
-    .filter(
-      (e) =>
-        e.verified === "PENDING" &&
-        dayjs().diff(dayjs(e.modified), "minute") > uploaderTimeout
-    )
-    .forEach((e) => {
-      gqlClient.UpdateObjectStatus({ key: e.key, isError: true });
-    });
+
   return getObjectList;
 });
 

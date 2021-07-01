@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { uploaderTimeout } from "../../../constants/NextSecretEnv";
 import { QueryResolvers } from "../../../types/generated/graphqlCodeGen";
+import { noop } from "../../../utils/noop";
 import { prisma } from "../client/PrismClient";
 import { updateObjectsStatus } from "../updateObjectsStatus";
 import { AuthenticationError, isUser } from "./rootResolvers";
@@ -24,8 +25,8 @@ export const getObjectListResolver: QueryResolvers["getObjectList"] = async (
   });
   if (!objects) throw new AuthenticationError("permission denied");
   const directory = objects.directory;
-  if (directory)
-    await updateObjectsStatus(
+  if (directory) {
+    updateObjectsStatus(
       directory.imageObjects
         .filter(
           (e) =>
@@ -34,11 +35,11 @@ export const getObjectListResolver: QueryResolvers["getObjectList"] = async (
         )
         .map((e) => e.key),
       "ERROR"
-    );
-  return (
-    objects.directory?.imageObjects.map((e) => ({
+    ).then(noop);
+    return directory.imageObjects.map((e) => ({
       ...e,
       modified: e.updatedAt.toJSON(),
-    })) ?? []
-  );
+    }));
+  }
+  return [];
 };
